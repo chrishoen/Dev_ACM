@@ -61,6 +61,7 @@ void TestSeqThread::executeRunTest1(int aNumTx)
             sprintf(tString, "hello from beagle   %d", i);
          }
 
+         sprintf(tString, "T");
 
          // Send a command.
          // sendString(gCommParms.mTxCommand);
