@@ -39,6 +39,11 @@ public:
 	// Members.
 
 	// Wants variables.
+	// value wanted.
+	// request flag. If true then the want value is requested.
+	// ack code, none, ack, nak. This is set after the want is verified.
+
+	// Wants variables.
 	float  mThreshHighPower_kw;
 	bool   mThreshHighPower_Req;
 	int    mThreshHighPower_Ack;
@@ -63,6 +68,16 @@ public:
 
 	// Show.
 	void show(int aPrintFilter = 0);
+
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+	// Methods.
+
+	// Request the setting of want variables. 
+	void requestThreshHighPower(float aValue);
+	void requestThreshLowPower(float aValue);
+	void requestThreshVSWR(float aValue);
 };
 
 //******************************************************************************
