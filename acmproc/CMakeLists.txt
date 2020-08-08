@@ -8,8 +8,10 @@ my_add_pch (acmproc)
 
 my_inc_import_RisLib(acmproc)
 my_inc_import_ShareLibACM(acmproc)
+my_inc_import_CommonLib(acmproc)
 
 my_lib_import_ShareLibACM(acmproc)
+my_lib_import_CommonLib(acmproc)
 my_lib_import_RisLib(acmproc)
 
 if (MSVC)

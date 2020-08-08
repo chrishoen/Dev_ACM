@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+#include "cmnProgramParms.h"
 #include "smShare.h"
 
 #include "CmdLineExec.h"
@@ -30,6 +31,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
 
 
+   if (aCmd->isCmd("Parms"))     executeParms(aCmd);
    if (aCmd->isCmd("Show"))      executeShow(aCmd);
 }
 
@@ -63,6 +65,15 @@ void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 {
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
+{
+   Cmn::gProgramParms.show();
 }
 
 //******************************************************************************
