@@ -74,8 +74,8 @@ public:
 
    // Thread print and log levels.
    TS::PrintLevel mSerialStringPrintLevel;
-   TS::PrintLevel mTestSeqShortPrintLevel;
-   TS::PrintLevel mTestSeqLongPrintLevel;
+   TS::PrintLevel mCommSeqShortPrintLevel;
+   TS::PrintLevel mCommSeqLongPrintLevel;
 
    //***************************************************************************
    //***************************************************************************

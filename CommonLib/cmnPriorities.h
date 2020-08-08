@@ -31,11 +31,9 @@ public:
    // Members.
 
    Ris::Threads::Priority mTsPrint;
-   Ris::Threads::Priority mLogFile;
-   Ris::Threads::Priority mCmdComm;
    Ris::Threads::Priority mSerialString;
-   Ris::Threads::Priority mTestSeqLong;
-   Ris::Threads::Priority mTestSeqShort;
+   Ris::Threads::Priority mCommSeqLong;
+   Ris::Threads::Priority mCommSeqShort;
 
    //***************************************************************************
    //***************************************************************************

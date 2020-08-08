@@ -63,8 +63,8 @@ void ProgramParms::show()
 
    printf("\n");
    printf("SerialStringPrintLevel  %12s\n",  mSerialStringPrintLevel.asString(tBuffer));
-   printf("TestSeqShortPrintLevel  %12s\n",  mTestSeqShortPrintLevel.asString(tBuffer));
-   printf("TestSeqLongPrintLevel   %12s\n",  mTestSeqLongPrintLevel.asString(tBuffer));
+   printf("CommSeqShortPrintLevel  %12s\n",  mCommSeqShortPrintLevel.asString(tBuffer));
+   printf("CommSeqLongPrintLevel   %12s\n",  mCommSeqLongPrintLevel.asString(tBuffer));
 
    printf("\n");
    printf("Delay                   %12d\n", mDelay);
@@ -88,8 +88,8 @@ void ProgramParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("CmdCommPort485Flag"))     mCmdCommPort485Flag = aCmd->argBool(1);
 
    if (aCmd->isCmd("SerialStringPrintLevel")) mSerialStringPrintLevel.readArgs(aCmd);
-   if (aCmd->isCmd("TestSeqShortPrintLevel")) mTestSeqShortPrintLevel.readArgs(aCmd);
-   if (aCmd->isCmd("TestSeqLongPrintLevel"))  mTestSeqLongPrintLevel.readArgs(aCmd);
+   if (aCmd->isCmd("CommSeqShortPrintLevel")) mCommSeqShortPrintLevel.readArgs(aCmd);
+   if (aCmd->isCmd("CommSeqLongPrintLevel"))  mCommSeqLongPrintLevel.readArgs(aCmd);
 
    if (aCmd->isCmd("Delay"))                  mDelay = aCmd->argInt(1);
    if (aCmd->isCmd("TxCommand"))              aCmd->copyArgString(1, mTxCommand, cMaxStringSize);

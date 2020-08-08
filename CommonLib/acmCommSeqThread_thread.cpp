@@ -9,9 +9,8 @@ Description:
 #include "stdafx.h"
 
 #include "cmnPriorities.h"
-#include "cmnShare.h"
-#include "acmProgramParms.h"
-#define  _ACMSCRIPTSEQTHREAD_CPP_
+#include "cmnProgramParms.h"
+#define  _ACMCOMMSEQTHREAD_CPP_
 #include "acmCommSeqThread.h"
 
 namespace ACM
@@ -29,13 +28,13 @@ CommSeqThread::CommSeqThread()
    using namespace std::placeholders;
 
    // Set base class thread variables.
-   BaseClass::mShortThread->setThreadName("ScriptSeqShort");
-   BaseClass::mShortThread->setThreadPriority(Cmn::gPriorities.mScriptSeqShort);
-   BaseClass::mShortThread->setThreadPrintLevel(gProgramParms.mScriptSeqShortPrintLevel);
+   BaseClass::mShortThread->setThreadName("CommSeqShort");
+   BaseClass::mShortThread->setThreadPriority(Cmn::gPriorities.mCommSeqShort);
+   BaseClass::mShortThread->setThreadPrintLevel(Cmn::gProgramParms.mCommSeqShortPrintLevel);
 
-   BaseClass::mLongThread->setThreadName("ScriptSeqLong");
-   BaseClass::mLongThread->setThreadPriority(Cmn::gPriorities.mScriptSeqLong);
-   BaseClass::mLongThread->setThreadPrintLevel(gProgramParms.mScriptSeqLongPrintLevel);
+   BaseClass::mLongThread->setThreadName("CommSeqLong");
+   BaseClass::mLongThread->setThreadPriority(Cmn::gPriorities.mCommSeqLong);
+   BaseClass::mLongThread->setThreadPrintLevel(Cmn::gProgramParms.mCommSeqLongPrintLevel);
 
    // Set base class call pointers.
    BaseClass::mShortThread->mThreadInitCallPointer           = std::bind(&CommSeqThread::threadInitFunction, this);
@@ -43,11 +42,8 @@ CommSeqThread::CommSeqThread()
    BaseClass::mShortThread->mThreadExecuteOnTimerCallPointer = std::bind(&CommSeqThread::executeOnTimer, this, _1);
 
    // Set qcalls.
-   mTest1QCall.bind          (this->mLongThread,  this, &CommSeqThread::executeTest1);
-   mTest2QCall.bind          (this->mLongThread,  this, &CommSeqThread::executeTest2);
-   mRunScript1QCall.bind(this->mLongThread, this, &CommSeqThread::executeRunScript1);
-   mRunScript2QCall.bind(this->mLongThread, this, &CommSeqThread::executeRunScript2);
-   mAbortScriptQCall.bind    (this->mShortThread, this, &CommSeqThread::executeAbortScript);
+   mAcquireQCall.bind   (this->mLongThread, this, &CommSeqThread::executeAcquire);
+   mAbortQCall.bind     (this->mShortThread, this, &CommSeqThread::executeAbort);
 
    // Set member variables.
    mLoopExitCode = 0;
@@ -98,28 +94,14 @@ void CommSeqThread::shutdownThreads()
 //******************************************************************************
 // Abort a running grid or script qcall.
 //
-void CommSeqThread::executeAbortScript()
+void CommSeqThread::executeAbort()
 {
-   Prn::print(Prn::View01, "ABORT SCRIPT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-   Prn::print(Prn::View01, "ABORT SCRIPT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-   Prn::print(Prn::View01, "ABORT SCRIPT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+   Prn::print(Prn::View01, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+   Prn::print(Prn::View01, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+   Prn::print(Prn::View01, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
    // Abort the long thread.
    BaseClass::mNotify.abort();
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Set the suspend request flag true. If the RunScript1QCall is executing
-// then, when it encounters the next test script command, it saves state
-// and exits in a suspended state. The script is resumed by running
-// another RunScript1QCall.
-
-void CommSeqThread::suspendScript()
-{
-   // Set the request flag.
-   mSuspendRequestFlag = true;
 }
 
 //******************************************************************************

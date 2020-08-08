@@ -22,12 +22,9 @@ namespace Cmn
 Priorities::Priorities()
 {
    mTsPrint           = Ris::Threads::Priority(-1, 20);
-   mLogFile           = Ris::Threads::Priority(-1, 21);
-   mCmdComm           = Ris::Threads::Priority( 3, 51);
-   mCmdComm           = Ris::Threads::Priority(-1, 60);
    mSerialString      = Ris::Threads::Priority(-1, 80);
-   mTestSeqLong       = Ris::Threads::Priority(-1, 50);
-   mTestSeqShort      = Ris::Threads::Priority(-1, 70);
+   mCommSeqLong       = Ris::Threads::Priority(-1, 50);
+   mCommSeqShort      = Ris::Threads::Priority(-1, 70);
 }
 
 //******************************************************************************

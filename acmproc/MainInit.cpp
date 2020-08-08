@@ -19,6 +19,24 @@ void main_initialize(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Enter process.
+
+   // Set program process for high priority.
+   Ris::Threads::enterProcessHigh();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize thread services.
+
+   TS::reset();
+   TS::setProgramName("cprint");
+   TS::setProgramPrintLevel(TS::PrintLevel(0, 3));
+   TS::initialize();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Initialize print facility.
 
    // Initialize print.
@@ -32,12 +50,6 @@ void main_initialize(int argc,char** argv)
    Prn::setFilter(Prn::View13, false, 1);
    Prn::setFilter(Prn::View14, false, 1);
 
-   Prn::setFilter(Prn::Show1, true);
-   Prn::setFilter(Prn::Show2, true);
-   Prn::setFilter(Prn::Show3, false);
-   Prn::setFilter(Prn::Show4, false);
-   Prn::setFilter(Prn::Show5, false);
-   Prn::setFilter(Prn::Show6, false);
 
    //***************************************************************************
    //***************************************************************************
