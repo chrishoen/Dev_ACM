@@ -7,7 +7,6 @@ Description:
 //******************************************************************************
 #include "stdafx.h"
 
-#include "SuperStateExtraACM.h"
 #include "risSharedMemory.h"
 
 #define  _SMSHARE_CPP_
@@ -36,11 +35,8 @@ void Share::initialize()
    mX3 = 103;
    mX4 = 104;
 
-   SuperStateACM_setDefaults(&mSuperStateACM);
-   SuperWantsACM_setDefaults(&mSuperWantsACM);
-
-   SuperStateACM_initialize(&mSuperStateACM);
-   SuperWantsACM_initialize(&mSuperWantsACM);
+   mSuperStateACM.initialize();
+   mSuperWantsACM.initialize();
 
    mEventNotifyQueue.initialize();
 }
@@ -66,8 +62,8 @@ void Share::show2()
 
 void Share::showACM()
 {
-   SuperStateACM_show(&mSuperStateACM);
-   SuperWantsACM_show(&mSuperWantsACM);
+   mSuperStateACM.show();
+   mSuperWantsACM.show();
 }
 
 //******************************************************************************
