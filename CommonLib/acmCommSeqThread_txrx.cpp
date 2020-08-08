@@ -25,7 +25,7 @@ void CommSeqThread::sendString(const char* aString)
    // Guard.
    if (!mConnectionFlag)
    {
-      Prn::print(Prn::Show1, ">>>> NOT CONNECTED");
+      Prn::print(Prn::View11, ">>>> NOT CONNECTED");
       return;
    }
 
@@ -33,7 +33,7 @@ void CommSeqThread::sendString(const char* aString)
    mTxCount++;
 
    // Print the string.
-   Prn::print(Prn::Show1, ">>>> %s", aString);
+   Prn::print(Prn::View11, ">>>> %s", aString);
 
    // Send the string.
    mSerialStringThread->sendString(aString);
@@ -52,7 +52,7 @@ void CommSeqThread::sendString(std::string* aString)
    // Guard.
    if (!mConnectionFlag)
    {
-      Prn::print(Prn::Show1, ">>>> NOT CONNECTED");
+      Prn::print(Prn::View11, ">>>> NOT CONNECTED");
       delete aString;
       return;
    }
@@ -61,7 +61,7 @@ void CommSeqThread::sendString(std::string* aString)
    mTxCount++;
 
    // Print the string.
-   Prn::print(Prn::Show1, ">>>> %s", aString->c_str());
+   Prn::print(Prn::View11, ">>>> %s", aString->c_str());
 
    // Send the string.
    mSerialStringThread->sendString(aString);
@@ -79,7 +79,7 @@ void CommSeqThread::executeRxString(std::string* aString)
    // Metrics.
    mRxCount++;
 
-   Prn::print(Prn::Show1, "<<<< %s", aString->c_str());
+   Prn::print(Prn::View11, "<<<< %s", aString->c_str());
 
    // Signal the notification that an acknowledgement was received.
    mNotify.notify(cCmdAckNotifyCode);
