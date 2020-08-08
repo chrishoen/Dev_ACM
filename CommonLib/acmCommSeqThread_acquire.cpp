@@ -38,15 +38,26 @@ void CommSeqThread::executeAcquire()
          // Set the thread notification mask.
          mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
 
-         char tString[200];
-         sprintf(tString, "T");
+         char tTxString[200];
+         sprintf(tTxString, "T");
 
          // Send a command.
          // sendString(Cmn::gProgramParms.mTxCommand);
-         sendString(tString);
+         sendString(tTxString);
 
          // Wait for the acknowledgement notification.
-//       mNotify.wait(cCmdAckTimeout);
+         mNotify.wait(cCmdAckTimeout);
+
+         std::string* tRxString;
+         if (mRxStringQueue.tryRead(&tRxString))
+         {
+            Prn::print(Prn::View11, "RxQueue %s", tRxString->c_str());
+            delete tRxString;
+         }
+         else
+         {
+            Prn::print(Prn::View11, "RxQueue EMPTY");
+         }
 
          // Loop delay.
          mNotify.waitForTimer(Cmn::gProgramParms.mDelay);

@@ -51,6 +51,8 @@ CommSeqThread::CommSeqThread()
    mLoopExitCode = 0;
    mTxCount = 0;
    mRxCount = 0;
+
+   mRxStringQueue.reset();
 }
 
 //******************************************************************************

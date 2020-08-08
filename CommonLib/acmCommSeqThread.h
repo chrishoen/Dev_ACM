@@ -9,6 +9,7 @@
 
 #include "risThreadsTwoThread.h"
 #include "risThreadsSynch.h"
+#include "risSRSWValueQueue.h"
 #include "risSerialStringThread.h"
 
 namespace ACM
@@ -53,6 +54,10 @@ public:
 
    // If true then the serial port is open.
    bool mConnectionFlag;
+
+   // Receive string queue. Strings are received at the short thread
+   // and processed in the long thread.
+   Ris::SRSWValueQueue<std::string*, 100> mRxStringQueue;
 
    //***************************************************************************
    //***************************************************************************

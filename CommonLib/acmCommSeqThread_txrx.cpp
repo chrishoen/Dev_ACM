@@ -81,11 +81,17 @@ void CommSeqThread::executeRxString(std::string* aString)
 
    Prn::print(Prn::View11, "<<<< %s", aString->c_str());
 
-   // Signal the notification that an acknowledgement was received.
-   mNotify.notify(cCmdAckNotifyCode);
-     
-   // Delete the string.
-   delete aString;
+   // Write the string to the rx string queue and signal the notification
+   // that an acknowledgement was received.
+   if (mRxStringQueue.tryWrite(aString))
+   {
+      mNotify.notify(cCmdAckNotifyCode);
+   }
+   else
+   {
+      Prn::print(Prn::View11, "RxStringQueue FULL");
+      delete aString;
+   }
 }
 
 //******************************************************************************
