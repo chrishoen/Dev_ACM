@@ -8,6 +8,7 @@ include(MyGlobalImports.cmake)
 project ("Dev_ACM")
 my_init_global_import_variables()
 
+add_subdirectory ("ShareLibACM")
 add_subdirectory ("commtest")
 return()
 

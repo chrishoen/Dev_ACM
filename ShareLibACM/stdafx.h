@@ -7,9 +7,11 @@
 #include <math.h>
 #include <random>
 
-#include <iostream>
 #include <vector>
-#include <iterator>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
 
 #include "tsThreadServices.h"
 #include "my_functions.h"
