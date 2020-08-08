@@ -26,7 +26,7 @@ void CommSeqThread::executeAcquire()
    Prn::print(Prn::View11, "CommSeqThread::executeAcquire BEGIN");
 
    // Initialize the synchronization objects.
-   mAcquireWaitable.initialize(2000);
+   mAcquireWaitable.initialize(Cmn::gProgramParms.mDelay);
    mNotify.clearFlags();
 
    try
@@ -58,7 +58,6 @@ void CommSeqThread::executeAcquire()
          std::string* tRxString;
          if (mRxStringQueue.tryRead(&tRxString))
          {
-            Prn::print(Prn::View11, "RxQueue %s", tRxString->c_str());
             delete tRxString;
          }
          else
@@ -71,6 +70,10 @@ void CommSeqThread::executeAcquire()
    {
       Prn::print(0, "EXCEPTION CommSeqThread::executeAcquire %d %s", aException, mNotify.mException);
    }
+
+   // Finalize the synchronization objects.
+   mAcquireWaitable.finalize();
+   mNotify.clearFlags();
 
    Prn::print(Prn::View11, "CommSeqThread::executeAcquire END");
 }
