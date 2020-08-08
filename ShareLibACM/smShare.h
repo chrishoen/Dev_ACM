@@ -11,6 +11,7 @@ Shared memory region.
 #include "risSRSWStringQueue.h"
 
 #include "SuperStateACM.h"
+#include "SuperWantsACM.h"
 
 //******************************************************************************
 //******************************************************************************
