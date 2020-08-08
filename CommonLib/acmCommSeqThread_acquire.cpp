@@ -25,29 +25,36 @@ void CommSeqThread::executeAcquire()
 {
    Prn::print(Prn::View11, "CommSeqThread::executeAcquire BEGIN");
 
-   mLoopExitCode = cLoopExitNormal;
+   // Initialize the synchronization objects.
+   mAcquireWaitable.initialize(2000);
+   mNotify.clearFlags();
 
    try
    {
       // Loop to transmit and receive.
       while (true)
       {
+         // Wait for timer or abort.
+         mAcquireWaitable.waitForTimerOrSemaphore();
+         if (mAcquireWaitable.wasSemaphore())
+         {
+            // The waitable semahore as posted for an abort.
+            throw 667;
+         }
+
          // Test for a notification exception.
          mNotify.testException();
 
          // Set the thread notification mask.
          mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
 
-         char tTxString[200];
-         sprintf(tTxString, "T");
-
          // Send a command.
-         // sendString(Cmn::gProgramParms.mTxCommand);
-         sendString(tTxString);
+         sendString("T");
 
          // Wait for the acknowledgement notification.
          mNotify.wait(cCmdAckTimeout);
 
+         // Read the receive string from the queue.
          std::string* tRxString;
          if (mRxStringQueue.tryRead(&tRxString))
          {
@@ -58,29 +65,11 @@ void CommSeqThread::executeAcquire()
          {
             Prn::print(Prn::View11, "RxQueue EMPTY");
          }
-
-         // Loop delay.
-         mNotify.waitForTimer(Cmn::gProgramParms.mDelay);
       }
    }
    catch(int aException)
    {
-      mLoopExitCode = cLoopExitAborted;
-      Prn::print(0, "EXCEPTION CommSeqThread::executeRunTest1 %d %s", aException, mNotify.mException);
-   }
-
-
-   // Test the exit code.
-   if (mLoopExitCode == cLoopExitNormal)
-   {
-      // Print and log.
-      Prn::print(0, "acquire done");
-      Prn::print(0, "");
-   }
-   else if (mLoopExitCode == cLoopExitAborted)
-   {
-      // Print and log.
-      Prn::print(0, "acquire aborted");
+      Prn::print(0, "EXCEPTION CommSeqThread::executeAcquire %d %s", aException, mNotify.mException);
    }
 
    Prn::print(Prn::View11, "CommSeqThread::executeAcquire END");

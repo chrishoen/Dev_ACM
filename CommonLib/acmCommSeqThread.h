@@ -9,6 +9,7 @@
 
 #include "risThreadsTwoThread.h"
 #include "risThreadsSynch.h"
+#include "risThreadsWaitable.h"
 #include "risSRSWValueQueue.h"
 #include "risSerialStringThread.h"
 
@@ -66,6 +67,9 @@ public:
 
    // Notifications.
    Ris::Threads::NotifyWrapper mCmdAckNotify;
+
+   // Waitable timer.
+   Ris::Threads::Waitable mAcquireWaitable;
 
    //***************************************************************************
    //***************************************************************************
