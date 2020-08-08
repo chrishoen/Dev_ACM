@@ -9,13 +9,15 @@
 
 #include "risThreadsTwoThread.h"
 #include "risThreadsSynch.h"
+#include "risSerialStringThread.h"
 
 namespace ACM
 {
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This is a two thread that manages communications sequences with an acm.
+// This is an example master thread that sends commands to a slave thread
+// and waits for responses.
 
 class CommSeqThread : public Ris::Threads::BaseTwoThread
 {
@@ -27,24 +29,30 @@ public:
    //***************************************************************************
    // Constants:
 
-   // Lcd paint settle time.
-   static const int cLcdSettleTime = 50;
-
    // Wait timeouts.
-   static const int cGCodeAckTimeout = -1;
-   static const int cLcdTimeout = 2000;
+   static const int cCmdAckTimeout = -1;
 
    // Notification codes.
-   static const int cGCodeAckNotifyCode = 11;
-   static const int cLcdNotifyCode = 12;
+   static const int cCmdAckNotifyCode = 11;
 
-   static const int cFlushGCodeAckNotifyCode = 17;
-   static const int cFlushLcdNotifyCode = 18;
+   static const int cFlushCmdAckNotifyCode = 17;
 
    // Loop exit status codes.
    static const int cLoopExitNormal    = 0;
-   static const int cLoopExitSuspended = 1;
-   static const int cLoopExitAborted   = 2;
+   static const int cLoopExitAborted   = 1;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members.
+
+   // Serial  string port child thread. It provides the thread execution
+   // context for a serial string port and uses it to provide string
+   // communication.
+   Ris::SerialStringThread* mSerialStringThread;
+
+   // If true then the serial port is open.
+   bool mConnectionFlag;
 
    //***************************************************************************
    //***************************************************************************
@@ -52,38 +60,24 @@ public:
    // Members.
 
    // Notifications.
-   Ris::Threads::NotifyWrapper mLcdNotify;
-   Ris::Threads::NotifyWrapper mGCodeAckNotify;
+   Ris::Threads::NotifyWrapper mCmdAckNotify;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
-   // Run script exit code.
+   // Run test exit code.
    int mLoopExitCode;
 
-   // If true then at the next test point script command that is encountered
-   // in the script file the suspend exit flag is set.
-   bool mSuspendRequestFlag;
-
-   // If true then the script qcall loop exits in a suspended state.
-   bool mSuspendExitFlag;
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
-   // If true the execute periodically.
-   bool mTPFlag;
-
    // Metrics.
-   int  mStatusCount1;
-   int  mStatusCount2;
-
-   // Metrics.
-   int mReadCount;
+   int mTxCount;
+   int mRxCount;
 
    //***************************************************************************
    //***************************************************************************
@@ -112,13 +106,34 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Methods. 
+
+   // Session callback qcall.
+   Ris::Threads::QCall1<bool> mSessionQCall;
+
+   // Session qcall function. This is invoked by the child thread when 
+   // the serial port is closed because of an error or when it is reopened
+   // correctly.
+   void executeSession(bool aConnected);
+
+   // Receive string callback qcall.
+   Ris::Threads::QCall1<std::string*> mRxStringQCall;
+
+   // Receive string qcall function. This is invoked by the child thread 
+   // when a string is received and it processes the received string
+   // in the context of the short thread.
+   void executeRxString(std::string* aString);
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Methods. qcalls.
 
-   // Run script qcall. It is invoked by the command line executive.
-   Ris::Threads::QCall0  mAcquireQCall;
+   // Acquire. It is invoked by the command line executive.
+   Ris::Threads::QCall0 mAcquireQCall;
 
-   // Run script function. This is bound to the qcall. This executes a loop
-   // that periodicall acquires data from the acm.
+   // Acquire function. This is bound to the qcall. It runs a periodic
+   // acm data acquisition sequence.
    void executeAcquire();
 
    //***************************************************************************
@@ -126,13 +141,29 @@ public:
    //***************************************************************************
    // Methods: QCalls: These are used to send commands to the thread.
 
-   // Abort a running qcall.
+   // Abort a running grid or test qcall.
 
    // The qcall. This is a call that is queued to this thread.
    Ris::Threads::QCall0 mAbortQCall;
 
    // Execute the call in the context of this thread.
    void executeAbort();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Send a null terminated string via the serial port. A newline terminator
+   // is appended to the string before transmission. This executes in the
+   // context of the The calling thread.
+   void sendString(const char* aString);
+
+   // Send a null terminated string via the serial port. A newline terminator
+   // is appended to the string before transmission. This executes in the
+   // context of the The calling thread. The string is deleted after
+   // transmission.
+   void sendString(std::string* aString);
 
 };
 
@@ -141,7 +172,7 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _ACMCOMMSEQTHREAD_CPP_
+#ifdef    _ACMCOMMSEQTHREAD_CPP_
           CommSeqThread* gCommSeqThread = 0;
 #else
    extern CommSeqThread* gCommSeqThread;

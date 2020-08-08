@@ -1,5 +1,5 @@
 /*==============================================================================
-Description:
+Detestion:
 ==============================================================================*/
 
 //******************************************************************************
@@ -10,6 +10,7 @@ Description:
 
 #include "cmnPriorities.h"
 #include "cmnProgramParms.h"
+
 #define  _ACMCOMMSEQTHREAD_CPP_
 #include "acmCommSeqThread.h"
 
@@ -22,8 +23,7 @@ namespace ACM
 // Constructor.
 
 CommSeqThread::CommSeqThread()
-   : mGCodeAckNotify(&mNotify, cGCodeAckNotifyCode),
-     mLcdNotify(&mNotify, cLcdNotifyCode)
+   : mCmdAckNotify(&mNotify, cCmdAckNotifyCode)
 {
    using namespace std::placeholders;
 
@@ -44,15 +44,13 @@ CommSeqThread::CommSeqThread()
    // Set qcalls.
    mAcquireQCall.bind   (this->mLongThread, this, &CommSeqThread::executeAcquire);
    mAbortQCall.bind     (this->mShortThread, this, &CommSeqThread::executeAbort);
+   mSessionQCall.bind   (this->mShortThread, this, &CommSeqThread::executeSession);
+   mRxStringQCall.bind  (this->mShortThread, this, &CommSeqThread::executeRxString);
 
    // Set member variables.
    mLoopExitCode = 0;
-   mSuspendRequestFlag = false;
-   mSuspendExitFlag = false;
-   mTPFlag = false;
-   mStatusCount1 = 0;
-   mStatusCount2 = 0;
-   mReadCount = 0;
+   mTxCount = 0;
+   mRxCount = 0;
 }
 
 //******************************************************************************
@@ -63,6 +61,26 @@ CommSeqThread::CommSeqThread()
 
 void CommSeqThread::threadInitFunction()
 {
+   using namespace std::placeholders;
+
+   // Instance of serial port settings.
+   Ris::SerialSettings tSerialSettings;
+
+   tSerialSettings.setPortDevice(Cmn::gProgramParms.mCmdCommPortDevice);
+   tSerialSettings.setPortSetup(Cmn::gProgramParms.mCmdCommPortSetup);
+   tSerialSettings.mRxTimeout = Cmn::gProgramParms.mCmdCommPortTimeout;
+   tSerialSettings.mTermMode = Ris::cSerialTermMode_CRLF;
+   tSerialSettings.mThreadPriority = Cmn::gPriorities.mSerialString;
+   tSerialSettings.mPrintLevel = Cmn::gProgramParms.mSerialStringPrintLevel;
+   tSerialSettings.mSessionQCall = mSessionQCall;
+   tSerialSettings.mRxStringQCall = mRxStringQCall;
+   tSerialSettings.m485Flag = Cmn::gProgramParms.mCmdCommPort485Flag;
+
+   // Create the child thread.
+   mSerialStringThread = new Ris::SerialStringThread(tSerialSettings);
+
+   // Launch the child thread.
+   mSerialStringThread->launchThread();
 }
 
 //******************************************************************************
@@ -73,6 +91,8 @@ void CommSeqThread::threadInitFunction()
 
 void CommSeqThread::threadExitFunction()
 {
+   // Shutdown the child thread
+   mSerialStringThread->shutdownThread();
 }
 
 //******************************************************************************
@@ -92,16 +112,35 @@ void CommSeqThread::shutdownThreads()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Abort a running grid or script qcall.
+// Abort a running grid or test qcall.
 //
 void CommSeqThread::executeAbort()
 {
-   Prn::print(Prn::View01, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-   Prn::print(Prn::View01, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-   Prn::print(Prn::View01, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+   Prn::print(Prn::View11, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
    // Abort the long thread.
    BaseClass::mNotify.abort();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Session qcall function. This is invoked by the child thread when 
+// the serial port is closed because of an error or when it is reopened
+// correctly.
+
+void CommSeqThread::executeSession(bool aConnected)
+{
+   if (aConnected)
+   {
+      Prn::print(0, "CommSeqThread serial port open  CONNECTED");
+   }
+   else
+   {
+      Prn::print(0, "CommSeqThread serial port error DISCONNECTED");
+   }
+
+   mConnectionFlag = aConnected;
 }
 
 //******************************************************************************

@@ -1,5 +1,5 @@
 /*==============================================================================
-Description:
+Detestion:
 ==============================================================================*/
 
 //******************************************************************************
@@ -8,8 +8,8 @@ Description:
 
 #include "stdafx.h"
 
-
 #include "cmnProgramParms.h"
+
 #include "acmCommSeqThread.h"
 
 namespace ACM
@@ -18,45 +18,61 @@ namespace ACM
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
+// Acquire function. This is bound to the qcall. It runs a periodic
+// acm data acquisition sequence.
 
 void CommSeqThread::executeAcquire()
 {
-   // Print and log.
-   Prn::print(Prn::View11, "");
-   Prn::print(0, "acquiring**********************************");
-   Prn::print(Prn::View11, "acquiring**********************************");
+   Prn::print(Prn::View11, "CommSeqThread::executeAcquire BEGIN");
 
-   // Initialize variables.
-   mLoopExitCode = 0;
-
-   // Open the script file.
-   mReadCount = 0;
+   mLoopExitCode = cLoopExitNormal;
 
    try
    {
-      // Loop through the script file.
+      // Loop to transmit and receive.
       while (true)
       {
-         mReadCount++;
-
          // Test for a notification exception.
          mNotify.testException();
 
-         Prn::print(Prn::View11, "acquire %d", mReadCount);
+         // Set the thread notification mask.
+         mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
 
-         // Delay.
+         char tString[200];
+         sprintf(tString, "T");
+
+         // Send a command.
+         // sendString(Cmn::gProgramParms.mTxCommand);
+         sendString(tString);
+
+         // Wait for the acknowledgement notification.
+//       mNotify.wait(cCmdAckTimeout);
+
+         // Loop delay.
          mNotify.waitForTimer(Cmn::gProgramParms.mDelay);
-
       }
    }
-   catch (int aException)
+   catch(int aException)
    {
       mLoopExitCode = cLoopExitAborted;
-      Prn::print(0, "EXCEPTION CommSeqThread::executeAcquire %d %s", aException, mNotify.mException);
+      Prn::print(0, "EXCEPTION CommSeqThread::executeRunTest1 %d %s", aException, mNotify.mException);
    }
+
+
+   // Test the exit code.
+   if (mLoopExitCode == cLoopExitNormal)
+   {
+      // Print and log.
+      Prn::print(0, "acquire done");
+      Prn::print(0, "");
+   }
+   else if (mLoopExitCode == cLoopExitAborted)
+   {
+      // Print and log.
+      Prn::print(0, "acquire aborted");
+   }
+
+   Prn::print(Prn::View11, "CommSeqThread::executeAcquire END");
 }
 
 //******************************************************************************
