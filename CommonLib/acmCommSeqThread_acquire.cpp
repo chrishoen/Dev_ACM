@@ -55,17 +55,14 @@ void CommSeqThread::executeAcquire()
          mNotify.wait(cCmdAckTimeout);
 
          // Read the receive string from the queue.
-#if 0
          if (std::string* tRxString = mRxStringQueue.tryRead())
          {
-            Prn::print(Prn::View11, "RxQueue NOT EMPTY");
-            //delete tRxString;
+            delete tRxString;
          }
          else
          {
             Prn::print(Prn::View11, "RxQueue EMPTY");
          }
-#endif
       }
    }
    catch(int aException)
