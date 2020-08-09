@@ -10,7 +10,7 @@
 #include "risThreadsTwoThread.h"
 #include "risThreadsSynch.h"
 #include "risThreadsWaitable.h"
-#include "risSRSWValueQueue.h"
+#include "risSRSWPointerQueue.h"
 #include "risSerialStringThread.h"
 
 namespace ACM
@@ -58,7 +58,7 @@ public:
 
    // Receive string queue. Strings are received at the short thread
    // and processed in the long thread.
-   Ris::SRSWValueQueue<std::string*, 100> mRxStringQueue;
+   Ris::SRSWPointerQueue<std::string*, 100> mRxStringQueue;
 
    //***************************************************************************
    //***************************************************************************
