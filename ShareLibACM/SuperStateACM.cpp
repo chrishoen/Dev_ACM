@@ -13,13 +13,11 @@
 void SuperStateACM::initialize()
 {
 	mForwardPower_kw = 0.0;
-	mForwardPower_dbm = 0.0;
 	mReflectedPower_kw = 0.0;
-	mReflectedPower_dbm = 0.0;
 	mVSWR = 0.0;
 	mReturnLoss_db = 0.0;
 	mRho = 0.0;
-	mEfficiency_percent = 0.0;
+	mEfficiency_pct = 0.0;
 
    mAlarmFlag = false;
    mAlarmOnZeroPower = false;
@@ -32,14 +30,12 @@ void SuperStateACM::initialize()
 
 void SuperStateACM::show(int aPF)
 {
-	Prn::print(aPF, "ForwardPower_kw      %10.2f", mForwardPower_kw);
-   Prn::print(aPF, "ForwardPower_dbm     %10.2f", mForwardPower_dbm);
-	Prn::print(aPF, "ReflectedPower_kw    %10.2f", mReflectedPower_kw);
-   Prn::print(aPF, "ReflectedPower_dbm   %10.2f", mReflectedPower_dbm);
+	Prn::print(aPF, "ForwardPower_kw      %10.3f", mForwardPower_kw);
+	Prn::print(aPF, "ReflectedPower_kw    %10.3f", mReflectedPower_kw);
 	Prn::print(aPF, "VSWR                 %10.2f", mVSWR);
 	Prn::print(aPF, "ReturnLoss_db        %10.2f", mReturnLoss_db);
 	Prn::print(aPF, "Rho                  %10.2f", mRho);
-	Prn::print(aPF, "Efficiency_percent   %10.2f", mEfficiency_percent);
+	Prn::print(aPF, "Efficiency_pct       %10.2f", mEfficiency_pct);
 	Prn::print(aPF, "AlarmFlag            %10s", my_string_from_bool(mAlarmFlag));
 	Prn::print(aPF, "AlarmOnZeroPower     %10s", my_string_from_bool(mAlarmOnZeroPower));
 }
@@ -52,7 +48,12 @@ void SuperStateACM::show(int aPF)
 
 bool SuperStateACM::updateForT(std::string* aResponse)
 {
-	// >000.0,00.00A1
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+   // Extract some variables from the input response string.
+
+   // >000.0,00.00A1
 	// 012345678901234
 	// 000.0,00.00A1
 
@@ -62,8 +63,8 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	if (tBuffer[0] == '>') tBuffer++;
 
 	// Temp variables to be extracted from the response string.
-	float tForwardPower = -1;
-	float tReflectedPower = -1;
+	float tForwardPower_w = -1;
+	float tReflectedPower_w = -1;
 	char  tAlarmChar = 'z';
 	int   tAlarmOnZeroPower = 9;
 	int   tRet = 0;
@@ -73,8 +74,8 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	//
 	// Guard.
 	if ((tBuffer[3] != '.') ||
-		(tBuffer[5] != ',') ||
-		(tBuffer[13] != 0)
+       (tBuffer[5] != ',') ||
+		 (tBuffer[13] != 0)
 		)
 	{
 		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 101");
@@ -83,8 +84,8 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 
 	// Read from response string into temp variables.
 	tRet = sscanf(tBuffer, "%f,%f%c%d",
-		&tForwardPower,
-		&tReflectedPower,
+		&tForwardPower_w,
+		&tReflectedPower_w,
 		&tAlarmChar,
 		&tAlarmOnZeroPower);
 
@@ -96,11 +97,46 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	}
 
 	// Copy temp variables to member variables. 
-	mForwardPower_kw   = tForwardPower;
-	mReflectedPower_kw = tReflectedPower;
+	mForwardPower_kw   = tForwardPower_w;
+	mReflectedPower_kw = tReflectedPower_w;
 	mAlarmFlag = tAlarmChar == 'A';
 	mAlarmOnZeroPower = tAlarmOnZeroPower == 1;
 
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+	// Calculate some more variables from the extracted variables.
+
+	// Guard.
+	if (my_closeto(tForwardPower_w, 0.0,0.000001))
+	{
+		// ff zero then error
+		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 201");
+		return false;
+	}
+
+	// Guard.
+	if (tForwardPower_w <= tReflectedPower_w)
+	{
+		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 202");
+		return false;
+	}
+
+	// Calculate some member variables.
+	mForwardPower_kw = tForwardPower_w/1000.0;
+	mReflectedPower_kw = tReflectedPower_w/1000.0;
+
+	// Calculate some member variables.
+	float tGamma = sqrt(tReflectedPower_w / tForwardPower_w);
+	mVSWR = (1.0 + tGamma) / (1.0 - tGamma);
+	mReturnLoss_db = -20.0 * log(tGamma);
+	mRho = tGamma;
+	mEfficiency_pct = (tForwardPower_w - tReflectedPower_w) / tForwardPower_w;
+
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
 	// Done.
+
 	return true;
 }

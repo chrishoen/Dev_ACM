@@ -42,13 +42,11 @@ public:
 	
 	// Measurement variables.
 	float  mForwardPower_kw;
-	float  mForwardPower_dbm;
 	float  mReflectedPower_kw;
-	float  mReflectedPower_dbm;
 	float  mVSWR;
 	float  mReturnLoss_db;
 	float  mRho;
-	float  mEfficiency_percent;
+	float  mEfficiency_pct;
 
 	// Alarm variables.
 	bool   mAlarmFlag;
