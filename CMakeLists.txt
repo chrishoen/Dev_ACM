@@ -12,6 +12,7 @@ my_init_global_import_variables()
 add_subdirectory ("CommonLib")
 add_subdirectory ("ShareLibACM")
 add_subdirectory ("acmproc")
+add_subdirectory ("Test")
 return()
 
 add_subdirectory ("Test")

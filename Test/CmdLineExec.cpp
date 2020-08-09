@@ -44,9 +44,24 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   Prn::print(0, "GO1");
-   Prn::print(Prn::View11, "GO1");
-   Prn::print(Prn::View12, "GO1");
+   char tBuffer[64];
+   strcpy(tBuffer, ">000.0,00.00 0");
+   strcpy(tBuffer, "123.4,12.34,2");
+   strcpy(tBuffer, ">123.4,12.34 1");
+   float tForwardPower = -1;
+   float tReflectedPower = -1;
+   int   tAlarmCode = -1;
+   int tRet = 0;
+
+   tRet = sscanf(tBuffer, ">%f,%f %d",
+      &tForwardPower,
+      &tReflectedPower,
+      &tAlarmCode);
+
+   Prn::print(0, "tRet              %d",    tRet);
+   Prn::print(0, "tForwardPower     %5.1f", tForwardPower);
+   Prn::print(0, "tReflectedPower   %5.2f", tReflectedPower);
+   Prn::print(0, "tAlarmCode        %1d",   tAlarmCode);
 }
 
 //******************************************************************************

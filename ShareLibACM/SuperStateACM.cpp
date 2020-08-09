@@ -39,3 +39,33 @@ void SuperStateACM::show(int aPF)
 	Prn::print(aPF, "mEfficiency_percent   %10.2f", mEfficiency_percent);
 }
 
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Update some variables by decoding a received response string from a
+// sent command. 
+
+bool SuperStateACM::updateForT(std::string* aResponse)
+{
+	// 012345678901234
+	// >000.0,00.00 0
+	const char* tResponse = aResponse->c_str();
+	char tTemp[10];
+
+	// Guard.
+	if (tResponse[0]  != '>') return false;
+	if (tResponse[4]  != '.') return false;
+	if (tResponse[6]  != ',') return false;
+	if (tResponse[6]  != ' ') return false;
+	if (tResponse[14] != 0)   return false;
+
+	// Decode.
+	tTemp[0] = tResponse[1];
+	tTemp[1] = tResponse[2];
+	tTemp[2] = tResponse[3];
+	tTemp[3] = tResponse[4];
+	tTemp[4] = tResponse[5];
+	tTemp[5] = 0;
+	mForwardPower_kw = atof(tTemp);;
+}
+
