@@ -9,7 +9,7 @@ Detestion:
 #include "stdafx.h"
 
 #include "cmnProgramParms.h"
-
+#include "smShare.h"
 #include "acmCommSeqThread.h"
 
 namespace ACM
@@ -57,6 +57,7 @@ void CommSeqThread::executeAcquire()
          // Read the receive string from the queue.
          if (std::string* tRxString = mRxStringQueue.tryRead())
          {
+            SM::gShare->mSuperStateACM.updateForT(tRxString);
             delete tRxString;
          }
          else

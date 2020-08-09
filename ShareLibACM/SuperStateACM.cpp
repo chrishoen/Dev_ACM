@@ -20,6 +20,9 @@ void SuperStateACM::initialize()
 	mReturnLoss_db = 0.0;
 	mRho = 0.0;
 	mEfficiency_percent = 0.0;
+
+   mAlarmFlag = false;
+   mAlarmOnZeroPower = false;
 }
 
 //******************************************************************************
@@ -29,14 +32,16 @@ void SuperStateACM::initialize()
 
 void SuperStateACM::show(int aPF)
 {
-	Prn::print(aPF, "mForwardPower_kw      %10.2f", mForwardPower_kw);
-   Prn::print(aPF, "mForwardPower_dbm     %10.2f", mForwardPower_dbm);
-	Prn::print(aPF, "mReflectedPower_kw    %10.2f", mReflectedPower_kw);
-   Prn::print(aPF, "mReflectedPower_dbm   %10.2f", mReflectedPower_dbm);
-	Prn::print(aPF, "mVSWR                 %10.2f", mVSWR);
-	Prn::print(aPF, "mReturnLoss_db        %10.2f", mReturnLoss_db);
-	Prn::print(aPF, "mRho                  %10.2f", mRho);
-	Prn::print(aPF, "mEfficiency_percent   %10.2f", mEfficiency_percent);
+	Prn::print(aPF, "ForwardPower_kw      %10.2f", mForwardPower_kw);
+   Prn::print(aPF, "ForwardPower_dbm     %10.2f", mForwardPower_dbm);
+	Prn::print(aPF, "ReflectedPower_kw    %10.2f", mReflectedPower_kw);
+   Prn::print(aPF, "ReflectedPower_dbm   %10.2f", mReflectedPower_dbm);
+	Prn::print(aPF, "VSWR                 %10.2f", mVSWR);
+	Prn::print(aPF, "ReturnLoss_db        %10.2f", mReturnLoss_db);
+	Prn::print(aPF, "Rho                  %10.2f", mRho);
+	Prn::print(aPF, "Efficiency_percent   %10.2f", mEfficiency_percent);
+	Prn::print(aPF, "AlarmFlag            %10s", my_string_from_bool(mAlarmFlag));
+	Prn::print(aPF, "AlarmOnZeroPower     %10s", my_string_from_bool(mAlarmOnZeroPower));
 }
 
 //******************************************************************************
@@ -48,24 +53,45 @@ void SuperStateACM::show(int aPF)
 bool SuperStateACM::updateForT(std::string* aResponse)
 {
 	// 012345678901234
-	// >000.0,00.00 0
-	const char* tResponse = aResponse->c_str();
-	char tTemp[10];
+	// >000.0,00.00A1
+	const char* tBuffer = aResponse->c_str();
+	float tForwardPower = -1;
+	float tReflectedPower = -1;
+	char  tAlarmChar = 'z';
+	int   tAlarmOnZeroPower = 9;
+	int   tRet = 0;
 
 	// Guard.
-	if (tResponse[0]  != '>') return false;
-	if (tResponse[4]  != '.') return false;
-	if (tResponse[6]  != ',') return false;
-	if (tResponse[6]  != ' ') return false;
-	if (tResponse[14] != 0)   return false;
+	if ((tBuffer[0] != '>') ||
+		(tBuffer[4] != '.') ||
+		(tBuffer[6] != ',') ||
+		(tBuffer[14] != 0)
+		)
+	{
+		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 101");
+		return false;
+	}
 
-	// Decode.
-	tTemp[0] = tResponse[1];
-	tTemp[1] = tResponse[2];
-	tTemp[2] = tResponse[3];
-	tTemp[3] = tResponse[4];
-	tTemp[4] = tResponse[5];
-	tTemp[5] = 0;
-	mForwardPower_kw = atof(tTemp);;
+	// Read from response string into temp variables.
+	tRet = sscanf(tBuffer, ">%f,%f%c%d",
+		&tForwardPower,
+		&tReflectedPower,
+		&tAlarmChar,
+		&tAlarmOnZeroPower);
+
+	// Guard.
+	if (tRet != 4)
+	{
+		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 102");
+		return false;
+	}
+
+	// Copy temp variables to member variables. 
+	mForwardPower_kw   = tForwardPower;
+	mReflectedPower_kw = tReflectedPower;
+	mAlarmFlag = tAlarmChar == 'A';
+	mAlarmOnZeroPower = tAlarmOnZeroPower == 1;
+
+	// Done.
+	return true;
 }
-

@@ -45,25 +45,26 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
    char tBuffer[64];
-   strcpy(tBuffer, ">000.0,00.00 0");
    strcpy(tBuffer, "123.4,12.34,2");
    strcpy(tBuffer, ">123.4,12.34A1");
+   strcpy(tBuffer, ">123.4,12.34 0");
+   strcpy(tBuffer, ">000.0,00.00 0");
    float tForwardPower = -1;
    float tReflectedPower = -1;
-   char  tAlarmCode = 'z';
+   char  tAlarmChar = 'z';
    int   tAlarmOnZeroPower =  9;
-   int tRet = 0;
+   int   tRet = 0;
 
    tRet = sscanf(tBuffer, ">%f,%f%c%d",
       &tForwardPower,
       &tReflectedPower,
-      &tAlarmCode,
+      &tAlarmChar,
       &tAlarmOnZeroPower);
 
    Prn::print(0, "tRet              %d",    tRet);
    Prn::print(0, "tForwardPower     %5.1f", tForwardPower);
    Prn::print(0, "tReflectedPower   %5.2f", tReflectedPower);
-   Prn::print(0, "tAlarmCode        %c",    tAlarmCode);
+   Prn::print(0, "tAlarmChar        %c",    tAlarmChar);
    Prn::print(0, "tAlarmOnZeroPower %1d",   tAlarmOnZeroPower);
 }
 
