@@ -52,20 +52,29 @@ void SuperStateACM::show(int aPF)
 
 bool SuperStateACM::updateForT(std::string* aResponse)
 {
-	// 012345678901234
 	// >000.0,00.00A1
+	// 012345678901234
+	// 000.0,00.00A1
+
+	// Point to the first char in the response string. 
+	// If it is a '>' then advance by one char to ignore it.
 	const char* tBuffer = aResponse->c_str();
+	if (tBuffer[0] == '>') tBuffer++;
+
+	// Temp variables to be extracted from the response string.
 	float tForwardPower = -1;
 	float tReflectedPower = -1;
 	char  tAlarmChar = 'z';
 	int   tAlarmOnZeroPower = 9;
 	int   tRet = 0;
 
+	// 012345678901234
+	// 000.0,00.00A1
+	//
 	// Guard.
-	if ((tBuffer[0] != '>') ||
-		(tBuffer[4] != '.') ||
-		(tBuffer[6] != ',') ||
-		(tBuffer[14] != 0)
+	if ((tBuffer[3] != '.') ||
+		(tBuffer[5] != ',') ||
+		(tBuffer[13] != 0)
 		)
 	{
 		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 101");
@@ -73,7 +82,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	}
 
 	// Read from response string into temp variables.
-	tRet = sscanf(tBuffer, ">%f,%f%c%d",
+	tRet = sscanf(tBuffer, "%f,%f%c%d",
 		&tForwardPower,
 		&tReflectedPower,
 		&tAlarmChar,
