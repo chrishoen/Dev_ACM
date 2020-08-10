@@ -122,6 +122,10 @@ public:
 	// Show.
 	void show(int aPrintFilter = 0);
 
+	// Return true if any settings variable qx has a request or is pending.
+	bool isAnyQxRequest();
+	bool isAnyQxPending();
+
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
