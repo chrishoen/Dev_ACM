@@ -142,6 +142,22 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Methods.
+
+   // Send a null terminated string via the serial port. A newline terminator
+   // is appended to the string before transmission. This executes in the
+   // context of the The calling thread.
+   void sendString(const char* aString);
+
+   // Send a null terminated string via the serial port. A newline terminator
+   // is appended to the string before transmission. This executes in the
+   // context of the The calling thread. The string is deleted after
+   // transmission.
+   void sendString(std::string* aString);
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Methods. qcalls.
 
    // Acquire. It is invoked by the command line executive.
@@ -167,18 +183,32 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Methods.
+   // Methods. qcalls.
 
-   // Send a null terminated string via the serial port. A newline terminator
-   // is appended to the string before transmission. This executes in the
-   // context of the The calling thread.
-   void sendString(const char* aString);
+   // Send super settings. It is invoked by the short thread.
+   Ris::Threads::QCall0 mSendSettingsQCall;
 
-   // Send a null terminated string via the serial port. A newline terminator
-   // is appended to the string before transmission. This executes in the
-   // context of the The calling thread. The string is deleted after
-   // transmission.
-   void sendString(std::string* aString);
+   // Send super settings function. This is bound to the qcall. Polls the
+   // super settings and for any settings variable that has pending1, send 
+   // a corresponding command to the acm to set the variable and then send 
+   // a command to read the variable as verification.
+   void executeSendSettings();
+
+   // Send for individual settings variables. These is called by the above
+   // function.
+   void sendLowPowerThresh_pct();
+   void sendLowPowerAlarmEnable();
+   void sendHighPowerThresh_pct();
+   void sendHighPowerAlarmEnable();
+   void sendGain();
+   void sendLatchAlarmEnable();
+   void sendPowerUpAlarmEnable();
+   void sendRelayOnPowerEnable();
+   void sendRelayOnVSWREnable();
+   void sendCheckVSWROnZeroEnable();
+   void sendPTTDelay_sec();
+   void sendPTTAlarmEnable();
+
 
 };
 

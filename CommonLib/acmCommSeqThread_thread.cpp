@@ -43,10 +43,11 @@ CommSeqThread::CommSeqThread()
    BaseClass::mShortThread->mThreadExecuteOnTimerCallPointer = std::bind(&CommSeqThread::executeOnTimer, this, _1);
 
    // Set qcalls.
-   mAcquireQCall.bind   (this->mLongThread, this, &CommSeqThread::executeAcquire);
-   mAbortQCall.bind     (this->mShortThread, this, &CommSeqThread::executeAbort);
-   mSessionQCall.bind   (this->mShortThread, this, &CommSeqThread::executeSession);
-   mRxStringQCall.bind  (this->mShortThread, this, &CommSeqThread::executeRxString);
+   mSessionQCall.bind       (this->mShortThread, this, &CommSeqThread::executeSession);
+   mRxStringQCall.bind      (this->mShortThread, this, &CommSeqThread::executeRxString);
+   mAcquireQCall.bind       (this->mLongThread, this, &CommSeqThread::executeAcquire);
+   mAbortQCall.bind         (this->mShortThread, this, &CommSeqThread::executeAbort);
+   mSendSettingsQCall.bind  (this->mLongThread, this, &CommSeqThread::executeSendSettings);
 
    // Set member variables.
    mLoopExitCode = 0;
