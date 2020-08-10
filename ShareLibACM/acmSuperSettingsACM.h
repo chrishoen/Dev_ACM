@@ -36,7 +36,6 @@ public:
 	int mValidFlag;
 
 	// Test variables.
-	// Test variables.
 	int    mCount;
 	int    mCode;
 
@@ -98,9 +97,9 @@ public:
 	int    mQxRelayOnVSWREnable;
 
 	// Check VSWR on zero power.
-	bool   mTxCheckVSWROnZeroPower;
-	bool   mRxCheckVSWROnZeroPower;
-	int    mQxCheckVSWROnZeroPower;
+	bool   mTxCheckVSWROnZeroEnable;
+	bool   mRxCheckVSWROnZeroEnable;
+	int    mQxCheckVSWROnZeroEnable;
 
 	// PTT delay.
 	float  mTxPTTDelay_sec;
@@ -128,10 +127,19 @@ public:
 	//***************************************************************************
 	// Methods.
 
-	// Request the setting of want variables. 
-	void requestThreshHighPower(float aValue);
-	void requestThreshLowPower(float aValue);
-	void requestThreshVSWR(float aValue);
+	// Request the setting of settings variables. 
+	void requestLowPowerThresh_pct(float aValue);
+	void requestLowPowerAlarmEnable(bool aValue);
+	void requestHighPowerThresh_pct(float aValue);
+	void requestHighPowerAlarmEnable(bool aValue);
+	void requestGain(int aForward, int aReverse);
+	void requestLatchAlarmEnable(bool aValue);
+	void requestPowerUpAlarmEnable(bool aValue);
+	void requestRelayOnPowerEnable(bool aValue);
+	void requestRelayOnVSWREnable(bool aValue);
+	void requestCheckVSWROnZeroEnable(bool aValue);
+	void requestPTTDelay_sec(float aValue);
+	void requestPTTAlarmEnable(bool aValue);
 };
 
 //******************************************************************************

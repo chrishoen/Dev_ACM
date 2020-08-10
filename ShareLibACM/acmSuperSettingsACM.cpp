@@ -68,9 +68,9 @@ void SuperSettingsACM::initialize()
 	mQxRelayOnVSWREnable = 0;
 
 	// Check VSWR on zero power.
-	mTxCheckVSWROnZeroPower = false;
-	mRxCheckVSWROnZeroPower = false;
-	mQxCheckVSWROnZeroPower = 0;
+	mTxCheckVSWROnZeroEnable = false;
+	mRxCheckVSWROnZeroEnable = false;
+	mQxCheckVSWROnZeroEnable = 0;
 
 	// PTT delay.
 	mTxPTTDelay_sec = 0.0;
@@ -148,9 +148,9 @@ void SuperSettingsACM::show(int aPF)
 
 	// Check VSWR on zero power.
 	Prn::print(aPF, "CheckVSWROnZeroPowerEnable   %10s %10s %10s",
-		my_string_from_bool(mTxCheckVSWROnZeroPower),
-		my_string_from_bool(mRxCheckVSWROnZeroPower),
-		asString_Qx(mQxCheckVSWROnZeroPower));
+		my_string_from_bool(mTxCheckVSWROnZeroEnable),
+		my_string_from_bool(mRxCheckVSWROnZeroEnable),
+		asString_Qx(mQxCheckVSWROnZeroEnable));
 
 	// PTT delay.
 	Prn::print(aPF, "PTTDelay_sec                 %10.2f %10.2f %10s",
@@ -171,16 +171,6 @@ void SuperSettingsACM::show(int aPF)
 //******************************************************************************
 // Show.
 // Request the setting of want variables. 
-
-void SuperSettingsACM::requestThreshLowPower(float aValue)
-{
-}
-void SuperSettingsACM::requestThreshHighPower(float aValue)
-{
-}
-void SuperSettingsACM::requestThreshVSWR(float aValue)
-{
-}
 
 //******************************************************************************
 //******************************************************************************
