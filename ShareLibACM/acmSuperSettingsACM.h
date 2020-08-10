@@ -1,7 +1,7 @@
 #pragma once
 
 /*==============================================================================
-ACM super state structs.
+ACM super settings.
 ==============================================================================*/
 
 //******************************************************************************
@@ -20,7 +20,7 @@ namespace ACM
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This class contains a set of variables that encapculate the super wants
+// This class contains a set of variables that encapculate the super settings
 // for an ACM. These are sent from the user (web page) to acmproc. They reflect 
 // variables that the user wants to set for the ACM.
 
@@ -45,25 +45,77 @@ public:
 	//***************************************************************************
 	// Members.
 
-	// Wants variables.
-	// value wanted.
-	// request flag. If true then the want value is requested.
-	// ack code, none, ack, nak. This is set after the want is verified.
+	// Settings variables.
+	// mTxVariable   the settings transmitted to    the acm
+	// mRxVariable   the settings received    from  the acm
+	// mQxVariable   the request code: none, request, pending, ack, nak
 
-	// Wants variables.
-	float  mThreshHighPower_kw;
-	bool   mThreshHighPower_Req;
-	int    mThreshHighPower_Ack;
+	// Low power threshold.
+	float  mTxLowPowerThresh_pct;
+	float  mRxLowPowerThresh_pct;
+	int    mQxLowPowerThresh_pct;
 
-	// Wants variables.
-	float  mThreshLowPower_kw;
-	bool   mThreshLowPower_Req;
-	int    mThreshLowPower_Ack;
+	// Low power alarm.
+	bool   mTxLowPowerAlarmEnable;
+	bool   mRxLowPowerAlarmEnable;
+	int    mQxLowPowerAlarmEnable;
 
-	// Wants variables.
-	float  mThreshVSWR;
-	bool   mThreshVSWR_Req;
-	int    mThreshVSWR_Ack;
+	// High power threshold.
+	float  mTxHighPowerThresh_pct;
+	float  mRxHighPowerThresh_pct;
+	int    mQxHighPowerThresh_pct;
+
+	// High power alarm.
+	bool   mTxHighPowerAlarmEnable;
+	bool   mRxHighPowerAlarmEnable;
+	int    mQxHighPowerAlarmEnable;
+
+	// Gain.
+	int    mTxForwardGain;
+	int    mTxReverseGain;
+	int    mRxForwardGain;
+	int    mRxReverseGain;
+	int    mQxGain;
+
+	// Latch alarm enable.
+	bool   mTxLatchAlarmEnable;
+	bool   mRxLatchAlarmEnable;
+	int    mQxLatchAlarmEnable;
+
+	// Power up alarm enable.
+	bool   mTxPowerUpAlarmEnable;
+	bool   mRxPowerUpAlarmEnable;
+	int    mQxPowerUpAlarmEnable;
+
+	// Relay energize on power alarm enable.
+	bool   mTxRelayOnPowerAlarmEnable;
+	bool   mRxRelayOnPowerAlarmEnable;
+	int    mQxRelayOnPowerAlarmEnable;
+
+	// Relay energize on VSWR alarm enable.
+	bool   mTxRelayOnVSWRAlarmEnable;
+	bool   mRxRelayOnVSWRAlarmEnable;
+	int    mQxRelayOnVSWRAlarmEnable;
+
+	// Check VSWR on zero power.
+	bool   mTxCheckVSWROnZeroPower;
+	bool   mRxCheckVSWROnZeroPower;
+	int    mQxCheckVSWROnZeroPower;
+
+	// VSWR pull down box settings.
+	int    mTxVSWRPullDownBox;
+	int    mRxVSWRPullDownBox;
+	int    mQxVSWRPullDownBox;
+
+	// PTT delay.
+	float  mTxPTTDelay;
+	float  mRxPTTDelay;
+	int    mQxPTTDelay;
+
+	// PTT alarm.
+	bool   mTxPTTAlarmEnable;
+	bool   mRxPTTAlarmEnable;
+	int    mQxPTTAlarmEnable;
 
 	//***************************************************************************
 	//***************************************************************************
