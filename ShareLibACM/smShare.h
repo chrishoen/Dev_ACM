@@ -10,8 +10,8 @@ Shared memory region.
 
 #include "risSRSWStringQueue.h"
 
-#include "SuperStateACM.h"
-#include "SuperWantsACM.h"
+#include "acmSuperStateACM.h"
+#include "acmSuperSettingsACM.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -63,7 +63,7 @@ public:
 
    // Super state variables.
    SuperStateACM mSuperStateACM;
-   SuperWantsACM mSuperWantsACM;
+   SuperSettingsACM mSuperSettingsACM;
 
    // Event notification queue.
    Ris::SRSWStringQueue<200, 100> mEventNotifyQueue;

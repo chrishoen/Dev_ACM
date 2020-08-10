@@ -8,16 +8,19 @@ ACM super state structs.
 //******************************************************************************
 //******************************************************************************
 
-#include "SuperStateDefs.h"
+#include <string>
+#include "acmSuperDefs.h"
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This class contains a set of variables that encapculate the super wants
-// for an ACM. These are sent from the user (web page) to acmproc. They reflect 
-// variables that the user wants to set for the ACM.
+// This contains a set of variables that encapculate the super state
+// for an ACM. These are variables that are sent from a ACM to acmproc.
+// These variables reflect the state of a ACM.
+//
+// This class is designed such that instances will reside in shared memory. 
 
-class SuperWantsACM
+class SuperStateACM
 {
 public:
 	//***************************************************************************
@@ -29,34 +32,25 @@ public:
 	int mValidFlag;
 
 	// Test variables.
-	// Test variables.
-	int    mCount;
-	int    mCode;
+	int mCount;
+	int mCode;
 
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
 	// Members.
+	
+	// Measurement variables.
+	float  mForwardPower_kw;
+	float  mReflectedPower_kw;
+	float  mVSWR;
+	float  mReturnLoss_db;
+	float  mRho;
+	float  mEfficiency_pct;
 
-	// Wants variables.
-	// value wanted.
-	// request flag. If true then the want value is requested.
-	// ack code, none, ack, nak. This is set after the want is verified.
-
-	// Wants variables.
-	float  mThreshHighPower_kw;
-	bool   mThreshHighPower_Req;
-	int    mThreshHighPower_Ack;
-
-	// Wants variables.
-	float  mThreshLowPower_kw;
-	bool   mThreshLowPower_Req;
-	int    mThreshLowPower_Ack;
-
-	// Wants variables.
-	float  mThreshVSWR;
-	bool   mThreshVSWR_Req;
-	int    mThreshVSWR_Ack;
+	// Alarm variables.
+	bool   mAlarmFlag;
+	bool   mAlarmOnZeroPower;
 
 	//***************************************************************************
 	//***************************************************************************
@@ -74,10 +68,9 @@ public:
 	//***************************************************************************
 	// Methods.
 
-	// Request the setting of want variables. 
-	void requestThreshHighPower(float aValue);
-	void requestThreshLowPower(float aValue);
-	void requestThreshVSWR(float aValue);
+	// Update some variables by decoding a received response string from a
+	// sent command. 
+	bool updateForT(std::string* aResponse);
 };
 
 //******************************************************************************

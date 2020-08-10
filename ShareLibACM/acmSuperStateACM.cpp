@@ -3,7 +3,7 @@
 //******************************************************************************
 #include "stdafx.h"
 
-#include "SuperStateACM.h"
+#include "acmSuperStateACM.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -78,7 +78,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 		 (tBuffer[13] != 0)
 		)
 	{
-		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 101");
+		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 101");
 		return false;
 	}
 
@@ -92,7 +92,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	// Guard.
 	if (tRet != 4)
 	{
-		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 102");
+		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 102");
 		return false;
 	}
 
@@ -111,14 +111,14 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	if (my_closeto(tForwardPower_w, 0.0,0.000001))
 	{
 		// ff zero then error
-		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 201");
+		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 201");
 		return false;
 	}
 
 	// Guard.
 	if (tForwardPower_w <= tReflectedPower_w)
 	{
-		Prn::print(Prn::View21, "SuperStateACM::updateForT ERROR 202");
+		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 202");
 		return false;
 	}
 

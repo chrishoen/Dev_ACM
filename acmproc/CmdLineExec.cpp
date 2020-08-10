@@ -111,7 +111,7 @@ void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
    }
    else if (aCmd->isArgString(1, "W"))
    {
-      SM::gShare->mSuperWantsACM.show();
+      SM::gShare->mSuperSettingsACM.show();
    }
 }
 

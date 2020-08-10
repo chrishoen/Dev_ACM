@@ -36,7 +36,7 @@ void Share::initialize()
    mX4 = 104;
 
    mSuperStateACM.initialize();
-   mSuperWantsACM.initialize();
+   mSuperSettingsACM.initialize();
 
    mEventNotifyQueue.initialize();
 }
@@ -63,7 +63,7 @@ void Share::show2()
 void Share::showACM()
 {
    mSuperStateACM.show();
-   mSuperWantsACM.show();
+   mSuperSettingsACM.show();
 }
 
 //******************************************************************************
