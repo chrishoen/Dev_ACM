@@ -90,10 +90,26 @@ void SuperSettingsACM::initialize()
 
 void SuperSettingsACM::show(int aPF)
 {
-	Prn::print(aPF, "LowPowerThresh       %10.2f %10.2f %10s",
+	Prn::print(aPF, "LowPowerThresh          %10.2f %10.2f %10s",
 	   mTxLowPowerThresh_pct,
 	   mRxLowPowerThresh_pct,
 		asString_Qx(mQxLowPowerThresh_pct));
+
+	Prn::print(aPF, "LowPowerAlarmEnable     %10s %10s %10s",
+		my_string_from_bool(mTxLowPowerAlarmEnable),
+		my_string_from_bool(mRxLowPowerAlarmEnable),
+		asString_Qx(mQxLowPowerAlarmEnable));
+
+	Prn::print(aPF, "HighPowerThresh         %10.2f %10.2f %10s",
+		mTxHighPowerThresh_pct,
+		mRxHighPowerThresh_pct,
+		asString_Qx(mQxHighPowerThresh_pct));
+
+	Prn::print(aPF, "HighPowerAlarmEnable    %10s %10s %10s",
+		my_string_from_bool(mTxHighPowerAlarmEnable),
+		my_string_from_bool(mRxHighPowerAlarmEnable),
+	asString_Qx(mQxHighPowerAlarmEnable));
+
 }
 
 //******************************************************************************
@@ -102,10 +118,10 @@ void SuperSettingsACM::show(int aPF)
 // Show.
 // Request the setting of want variables. 
 
-void SuperSettingsACM::requestThreshHighPower(float aValue)
+void SuperSettingsACM::requestThreshLowPower(float aValue)
 {
 }
-void SuperSettingsACM::requestThreshLowPower(float aValue)
+void SuperSettingsACM::requestThreshHighPower(float aValue)
 {
 }
 void SuperSettingsACM::requestThreshVSWR(float aValue)
