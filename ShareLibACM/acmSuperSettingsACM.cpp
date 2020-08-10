@@ -169,8 +169,69 @@ void SuperSettingsACM::show(int aPF)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Show.
-// Request the setting of want variables. 
+// Request the setting of settings variables. 
+
+void SuperSettingsACM::requestLowPowerThresh_pct(float aValue)
+{
+	mTxLowPowerThresh_pct = aValue;
+	mQxLowPowerThresh_pct = cQx_Request;
+}
+void SuperSettingsACM::requestLowPowerAlarmEnable(bool aValue)
+{
+	mTxLowPowerAlarmEnable = aValue;
+	mQxLowPowerAlarmEnable = cQx_Request;
+}
+void SuperSettingsACM::requestHighPowerThresh_pct(float aValue)
+{
+	mTxHighPowerThresh_pct = aValue;
+	mQxHighPowerThresh_pct = cQx_Request;
+}
+void SuperSettingsACM::requestHighPowerAlarmEnable(bool aValue)
+{
+	mTxHighPowerAlarmEnable = aValue;
+	mQxHighPowerAlarmEnable = cQx_Request;
+}
+void SuperSettingsACM::requestGain(int aForward, int aReverse)
+{
+	mTxForwardGain = aForward;
+	mTxReverseGain = aReverse;
+	mQxGain = cQx_Request;
+}
+void SuperSettingsACM::requestLatchAlarmEnable(bool aValue)
+{
+	mTxLatchAlarmEnable = aValue;
+	mQxLatchAlarmEnable = cQx_Request;
+}
+void SuperSettingsACM::requestPowerUpAlarmEnable(bool aValue)
+{
+	mTxPowerUpAlarmEnable = aValue;
+	mQxPowerUpAlarmEnable = cQx_Request;
+}
+void SuperSettingsACM::requestRelayOnPowerEnable(bool aValue)
+{
+	mTxRelayOnPowerEnable = aValue;
+	mQxRelayOnPowerEnable = cQx_Request;
+}
+void SuperSettingsACM::requestRelayOnVSWREnable(bool aValue)
+{
+	mTxRelayOnVSWREnable = aValue;
+	mQxRelayOnVSWREnable = cQx_Request;
+}
+void SuperSettingsACM::requestCheckVSWROnZeroEnable(bool aValue)
+{
+	mTxCheckVSWROnZeroEnable = aValue;
+	mQxCheckVSWROnZeroEnable = cQx_Request;
+}
+void SuperSettingsACM::requestPTTDelay_sec(float aValue)
+{
+	mTxPTTDelay_sec = aValue;
+	mQxPTTDelay_sec = cQx_Request;
+}
+void SuperSettingsACM::requestPTTAlarmEnable(bool aValue)
+{
+	mTxPTTAlarmEnable = aValue;
+	mQxPTTAlarmEnable = cQx_Request;
+}
 
 //******************************************************************************
 //******************************************************************************
