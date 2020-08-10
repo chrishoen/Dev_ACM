@@ -17,7 +17,8 @@ const char* asString_Qx(int aOpMode)
    {
    case cQx_None: return "None";
    case cQx_Request: return "Request";
-   case cQx_Pending: return "Pending";
+   case cQx_Pending1: return "Pending1";
+   case cQx_Pending2: return "Pending2";
    case cQx_Ack: return "Ack";
    case cQx_Nak: return "Nak";
    }

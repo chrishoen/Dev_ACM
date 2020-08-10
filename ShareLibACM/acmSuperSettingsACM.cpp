@@ -86,45 +86,6 @@ void SuperSettingsACM::initialize()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Return true if any settings variable qx has a request or is pending.
-
-bool SuperSettingsACM::isAnyQxRequest()
-{
-	return 
-		mQxLowPowerThresh_pct == cQx_Request ||
-		mQxLowPowerAlarmEnable == cQx_Request ||
-		mQxHighPowerThresh_pct == cQx_Request ||
-		mQxHighPowerAlarmEnable == cQx_Request ||
-		mQxGain == cQx_Request ||
-		mQxLatchAlarmEnable == cQx_Request ||
-		mQxPowerUpAlarmEnable == cQx_Request ||
-		mQxRelayOnPowerEnable == cQx_Request ||
-		mQxRelayOnVSWREnable == cQx_Request ||
-		mQxCheckVSWROnZeroEnable == cQx_Request ||
-		mQxPTTDelay_sec == cQx_Request ||
-		mQxPTTAlarmEnable == cQx_Request;
-}
-bool SuperSettingsACM::isAnyQxPending()
-{
-	return
-		mQxLowPowerThresh_pct == cQx_Pending ||
-		mQxLowPowerAlarmEnable == cQx_Pending ||
-		mQxHighPowerThresh_pct == cQx_Pending ||
-		mQxHighPowerAlarmEnable == cQx_Pending ||
-		mQxGain == cQx_Pending ||
-		mQxLatchAlarmEnable == cQx_Pending ||
-		mQxPowerUpAlarmEnable == cQx_Pending ||
-		mQxRelayOnPowerEnable == cQx_Pending ||
-		mQxRelayOnVSWREnable == cQx_Pending ||
-		mQxCheckVSWROnZeroEnable == cQx_Pending ||
-		mQxPTTDelay_sec == cQx_Pending ||
-		mQxPTTAlarmEnable == cQx_Pending;
-}
-
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
 // Show.
 
 void SuperSettingsACM::show(int aPF)

@@ -31,6 +31,7 @@ CommSeqThread::CommSeqThread()
    BaseClass::mShortThread->setThreadName("CommSeqShort");
    BaseClass::mShortThread->setThreadPriority(Cmn::gPriorities.mCommSeqShort);
    BaseClass::mShortThread->setThreadPrintLevel(Cmn::gProgramParms.mCommSeqShortPrintLevel);
+   BaseClass::mShortThread->mTimerPeriod = cTimerPeriod;
 
    BaseClass::mLongThread->setThreadName("CommSeqLong");
    BaseClass::mLongThread->setThreadPriority(Cmn::gPriorities.mCommSeqLong);

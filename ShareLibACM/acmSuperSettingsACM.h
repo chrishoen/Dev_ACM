@@ -122,10 +122,6 @@ public:
 	// Show.
 	void show(int aPrintFilter = 0);
 
-	// Return true if any settings variable qx has a request or is pending.
-	bool isAnyQxRequest();
-	bool isAnyQxPending();
-
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
@@ -150,3 +146,19 @@ public:
 //******************************************************************************
 //******************************************************************************
 } //namespace
+
+
+#if 0
+mQxLowPowerThresh_pct;
+mQxLowPowerAlarmEnable;
+mQxHighPowerThresh_pct;
+mQxHighPowerAlarmEnable;
+mQxGain;
+mQxLatchAlarmEnable;
+mQxPowerUpAlarmEnable;
+mQxRelayOnPowerEnable;
+mQxRelayOnVSWREnable;
+mQxCheckVSWROnZeroEnable;
+mQxPTTDelay_sec;
+mQxPTTAlarmEnable;
+#endif

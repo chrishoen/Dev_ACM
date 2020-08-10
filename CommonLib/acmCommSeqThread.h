@@ -43,6 +43,9 @@ public:
    static const int cLoopExitNormal    = 0;
    static const int cLoopExitAborted   = 1;
 
+   // Timer period.
+   static const int cTimerPeriod = 100;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -111,6 +114,9 @@ public:
 
    // Thread shutdown function. This shuts down the two threads.
    void shutdownThreads() override;
+
+   // Thread timer function.
+   void executeOnTimer(int aTimerCount) override;
 
    //***************************************************************************
    //***************************************************************************
