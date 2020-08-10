@@ -88,14 +88,14 @@ public:
 	int    mQxPowerUpAlarmEnable;
 
 	// Relay energize on power alarm enable.
-	bool   mTxRelayOnPowerAlarmEnable;
-	bool   mRxRelayOnPowerAlarmEnable;
-	int    mQxRelayOnPowerAlarmEnable;
+	bool   mTxRelayOnPowerEnable;
+	bool   mRxRelayOnPowerEnable;
+	int    mQxRelayOnPowerEnable;
 
 	// Relay energize on VSWR alarm enable.
-	bool   mTxRelayOnVSWRAlarmEnable;
-	bool   mRxRelayOnVSWRAlarmEnable;
-	int    mQxRelayOnVSWRAlarmEnable;
+	bool   mTxRelayOnVSWREnable;
+	bool   mRxRelayOnVSWREnable;
+	int    mQxRelayOnVSWREnable;
 
 	// Check VSWR on zero power.
 	bool   mTxCheckVSWROnZeroPower;
@@ -103,9 +103,9 @@ public:
 	int    mQxCheckVSWROnZeroPower;
 
 	// PTT delay.
-	float  mTxPTTDelay;
-	float  mRxPTTDelay;
-	int    mQxPTTDelay;
+	float  mTxPTTDelay_sec;
+	float  mRxPTTDelay_sec;
+	int    mQxPTTDelay_sec;
 
 	// PTT alarm.
 	bool   mTxPTTAlarmEnable;
