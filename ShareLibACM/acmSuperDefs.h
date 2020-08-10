@@ -26,7 +26,7 @@ static const int cQx_Nak = 4;
 // Methods.
 
 // Return a variable as a string.
-char* get_Qx_asString(int aOpMode);
+const char* asString_Qx(int aOpMode);
 
 
 //******************************************************************************

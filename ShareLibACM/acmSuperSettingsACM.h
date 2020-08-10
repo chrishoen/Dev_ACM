@@ -102,11 +102,6 @@ public:
 	bool   mRxCheckVSWROnZeroPower;
 	int    mQxCheckVSWROnZeroPower;
 
-	// VSWR pull down box settings.
-	int    mTxVSWRPullDownBox;
-	int    mRxVSWRPullDownBox;
-	int    mQxVSWRPullDownBox;
-
 	// PTT delay.
 	float  mTxPTTDelay;
 	float  mRxPTTDelay;

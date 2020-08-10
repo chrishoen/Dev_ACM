@@ -3,6 +3,7 @@
 //******************************************************************************
 #include "stdafx.h"
 
+#include "acmSuperDefs.h"
 #include "acmSuperSettingsACM.h"
 
 //******************************************************************************
@@ -19,17 +20,67 @@ namespace ACM
 
 void SuperSettingsACM::initialize()
 {
-	mThreshHighPower_kw = 0.0;
-	mThreshHighPower_Req = false;
-	mThreshHighPower_Ack = 0;
+	// Low power threshold.
+	mTxLowPowerThresh_pct = 0.0;
+	mRxLowPowerThresh_pct = 0.0;
+	mQxLowPowerThresh_pct = 0;
 
-	mThreshLowPower_kw = 0.0;
-	mThreshLowPower_Req = false;
-	mThreshLowPower_Ack = 0;
+	// Low power alarm.
+	mTxLowPowerAlarmEnable = false;
+	mRxLowPowerAlarmEnable = false;
+	mQxLowPowerAlarmEnable = 0;
 
-	mThreshVSWR = 0.0;
-	mThreshVSWR_Req = false;
-	mThreshVSWR_Ack = 0;
+	// High power threshold.
+	mTxHighPowerThresh_pct = 0.0;
+	mRxHighPowerThresh_pct = 0.0;
+	mQxHighPowerThresh_pct = 0;
+
+	// High power alarm.
+	mTxHighPowerAlarmEnable = false;
+	mRxHighPowerAlarmEnable = false;
+	mQxHighPowerAlarmEnable = 0;
+
+	// Gain.
+	mTxForwardGain = 0;
+	mTxReverseGain = 0;
+	mRxForwardGain = 0;
+	mRxReverseGain = 0;
+	mQxGain = 0;
+
+	// Latch alarm enable.
+	mTxLatchAlarmEnable = false;
+	mRxLatchAlarmEnable = false;
+	mQxLatchAlarmEnable = 0;
+
+	// Power up alarm enable.
+	mTxPowerUpAlarmEnable = false;
+	mRxPowerUpAlarmEnable = false;
+	mQxPowerUpAlarmEnable = 0;
+
+	// Relay energize on power alarm enable.
+	mTxRelayOnPowerAlarmEnable = false;
+	mRxRelayOnPowerAlarmEnable = false;
+	mQxRelayOnPowerAlarmEnable = 0;
+
+	// Relay energize on VSWR alarm enable.
+	mTxRelayOnVSWRAlarmEnable = false;
+	mRxRelayOnVSWRAlarmEnable = false;
+	mQxRelayOnVSWRAlarmEnable = 0;
+
+	// Check VSWR on zero power.
+	mTxCheckVSWROnZeroPower = false;
+	mRxCheckVSWROnZeroPower = false;
+	mQxCheckVSWROnZeroPower = 0;
+
+	// PTT delay.
+	mTxPTTDelay = 0.0;
+	mRxPTTDelay = 0.0;
+	mQxPTTDelay = 0;
+
+	// PTT alarm.
+	mTxPTTAlarmEnable = false;
+	mRxPTTAlarmEnable = false;
+	mQxPTTAlarmEnable = 0;
 }
 
 //******************************************************************************
@@ -39,12 +90,10 @@ void SuperSettingsACM::initialize()
 
 void SuperSettingsACM::show(int aPF)
 {
-	Prn::print(aPF, "ThreshHighPower       %10.2f %d %d",
-		mThreshHighPower_kw, mThreshHighPower_Req, mThreshHighPower_Ack);
-	Prn::print(aPF, "ThreshLowPower        %10.2f %d %d",
-		mThreshLowPower_kw, mThreshLowPower_Req, mThreshLowPower_Ack);
-	Prn::print(aPF, "ThreshVSWR            %10.2f %d %d",
-		mThreshVSWR, mThreshVSWR_Req, mThreshVSWR_Ack);
+	Prn::print(aPF, "LowPowerThresh       %10.2f %10.2f %10s",
+	   mTxLowPowerThresh_pct,
+	   mRxLowPowerThresh_pct,
+		asString_Qx(mQxLowPowerThresh_pct));
 }
 
 //******************************************************************************
@@ -55,21 +104,12 @@ void SuperSettingsACM::show(int aPF)
 
 void SuperSettingsACM::requestThreshHighPower(float aValue)
 {
-	mThreshHighPower_kw = aValue;
-	mThreshHighPower_Ack = 0;
-	mThreshHighPower_Req = true;
 }
 void SuperSettingsACM::requestThreshLowPower(float aValue)
 {
-	mThreshLowPower_kw = aValue;
-	mThreshLowPower_Ack = 0;
-	mThreshLowPower_Req = true;
 }
 void SuperSettingsACM::requestThreshVSWR(float aValue)
 {
-	mThreshVSWR = aValue;
-	mThreshVSWR_Ack = 0;
-	mThreshVSWR_Req = true;
 }
 
 //******************************************************************************

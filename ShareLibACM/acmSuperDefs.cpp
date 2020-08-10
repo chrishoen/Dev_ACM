@@ -11,7 +11,7 @@
 //******************************************************************************
 // Return a super state variable as a string.
 
-char* get_Qx_asString(int aOpMode)
+const char* asString_Qx(int aOpMode)
 {
    switch (aOpMode)
    {

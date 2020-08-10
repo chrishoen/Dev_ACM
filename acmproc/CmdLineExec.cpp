@@ -109,7 +109,7 @@ void CmdLineExec::executeShow(Ris::CmdLineCmd* aCmd)
    {
       SM::gShare->mSuperStateACM.show();
    }
-   else if (aCmd->isArgString(1, "W"))
+   else if (aCmd->isArgString(1, "S"))
    {
       SM::gShare->mSuperSettingsACM.show();
    }
