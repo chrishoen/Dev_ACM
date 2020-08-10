@@ -25,7 +25,7 @@ namespace ACM
 
 void CommSeqThread::executeSendSettings()
 {
-   Prn::print(Prn::View11, "CommSeqThread::executeSend BEGIN");
+   Prn::print(Prn::View11, "CommSeqThread::executeSendSettings BEGIN");
 
    // Initialize the synchronization objects.
    mAcquireWaitable.initialize(Cmn::gProgramParms.mDelay);
@@ -33,6 +33,68 @@ void CommSeqThread::executeSendSettings()
 
    try
    {
+      ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+
+      if (tS->mQxLowPowerThresh_pct == cQx_Pending1)
+      {
+         sendLowPowerThresh_pct();
+      }
+
+      if (tS->mQxLowPowerAlarmEnable == cQx_Pending1)
+      {
+         sendLowPowerAlarmEnable();
+      }
+
+      if (tS->mQxHighPowerThresh_pct == cQx_Pending1)
+      {
+         sendHighPowerThresh_pct();
+      }
+
+      if (tS->mQxHighPowerAlarmEnable == cQx_Pending1)
+      {
+         sendHighPowerAlarmEnable();
+      }
+
+      if (tS->mQxGain == cQx_Pending1)
+      {
+         sendGain();
+      }
+
+      if (tS->mQxLatchAlarmEnable == cQx_Pending1)
+      {
+         sendLatchAlarmEnable();
+      }
+
+      if (tS->mQxPowerUpAlarmEnable == cQx_Pending1)
+      {
+         sendPowerUpAlarmEnable();
+      }
+
+      if (tS->mQxRelayOnPowerEnable == cQx_Pending1)
+      {
+         sendRelayOnPowerEnable();
+      }
+
+      if (tS->mQxRelayOnVSWREnable == cQx_Pending1)
+      {
+         sendRelayOnVSWREnable();
+      }
+
+      if (tS->mQxCheckVSWROnZeroEnable == cQx_Pending1)
+      {
+         sendCheckVSWROnZeroEnable();
+      }
+
+      if (tS->mQxPTTDelay_sec == cQx_Pending1)
+      {
+         sendPTTDelay_sec();
+      }
+
+      if (tS->mQxPTTAlarmEnable == cQx_Pending1)
+      {
+         sendPTTAlarmEnable();
+      }
+
    }
    catch(int aException)
    {
@@ -44,6 +106,72 @@ void CommSeqThread::executeSendSettings()
    mNotify.clearFlags();
 
    Prn::print(Prn::View11, "CommSeqThread::executeSendSettings END");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Request the setting of settings variables. 
+
+void CommSeqThread::sendLowPowerThresh_pct()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxLowPowerThresh_pct = cQx_Pending2;
+}
+void CommSeqThread::sendLowPowerAlarmEnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxLowPowerAlarmEnable = cQx_Pending2;
+}
+void CommSeqThread::sendHighPowerThresh_pct()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxHighPowerThresh_pct = cQx_Pending2;
+}
+void CommSeqThread::sendHighPowerAlarmEnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxHighPowerAlarmEnable = cQx_Pending2;
+}
+void CommSeqThread::sendGain()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxGain = cQx_Pending2;
+}
+void CommSeqThread::sendLatchAlarmEnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxLatchAlarmEnable = cQx_Pending2;
+}
+void CommSeqThread::sendPowerUpAlarmEnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxPowerUpAlarmEnable = cQx_Pending2;
+}
+void CommSeqThread::sendRelayOnPowerEnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxRelayOnPowerEnable = cQx_Pending2;
+}
+void CommSeqThread::sendRelayOnVSWREnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxRelayOnVSWREnable = cQx_Pending2;
+}
+void CommSeqThread::sendCheckVSWROnZeroEnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxCheckVSWROnZeroEnable = cQx_Pending2;
+}
+void CommSeqThread::sendPTTDelay_sec()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxPTTDelay_sec = cQx_Pending2;
+}
+void CommSeqThread::sendPTTAlarmEnable()
+{
+   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+   tS->mQxPTTAlarmEnable = cQx_Pending2;
 }
 
 //******************************************************************************

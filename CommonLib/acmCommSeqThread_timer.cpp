@@ -31,6 +31,7 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
    ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
    bool tGoing = false;
 
+   // For each settings variable, set the qx code.
    if (tS->mQxLowPowerThresh_pct == cQx_Request)
    {
       tS->mQxLowPowerThresh_pct = cQx_Pending1;
@@ -103,6 +104,11 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
       tGoing = true;
    }
 
+   // Send the qcall to the long thread.
+   if (tGoing)
+   {
+      mSendSettingsQCall();
+   }
 }
 
 //******************************************************************************
