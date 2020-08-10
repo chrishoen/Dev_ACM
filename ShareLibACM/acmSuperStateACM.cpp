@@ -8,6 +8,13 @@
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+
+namespace ACM
+{
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 // Initialize.
 
 void SuperStateACM::initialize()
@@ -19,8 +26,8 @@ void SuperStateACM::initialize()
 	mRho = 0.0;
 	mEfficiency_pct = 0.0;
 
-   mAlarmFlag = false;
-   mAlarmOnZeroPower = false;
+	mAlarmFlag = false;
+	mAlarmOnZeroPower = false;
 }
 
 //******************************************************************************
@@ -51,9 +58,9 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
-   // Extract some variables from the input response string.
+	// Extract some variables from the input response string.
 
-   // >000.0,00.00A1
+	// >000.0,00.00A1
 	// 012345678901234
 	// 000.0,00.00A1
 
@@ -74,8 +81,8 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	//
 	// Guard.
 	if ((tBuffer[3] != '.') ||
-       (tBuffer[5] != ',') ||
-		 (tBuffer[13] != 0)
+		(tBuffer[5] != ',') ||
+		(tBuffer[13] != 0)
 		)
 	{
 		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 101");
@@ -97,7 +104,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	}
 
 	// Copy temp variables to member variables. 
-	mForwardPower_kw   = tForwardPower_w;
+	mForwardPower_kw = tForwardPower_w;
 	mReflectedPower_kw = tReflectedPower_w;
 	mAlarmFlag = tAlarmChar == 'A';
 	mAlarmOnZeroPower = tAlarmOnZeroPower == 1;
@@ -108,7 +115,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	// Calculate some more variables from the extracted variables.
 
 	// Guard.
-	if (my_closeto(tForwardPower_w, 0.0,0.000001))
+	if (my_closeto(tForwardPower_w, 0.0, 0.000001))
 	{
 		// ff zero then error
 		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 201");
@@ -123,8 +130,8 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	}
 
 	// Calculate some member variables.
-	mForwardPower_kw = tForwardPower_w/1000.0;
-	mReflectedPower_kw = tReflectedPower_w/1000.0;
+	mForwardPower_kw = tForwardPower_w / 1000.0;
+	mReflectedPower_kw = tReflectedPower_w / 1000.0;
 
 	// Calculate some member variables.
 	float tGamma = sqrt(tReflectedPower_w / tForwardPower_w);
@@ -140,3 +147,9 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 
 	return true;
 }
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+} //namespace
+

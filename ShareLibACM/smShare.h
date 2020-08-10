@@ -62,8 +62,8 @@ public:
    // Members.
 
    // Super state variables.
-   SuperStateACM mSuperStateACM;
-   SuperSettingsACM mSuperSettingsACM;
+   ACM::SuperStateACM mSuperStateACM;
+   ACM::SuperSettingsACM mSuperSettingsACM;
 
    // Event notification queue.
    Ris::SRSWStringQueue<200, 100> mEventNotifyQueue;
