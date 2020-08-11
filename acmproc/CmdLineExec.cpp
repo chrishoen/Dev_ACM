@@ -71,14 +71,16 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
       Prn::print(0, " 2  LowPowerAlarmEnable     bool");
       Prn::print(0, " 3  HighPowerThresh_pct     float");
       Prn::print(0, " 4  HighPowerAlarmEnable    bool");
-      Prn::print(0, " 5  Gain                    int int");
-      Prn::print(0, " 6  LatchAlarmEnable        bool");
-      Prn::print(0, " 7  PowerUpAlarmEnable      bool");
-      Prn::print(0, " 8  RelayOnPowerEnable(     bool");
-      Prn::print(0, " 9  RelayOnVSWREnable(      bool");
-      Prn::print(0, "10  CheckVSWROnZeroEnable   bool");
-      Prn::print(0, "11  PTTDelay_sec            float");
-      Prn::print(0, "12  PTTAlarmEnable          bool");
+      Prn::print(0, " 5  VSWRTrigger             int");
+      Prn::print(0, " 6  VSWRAlarmEnable         bool");
+      Prn::print(0, " 7  Gain                    int int");
+      Prn::print(0, " 8  LatchAlarmEnable        bool");
+      Prn::print(0, " 9  PowerUpAlarmEnable      bool");
+      Prn::print(0, "10  RelayOnPowerEnable(     bool");
+      Prn::print(0, "11  RelayOnVSWREnable(      bool");
+      Prn::print(0, "12  CheckVSWROnZeroEnable   bool");
+      Prn::print(0, "13  PTTDelay_sec            float");
+      Prn::print(0, "14  PTTAlarmEnable          bool");
       return;
    }
 
@@ -89,14 +91,16 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
    case  2:  tS->requestLowPowerAlarmEnable(aCmd->argBool(2)); break;
    case  3:  tS->requestHighPowerThresh_pct(aCmd->argDouble(2)); break;
    case  4:  tS->requestHighPowerAlarmEnable(aCmd->argBool(2)); break;
-   case  5:  tS->requestGain(aCmd->argInt(2), aCmd->argDouble(3)); break;
-   case  6:  tS->requestLatchAlarmEnable(aCmd->argBool(2)); break;
-   case  7:  tS->requestPowerUpAlarmEnable(aCmd->argBool(2)); break;
-   case  8:  tS->requestRelayOnPowerEnable(aCmd->argBool(2)); break;
-   case  9:  tS->requestRelayOnVSWREnable(aCmd->argBool(2)); break;
-   case 10:  tS->requestCheckVSWROnZeroEnable(aCmd->argBool(2)); break;
-   case 11:  tS->requestPTTDelay_sec(aCmd->argDouble(2)); break;
-   case 12:  tS->requestPTTAlarmEnable(aCmd->argBool(2)); break;
+   case  5:  tS->requestVSWRTrigger(aCmd->argInt(2)); break;
+   case  6:  tS->requestVSWRAlarmEnable(aCmd->argBool(2)); break;
+   case  7:  tS->requestGain(aCmd->argInt(2), aCmd->argDouble(3)); break;
+   case  8:  tS->requestLatchAlarmEnable(aCmd->argBool(2)); break;
+   case  9:  tS->requestPowerUpAlarmEnable(aCmd->argBool(2)); break;
+   case 10:  tS->requestRelayOnPowerEnable(aCmd->argBool(2)); break;
+   case 11:  tS->requestRelayOnVSWREnable(aCmd->argBool(2)); break;
+   case 12:  tS->requestCheckVSWROnZeroEnable(aCmd->argBool(2)); break;
+   case 13:  tS->requestPTTDelay_sec(aCmd->argDouble(2)); break;
+   case 14:  tS->requestPTTAlarmEnable(aCmd->argBool(2)); break;
    }
 }
 

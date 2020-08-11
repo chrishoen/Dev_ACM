@@ -213,6 +213,16 @@ void SuperSettingsACM::requestHighPowerAlarmEnable(bool aValue)
 	mTxHighPowerAlarmEnable = aValue;
 	mQxHighPowerAlarmEnable = cQx_Request;
 }
+void SuperSettingsACM::requestVSWRTrigger(int aValue)
+{
+	mTxVSWRTrigger = aValue;
+	mQxVSWRTrigger = cQx_Request;
+}
+void SuperSettingsACM::requestVSWRAlarmEnable(bool aValue)
+{
+	mTxVSWRAlarmEnable = aValue;
+	mQxVSWRAlarmEnable = cQx_Request;
+}
 void SuperSettingsACM::requestGain(int aForward, int aReverse)
 {
 	mTxForwardGain = aForward;

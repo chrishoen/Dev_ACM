@@ -142,6 +142,8 @@ public:
 	void requestLowPowerAlarmEnable(bool aValue);
 	void requestHighPowerThresh_pct(float aValue);
 	void requestHighPowerAlarmEnable(bool aValue);
+	void requestVSWRTrigger(int aValue);
+	void requestVSWRAlarmEnable(bool aValue);
 	void requestGain(int aForward, int aReverse);
 	void requestLatchAlarmEnable(bool aValue);
 	void requestPowerUpAlarmEnable(bool aValue);

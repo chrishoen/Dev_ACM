@@ -56,6 +56,18 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
       tGoing = true;
    }
 
+   if (tS->mQxVSWRTrigger == cQx_Request)
+   {
+      tS->mQxVSWRTrigger = cQx_Pending1;
+      tGoing = true;
+   }
+
+   if (tS->mQxVSWRAlarmEnable == cQx_Request)
+   {
+      tS->mQxVSWRAlarmEnable = cQx_Pending1;
+      tGoing = true;
+   }
+
    if (tS->mQxGain == cQx_Request)
    {
       tS->mQxGain = cQx_Pending1;

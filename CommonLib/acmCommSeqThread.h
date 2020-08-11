@@ -200,6 +200,8 @@ public:
    void sendLowPowerAlarmEnable();
    void sendHighPowerThresh_pct();
    void sendHighPowerAlarmEnable();
+   void sendVSWRTrigger();
+   void sendVSWRAlarmEnable();
    void sendGain();
    void sendLatchAlarmEnable();
    void sendPowerUpAlarmEnable();
