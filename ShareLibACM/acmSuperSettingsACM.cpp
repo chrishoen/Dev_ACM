@@ -40,6 +40,16 @@ void SuperSettingsACM::initialize()
 	mRxHighPowerAlarmEnable = false;
 	mQxHighPowerAlarmEnable = 0;
 
+	// VSWR trigger.
+	mTxVSWRTrigger = 0;
+	mRxVSWRTrigger = 0;
+	mQxVSWRTrigger = 0;
+
+	// VSWR alarm.
+	mTxVSWRAlarmEnable = false;
+	mRxVSWRAlarmEnable = false;
+	mQxVSWRAlarmEnable = 0;
+
 	// Gain.
 	mTxForwardGain = 0;
 	mTxReverseGain = 0;
@@ -113,6 +123,18 @@ void SuperSettingsACM::show(int aPF)
 		my_string_from_bool(mTxHighPowerAlarmEnable),
 		my_string_from_bool(mRxHighPowerAlarmEnable),
 	   asString_Qx(mQxHighPowerAlarmEnable));
+
+	// VSWR trigger.
+	Prn::print(aPF, "VSWRTrigger                  %10d %10d %10s",
+		mTxVSWRTrigger,
+		mRxVSWRTrigger,
+		asString_Qx(mQxVSWRTrigger));
+
+	// VSWR alarm.
+	Prn::print(aPF, "VSWRAlarmEnable              %10s %10s %10s",
+		my_string_from_bool(mTxVSWRAlarmEnable),
+		my_string_from_bool(mRxVSWRAlarmEnable),
+		asString_Qx(mQxVSWRAlarmEnable));
 
 	// Gain.
 	Prn::print(aPF, "Gain                         %8d %1d %8d %1d %10s",

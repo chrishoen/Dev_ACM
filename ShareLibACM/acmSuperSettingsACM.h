@@ -69,6 +69,16 @@ public:
 	bool   mRxHighPowerAlarmEnable;
 	int    mQxHighPowerAlarmEnable;
 
+	// VSWR trigger.
+	int    mTxVSWRTrigger;
+	int    mRxVSWRTrigger;
+	int    mQxVSWRTrigger;
+
+	// VSWR alarm.
+	bool   mTxVSWRAlarmEnable;
+	bool   mRxVSWRAlarmEnable;
+	int    mQxVSWRAlarmEnable;
+
 	// Gain.
 	int    mTxForwardGain;
 	int    mTxReverseGain;
