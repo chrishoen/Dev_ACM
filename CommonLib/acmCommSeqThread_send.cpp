@@ -139,7 +139,8 @@ void CommSeqThread::sendLowPowerThresh_pct()
    // Read the receive string from the queue.
    if (std::string* tRxString = mRxStringQueue.tryRead())
    {
-      //SM::gShare->mSuperStateACM.updateForT(tRxString);
+      // Update the settings with the receive string.
+      SM::gShare->mSuperSettingsACM.updateForDE(tRxString);
       delete tRxString;
    }
    else

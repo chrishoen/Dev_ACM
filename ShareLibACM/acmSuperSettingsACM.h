@@ -140,6 +140,15 @@ public:
 	void requestCheckVSWROnZeroEnable(bool aValue);
 	void requestPTTDelay_sec(float aValue);
 	void requestPTTAlarmEnable(bool aValue);
+
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+	// Methods.
+
+	// Update some variables by decoding a received response string from a
+	// sent command. 
+	bool updateForDE(std::string* aResponse);
 };
 
 //******************************************************************************
