@@ -164,6 +164,9 @@ public:
 	bool updateForG(std::string* aResponse);
 	bool updateForLM(std::string* aResponse);
 	bool updateForN(std::string* aResponse);
+	bool updateFor89(std::string* aResponse);
+	bool updateFor6(std::string* aResponse);
+	bool updateForJK(std::string* aResponse);
 };
 
 //******************************************************************************
