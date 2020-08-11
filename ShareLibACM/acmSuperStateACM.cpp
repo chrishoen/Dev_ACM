@@ -125,7 +125,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	// Guard.
 	if (tForwardPower_w <= tReflectedPower_w)
 	{
-		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 202");
+		//Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 202");
 		return false;
 	}
 
