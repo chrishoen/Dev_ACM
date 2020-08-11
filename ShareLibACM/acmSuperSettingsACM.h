@@ -150,6 +150,8 @@ public:
 	// sent command. 
 	bool updateForDE(std::string* aResponse);
 	bool updateForG(std::string* aResponse);
+	bool updateForLM(std::string* aResponse);
+	bool updateForN(std::string* aResponse);
 };
 
 //******************************************************************************
