@@ -149,6 +149,7 @@ public:
 	// Update some variables by decoding a received response string from a
 	// sent command. 
 	bool updateForDE(std::string* aResponse);
+	bool updateForG(std::string* aResponse);
 };
 
 //******************************************************************************

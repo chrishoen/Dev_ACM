@@ -97,7 +97,7 @@ void SuperSettingsACM::show(int aPF)
 		asString_Qx(mQxLowPowerThresh_pct));
 
 	// Low power alarm.
-	Prn::print(aPF, "LowPowerAlarmEnable_pct      %10s %10s %10s",
+	Prn::print(aPF, "LowPowerAlarmEnable          %10s %10s %10s",
 		my_string_from_bool(mTxLowPowerAlarmEnable),
 		my_string_from_bool(mRxLowPowerAlarmEnable),
 		asString_Qx(mQxLowPowerAlarmEnable));
@@ -305,6 +305,84 @@ bool SuperSettingsACM::updateForDE(std::string* aResponse)
 
 	Prn::print(Prn::View21, "acmSuperStateACM::updateForDE %s %.2f", 
 		asString_Qx(mQxLowPowerThresh_pct), tRxLowPowerThresh_pct);
+
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+	// Done.
+
+	return true;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Update some variables by decoding a received response string from a
+// sent command. 
+
+bool SuperSettingsACM::updateForG(std::string* aResponse)
+{
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+	// Extract some variables from the input response string.
+
+	// >L=32768
+
+	// Point to the first char in the response string. 
+	// If it is a '>' then advance by one char to ignore it.
+	const char* tBuffer = aResponse->c_str();
+	if (tBuffer[0] == '>') tBuffer++;
+	int tRet = 0;
+
+	// Temp variables to be extracted from the response string.
+	int   tV = 0;
+	bool tTxLowPowerAlarmEnable = mTxLowPowerAlarmEnable;
+	bool tRxLowPowerAlarmEnable = false;
+
+	// 012345678901234
+	// L=32768
+	//
+	// Guard.
+	if ((tBuffer[0] != 'L') ||
+		(tBuffer[1] != '=') ||
+		(tBuffer[7] != 0)
+		)
+	{
+		Prn::print(Prn::View21, "acmSuperStateACM::updateForDE ERROR 101");
+		return false;
+	}
+
+	// Read from response string into temp variables.
+	tRet = sscanf(tBuffer, "L=%d",
+		&tV);
+
+	// Guard.
+	if (tRet != 1)
+	{
+		Prn::print(Prn::View21, "acmSuperStateACM::updateForDE ERROR 102");
+		return false;
+	}
+
+	// Convert.
+	tRxLowPowerAlarmEnable = tV & 0x8000;
+
+	// Compare.
+	if (tTxLowPowerAlarmEnable == tRxLowPowerAlarmEnable)
+	{
+		// If ok then copy the temp to the member and set the
+		// qx ack code for an ack. 
+		mRxLowPowerAlarmEnable = tRxLowPowerAlarmEnable;
+		mQxLowPowerAlarmEnable = cQx_Ack;
+	}
+	else
+	{
+		// If not ok then set the qx ack code for a nak. 
+		mQxLowPowerAlarmEnable = cQx_Nak;
+	}
+
+	Prn::print(Prn::View21, "acmSuperStateACM::updateForG %s %s",
+		asString_Qx(mQxLowPowerAlarmEnable), my_string_from_bool(tRxLowPowerAlarmEnable));
 
 	//***************************************************************************
 	//***************************************************************************
