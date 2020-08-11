@@ -74,6 +74,12 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   char tBuffer[200];
+   float tPct = aCmd->argDouble(1);
+   int   tN = (int) 26214*tPct / 100.0;
+   sprintf(tBuffer, "%05d",tN);
+
+   Prn::print(0, "%s", tBuffer);
 }
 
 //******************************************************************************

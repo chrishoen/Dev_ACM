@@ -35,8 +35,8 @@ void CommSeqThread::sendString(const char* aString)
    // Print the string.
    Prn::print(Prn::View11, ">>>> %s", aString);
 
-   // Send the string.
-   mSerialStringThread->sendString(aString);
+   // Send the string, no crlf
+   mSerialStringThread->sendString(aString, false);
 }
 
 //******************************************************************************
@@ -63,8 +63,8 @@ void CommSeqThread::sendString(std::string* aString)
    // Print the string.
    Prn::print(Prn::View11, ">>>> %s", aString->c_str());
 
-   // Send the string.
-   mSerialStringThread->sendString(aString);
+   // Send the string, no crlf
+   mSerialStringThread->sendString(aString, false);
 }
 
 //******************************************************************************

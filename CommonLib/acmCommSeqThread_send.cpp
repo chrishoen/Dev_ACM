@@ -28,7 +28,6 @@ void CommSeqThread::executeSendSettings()
    Prn::print(Prn::View11, "CommSeqThread::executeSendSettings BEGIN");
 
    // Initialize the synchronization objects.
-   mAcquireWaitable.initialize(Cmn::gProgramParms.mDelay);
    mNotify.clearFlags();
 
    try
@@ -111,13 +110,50 @@ void CommSeqThread::executeSendSettings()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Request the setting of settings variables. 
+// Request the setting of a settings variable. 
 
 void CommSeqThread::sendLowPowerThresh_pct()
 {
+   // Do this first.
    ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
    tS->mQxLowPowerThresh_pct = cQx_Pending2;
+
+   // Format the command string.
+   char tBuffer[200];
+   float tPct = tS->mTxLowPowerThresh_pct;
+   int   tN = (int)26214 * tPct / 100.0;
+   sprintf(tBuffer, "E%05d", tN);
+
+   // Test for a notification exception.
+   mNotify.testException();
+
+   // Set the thread notification mask.
+   mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
+
+   // Send a command.
+   sendString(tBuffer);
+
+   // Wait for the acknowledgement notification.
+   mNotify.wait(cCmdAckTimeout);
+
+   // Read the receive string from the queue.
+   if (std::string* tRxString = mRxStringQueue.tryRead())
+   {
+      //SM::gShare->mSuperStateACM.updateForT(tRxString);
+      delete tRxString;
+   }
+   else
+   {
+      Prn::print(Prn::View11, "RxQueue EMPTY");
+   }
+
 }
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Request the setting of a settings variable. 
+
 void CommSeqThread::sendLowPowerAlarmEnable()
 {
    ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
