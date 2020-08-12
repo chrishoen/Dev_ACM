@@ -42,25 +42,25 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	tS->mQxLowPowerThresh_pct = cQx_Pending2;
 
 	// Format the command string.
-	char tBuffer[200];
+	char tTxString[100];
 	float tPct = tS->mTxLowPowerThresh_pct;
 	int   tN = (int)26214 * tPct / 100.0;
 	if (aTxFlag)
 	{
 		// Command to write the variable.
-		sprintf(tBuffer, "E%05d", tN);
+		sprintf(tTxString, "E%05d", tN);
 	}
 	else
 	{
 		// Command to read the variable.
-		sprintf(tBuffer, "D");
+		sprintf(tTxString, "D");
 	}
 
 	// Set the thread notification mask.
 	mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
 
 	// Send the command.
-	sendString(tBuffer);
+	sendString(tTxString);
 
 	// Wait for the receive acknowledgement notification.
 	mNotify.wait(cCmdAckTimeout);

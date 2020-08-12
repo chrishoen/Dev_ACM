@@ -41,23 +41,23 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 	tS->mQxLowPowerAlarmEnable = cQx_Pending2;
 
 	// Format the command string.
-	char tBuffer[200];
+	char tTxString[100];
 	if (aTxFlag)
 	{
 		// Command to write the variable.
-		sprintf(tBuffer, "G%1d", tS->mTxLowPowerAlarmEnable);
+		sprintf(tTxString, "G%1d", tS->mTxLowPowerAlarmEnable);
 	}
 	else
 	{
 		// Command to read the variable.
-		sprintf(tBuffer, "BT");
+		sprintf(tTxString, "BT");
 	}
 
 	// Set the thread notification mask.
 	mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
 
 	// Send the command.
-	sendString(tBuffer);
+	sendString(tTxString);
 
 	// Wait for the receive acknowledgement notification.
 	mNotify.wait(cCmdAckTimeout);
