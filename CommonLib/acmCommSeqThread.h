@@ -211,6 +211,31 @@ public:
    void sendPTTDelay_sec();
    void sendPTTAlarmEnable();
 
+   // For each individual settings variable, process the super settings
+   // as follows:
+   //
+   // If the tx flag is true then then send a command to the acm to set the
+   // variable, based on the tx variable. Receive and process the response
+   // to set the rx and qx variables. 
+   //
+   // If the tx flag is false then send a command to the acm to read the
+   // current variable. Receive and process the response to set the rx
+   // variable.
+   void txrxLowPowerThresh_pct(bool aTxFlag);
+   void txrxLowPowerAlarmEnable(bool aTxFlag);
+   void txrxHighPowerThresh_pct(bool aTxFlag);
+   void txrxHighPowerAlarmEnable(bool aTxFlag);
+   void txrxVSWRTrigger(bool aTxFlag);
+   void txrxVSWRAlarmEnable(bool aTxFlag);
+   void txrxGain(bool aTxFlag);
+   void txrxLatchAlarmEnable(bool aTxFlag);
+   void txrxPowerUpAlarmEnable(bool aTxFlag);
+   void txrxRelayOnPowerEnable(bool aTxFlag);
+   void txrxRelayOnVSWREnable(bool aTxFlag);
+   void txrxCheckVSWROnZeroEnable(bool aTxFlag);
+   void txrxPTTDelay_sec(bool aTxFlag);
+   void txrxPTTAlarmEnable(bool aTxFlag);
+
 
 };
 
