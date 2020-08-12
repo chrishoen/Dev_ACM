@@ -46,7 +46,8 @@ void CommSeqThread::executeSendSettings()
 
       if (tS->mQxHighPowerThresh_pct == cQx_Pending1)
       {
-         sendHighPowerThresh_pct();
+         // sendHighPowerThresh_pct();
+         txrxHighPowerThresh_pct(true);
       }
 
       if (tS->mQxHighPowerAlarmEnable == cQx_Pending1)

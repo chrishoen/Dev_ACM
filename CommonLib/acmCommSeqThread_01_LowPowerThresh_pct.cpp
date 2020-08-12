@@ -32,51 +32,51 @@ namespace ACM
 
 void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 {
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Send a command to the acm.
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+// Send a command to the acm.
 
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxLowPowerThresh_pct = cQx_Pending2;
+	// Do this first.
+	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	tS->mQxLowPowerThresh_pct = cQx_Pending2;
 
-   // Format the command string.
-   char tBuffer[200];
-   float tPct = tS->mTxLowPowerThresh_pct;
-   int   tN = (int)26214 * tPct / 100.0;
-   if (aTxFlag)
-   {
-      // Command to write the variable.
-      sprintf(tBuffer, "E%05d", tN);
-   }
-   else
-   {
-      // Command to read the variable.
-      sprintf(tBuffer, "D");
-   }
+	// Format the command string.
+	char tBuffer[200];
+	float tPct = tS->mTxLowPowerThresh_pct;
+	int   tN = (int)26214 * tPct / 100.0;
+	if (aTxFlag)
+	{
+		// Command to write the variable.
+		sprintf(tBuffer, "E%05d", tN);
+	}
+	else
+	{
+		// Command to read the variable.
+		sprintf(tBuffer, "D");
+	}
 
-   // Set the thread notification mask.
-   mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
+	// Set the thread notification mask.
+	mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
 
-   // Send the command.
-   sendString(tBuffer);
+	// Send the command.
+	sendString(tBuffer);
 
-   // Wait for the receive acknowledgement notification.
-   mNotify.wait(cCmdAckTimeout);
+	// Wait for the receive acknowledgement notification.
+	mNotify.wait(cCmdAckTimeout);
 
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Process the response from the acm.
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+// Process the response from the acm.
 
-   // Read the receive string from the queue.
-   std::string* tRxString = mRxStringQueue.tryRead();
-   if (tRxString == 0)
-   {
-      Prn::print(Prn::View11, "RxQueue EMPTY");
-      return;
-   }
+	// Read the receive string from the queue.
+	std::string* tRxString = mRxStringQueue.tryRead();
+	if (tRxString == 0)
+	{
+		Prn::print(Prn::View11, "RxQueue EMPTY");
+		return;
+	}
 
 	// Point to the first char in the response string that is not '>'.
 	int tRet = 0;
@@ -147,10 +147,10 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	Prn::print(Prn::View21, "LowPowerThresh_pct %s %.2f",
 		asString_Qx(tS->mQxLowPowerThresh_pct), tRxLowPowerThresh_pct);
 
-	//***************************************************************************
-	//***************************************************************************
-	//***************************************************************************
-	// Done.
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+// Done.
 
 	delete tRxString;
 }
