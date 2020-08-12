@@ -41,7 +41,8 @@ void CommSeqThread::executeSendSettings()
 
       if (tS->mQxLowPowerAlarmEnable == cQx_Pending1)
       {
-         sendLowPowerAlarmEnable();
+         //sendLowPowerAlarmEnable();
+         txrxLowPowerAlarmEnable(true);
       }
 
       if (tS->mQxHighPowerThresh_pct == cQx_Pending1)
@@ -116,90 +117,6 @@ void CommSeqThread::executeSendSettings()
    mNotify.clearFlags();
 
    Prn::print(Prn::View11, "CommSeqThread::executeSendSettings END");
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Request the setting of a settings variable. 
-
-void CommSeqThread::sendLowPowerAlarmEnable()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxLowPowerAlarmEnable = cQx_Pending2;
-
-   // Format the command string.
-   char tBuffer[200];
-   float tPct = tS->mTxLowPowerThresh_pct;
-   int   tN = (int)26214 * tPct / 100.0;
-   sprintf(tBuffer, "G%1d", tS->mTxLowPowerAlarmEnable);
-
-   // Test for a notification exception.
-   mNotify.testException();
-
-   // Set the thread notification mask.
-   mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
-
-   // Send a command.
-   sendString(tBuffer);
-
-   // Wait for the acknowledgement notification.
-   mNotify.wait(cCmdAckTimeout);
-
-   // Read the receive string from the queue.
-   if (std::string* tRxString = mRxStringQueue.tryRead())
-   {
-      // Update the settings with the receive string.
-      SM::gShare->mSuperSettingsACM.updateForG(tRxString);
-      delete tRxString;
-   }
-   else
-   {
-      Prn::print(Prn::View11, "RxQueue EMPTY");
-   }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Request the setting of a settings variable. 
-
-void CommSeqThread::sendHighPowerThresh_pct()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxHighPowerThresh_pct = cQx_Pending2;
-
-   // Format the command string.
-   char tBuffer[200];
-   float tPct = tS->mTxHighPowerThresh_pct;
-   int   tN = (int)26214 * tPct / 100.0;
-   sprintf(tBuffer, "M%05d", tN);
-
-   // Test for a notification exception.
-   mNotify.testException();
-
-   // Set the thread notification mask.
-   mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
-
-   // Send a command.
-   sendString(tBuffer);
-
-   // Wait for the acknowledgement notification.
-   mNotify.wait(cCmdAckTimeout);
-
-   // Read the receive string from the queue.
-   if (std::string* tRxString = mRxStringQueue.tryRead())
-   {
-      // Update the settings with the receive string.
-      SM::gShare->mSuperSettingsACM.updateForLM(tRxString);
-      delete tRxString;
-   }
-   else
-   {
-      Prn::print(Prn::View11, "RxQueue EMPTY");
-   }
 }
 
 //******************************************************************************

@@ -138,7 +138,7 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 		tS->mQxLowPowerAlarmEnable = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "LowPowerAlarmEnable %s %.2f",
+	Prn::print(Prn::View21, "LowPowerAlarmEnable %s %s",
 		asString_Qx(tS->mQxLowPowerAlarmEnable), my_string_from_bool(tRxLowPowerAlarmEnable));
 
 	//***************************************************************************
