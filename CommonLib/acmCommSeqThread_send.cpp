@@ -61,7 +61,7 @@ void CommSeqThread::executeSendSettings()
 
       if (tS->mQxVSWRAlarmEnable == cQx_Pending1)
       {
-         sendVSWRAlarmEnable();
+         txrxVSWRAlarmEnable(true);
       }
 
       if (tS->mQxGain == cQx_Pending1)
@@ -115,46 +115,6 @@ void CommSeqThread::executeSendSettings()
    mNotify.clearFlags();
 
    Prn::print(Prn::View11, "CommSeqThread::executeSendSettings END");
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Request the setting of a settings variable. 
-
-void CommSeqThread::sendVSWRAlarmEnable()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxVSWRAlarmEnable = cQx_Pending2;
-
-   // Format the command string.
-   char tBuffer[200];
-   sprintf(tBuffer, "6%1d", tS->mTxVSWRAlarmEnable);
-
-   // Test for a notification exception.
-   mNotify.testException();
-
-   // Set the thread notification mask.
-   mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
-
-   // Send a command.
-   sendString(tBuffer);
-
-   // Wait for the acknowledgement notification.
-   mNotify.wait(cCmdAckTimeout);
-
-   // Read the receive string from the queue.
-   if (std::string* tRxString = mRxStringQueue.tryRead())
-   {
-      // Update the settings with the receive string.
-      SM::gShare->mSuperSettingsACM.updateFor6(tRxString);
-      delete tRxString;
-   }
-   else
-   {
-      Prn::print(Prn::View11, "RxQueue EMPTY");
-   }
 }
 
 //******************************************************************************

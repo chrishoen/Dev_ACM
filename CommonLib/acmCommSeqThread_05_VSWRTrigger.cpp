@@ -82,9 +82,9 @@ void CommSeqThread::txrxVSWRTrigger(bool aTxFlag)
 	else                              tResponse = &tRxString->c_str()[1];
 
 	// Temp variables to be extracted from the response string.
-	int   tV = 0;
-	float tTxVSWRTrigger = tS->mTxVSWRTrigger;
-	float tRxVSWRTrigger = 0.0;
+	int tV = 0;
+	int tTxVSWRTrigger = tS->mTxVSWRTrigger;
+	int tRxVSWRTrigger = 0.0;
 
 	// 01234567890
 	// V=C
