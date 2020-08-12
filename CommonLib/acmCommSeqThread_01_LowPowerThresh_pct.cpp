@@ -62,7 +62,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
    // Send the command.
    sendString(tBuffer);
 
-   // Wait for the acknowledgement notification.
+   // Wait for the receive acknowledgement notification.
    mNotify.wait(cCmdAckTimeout);
 
    //***************************************************************************
@@ -98,7 +98,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 		(tResponse[7] != 0)
 		)
 	{
-		Prn::print(Prn::View21, "acmSuperStateACM::updateForDE ERROR 101 %s", tResponse);
+		Prn::print(Prn::View21, "txrxLowPowerThresh_pct ERROR 101 %s", tResponse);
 		delete tRxString;
 		return;
 	}
@@ -111,7 +111,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	if (tRet != 1)
 	{
 		delete tRxString;
-		Prn::print(Prn::View21, "acmSuperStateACM::updateForDE ERROR 102");
+		Prn::print(Prn::View21, "txrxLowPowerThresh_pct ERROR 102");
 	}
 
 	// Apply a mask.
