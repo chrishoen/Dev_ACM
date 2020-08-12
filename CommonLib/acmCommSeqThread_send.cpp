@@ -36,7 +36,8 @@ void CommSeqThread::executeSendSettings()
 
       if (tS->mQxLowPowerThresh_pct == cQx_Pending1)
       {
-         sendLowPowerThresh_pct();
+         // sendLowPowerThresh_pct();
+         txrxLowPowerThresh_pct(true);
       }
 
       if (tS->mQxLowPowerAlarmEnable == cQx_Pending1)
