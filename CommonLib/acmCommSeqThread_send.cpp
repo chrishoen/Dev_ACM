@@ -41,19 +41,17 @@ void CommSeqThread::executeSendSettings()
 
       if (tS->mQxLowPowerAlarmEnable == cQx_Pending1)
       {
-         //sendLowPowerAlarmEnable();
          txrxLowPowerAlarmEnable(true);
       }
 
       if (tS->mQxHighPowerThresh_pct == cQx_Pending1)
       {
-         // sendHighPowerThresh_pct();
          txrxHighPowerThresh_pct(true);
       }
 
       if (tS->mQxHighPowerAlarmEnable == cQx_Pending1)
       {
-         sendHighPowerAlarmEnable();
+         txrxHighPowerAlarmEnable(true);
       }
 
       if (tS->mQxVSWRTrigger == cQx_Pending1)
@@ -117,46 +115,6 @@ void CommSeqThread::executeSendSettings()
    mNotify.clearFlags();
 
    Prn::print(Prn::View11, "CommSeqThread::executeSendSettings END");
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Request the setting of a settings variable. 
-
-void CommSeqThread::sendHighPowerAlarmEnable()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxHighPowerAlarmEnable = cQx_Pending2;
-
-   // Format the command string.
-   char tBuffer[200];
-   sprintf(tBuffer, "N%1d", tS->mTxHighPowerAlarmEnable);
-
-   // Test for a notification exception.
-   mNotify.testException();
-
-   // Set the thread notification mask.
-   mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
-
-   // Send a command.
-   sendString(tBuffer);
-
-   // Wait for the acknowledgement notification.
-   mNotify.wait(cCmdAckTimeout);
-
-   // Read the receive string from the queue.
-   if (std::string* tRxString = mRxStringQueue.tryRead())
-   {
-      // Update the settings with the receive string.
-      SM::gShare->mSuperSettingsACM.updateForN(tRxString);
-      delete tRxString;
-   }
-   else
-   {
-      Prn::print(Prn::View11, "RxQueue EMPTY");
-   }
 }
 
 //******************************************************************************
