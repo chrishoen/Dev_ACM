@@ -47,22 +47,19 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
    int   tN = (int)26214 * tPct / 100.0;
    if (aTxFlag)
    {
-      // Write the variable.
+      // Command to write the variable.
       sprintf(tBuffer, "E%05d", tN);
    }
    else
    {
-      // Read the variable.
+      // Command to read the variable.
       sprintf(tBuffer, "D");
    }
-
-   // Test for a notification exception.
-   mNotify.testException();
 
    // Set the thread notification mask.
    mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
 
-   // Send a command.
+   // Send the command.
    sendString(tBuffer);
 
    // Wait for the acknowledgement notification.
@@ -81,15 +78,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
       return;
    }
 
-	//***************************************************************************
-	//***************************************************************************
-	//***************************************************************************
-	// Extract the variable from the input response string.
-
-	// >L=32768
-
-	// Point to the first char in the response string. 
-	// If it is a '>' then advance by one char to ignore it.
+	// Point to the first char in the response string that is not '>'.
 	int tRet = 0;
 	const char* tResponse;
 	if (tRxString->c_str()[0] != '>') tResponse = &tRxString->c_str()[0];
@@ -102,7 +91,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 
 	// 012345678901234
 	// L=32768
-	//
+
 	// Guard.
 	if ((tResponse[0] != 'L') ||
 		(tResponse[1] != '=') ||
@@ -134,15 +123,17 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	// If rx only then done. Copy the temp to the settings and exit.
 	if (!aTxFlag)
 	{
+		Prn::print(Prn::View21, "LowPowerThresh_pct %s %.2f",
+			tRxLowPowerThresh_pct);
 		tS->mRxLowPowerThresh_pct = tRxLowPowerThresh_pct;
 		delete tRxString;
 		return;
 	}
 
-	// Compare.
+	// Compare the tx and rx variables.
 	if (my_closeto(tTxLowPowerThresh_pct, tRxLowPowerThresh_pct, 0.01))
 	{
-		// If ok then copy the temp to the member and set the
+		// If ok then copy the temp to the rx variable and set the
 		// qx ack code for an ack. 
 		tS->mRxLowPowerThresh_pct = tRxLowPowerThresh_pct;
 		tS->mQxLowPowerThresh_pct = cQx_Ack;
@@ -153,7 +144,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 		tS->mQxLowPowerThresh_pct = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "acmSuperStateACM::updateForDE %s %.2f",
+	Prn::print(Prn::View21, "LowPowerThresh_pct %s %.2f",
 		asString_Qx(tS->mQxLowPowerThresh_pct), tRxLowPowerThresh_pct);
 
 	//***************************************************************************
