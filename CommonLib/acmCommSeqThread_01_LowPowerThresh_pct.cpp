@@ -84,7 +84,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
-	// Extract some variables from the input response string.
+	// Extract the variable from the input response string.
 
 	// >L=32768
 
@@ -130,6 +130,14 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 
 	// Convert.
 	tRxLowPowerThresh_pct = 100.0 * tV / 26214.0;
+
+	// If rx only then done. Copy the temp to the settings and exit.
+	if (!aTxFlag)
+	{
+		tS->mRxLowPowerThresh_pct = tRxLowPowerThresh_pct;
+		delete tRxString;
+		return;
+	}
 
 	// Compare.
 	if (my_closeto(tTxLowPowerThresh_pct, tRxLowPowerThresh_pct, 0.01))
