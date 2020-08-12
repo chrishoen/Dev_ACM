@@ -110,7 +110,13 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   Prn::print(Prn::View11, "GO1");
+   ACM::gCommSeqThread->sendString(aCmd->argString(1));
+   return;
+
+   char tString[100];
+   sprintf(tString, "B");
+   ACM::gCommSeqThread->sendString(tString);
+
 }
 
 //******************************************************************************
