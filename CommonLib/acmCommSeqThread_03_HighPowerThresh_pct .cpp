@@ -29,6 +29,7 @@ namespace ACM
 // current variable. Receive and process the response to set the rx
 // variable.
 
+
 void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 {
 	//***************************************************************************
@@ -61,7 +62,7 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 	// Send the command.
 	sendString(tTxString);
 
-	// Wait for the receive acknowledgement notification.
+	// Wait for the receive response notification.
 	mNotify.wait(cCmdAckTimeout);
 
 	//***************************************************************************
@@ -74,6 +75,8 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 	if (tRxString == 0)
 	{
 		Prn::print(Prn::View11, "RxQueue EMPTY");
+		tS->mQxHighPowerThresh_pct = cQx_Nak;
+		delete tRxString;
 		return;
 	}
 
@@ -91,17 +94,6 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 	// 012345678901234
 	// L=32768
 
-	// Guard.
-	if ((tResponse[0] != 'H') ||
-		(tResponse[1] != '=') ||
-		(tResponse[7] != 0)
-		)
-	{
-		Prn::print(Prn::View21, "txrxHighPowerThresh_pct ERROR 101 %s", tResponse);
-		delete tRxString;
-		return;
-	}
-
 	// Read from response string into temp variables.
 	tRet = sscanf(tResponse, "H=%d",
 		&tV);
@@ -109,8 +101,10 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 	// Guard.
 	if (tRet != 1)
 	{
+		Prn::print(Prn::View21, "HighPowerThresh_pct             Nak ERROR 102 %s", tResponse);
+		tS->mQxHighPowerThresh_pct = cQx_Nak;
 		delete tRxString;
-		Prn::print(Prn::View21, "txrxHighPowerThresh_pct ERROR 102");
+		return;
 	}
 
 	// Apply a mask.
@@ -119,21 +113,11 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 	// Convert.
 	tRxHighPowerThresh_pct = 100.0 * tV / 26214.0;
 
-	// If rx only then done. Copy the temp to the settings and exit.
-	if (!aTxFlag)
-	{
-		Prn::print(Prn::View21, "HighPowerThresh_pct %s %.2f",
-			tRxHighPowerThresh_pct);
-		tS->mRxHighPowerThresh_pct = tRxHighPowerThresh_pct;
-		delete tRxString;
-		return;
-	}
-
 	// Compare the tx and rx variables.
-	if (my_closeto(tTxHighPowerThresh_pct, tRxHighPowerThresh_pct, 0.01))
+	if (!aTxFlag || my_closeto(tTxHighPowerThresh_pct, tRxHighPowerThresh_pct, 0.01))
 	{
-		// If ok then copy the temp to the rx variable and set the
-		// qx ack code for an ack. 
+		// If rx only or compare ok then copy the temp to the rx variable
+		// and set the qx ack code for an ack. 
 		tS->mRxHighPowerThresh_pct = tRxHighPowerThresh_pct;
 		tS->mQxHighPowerThresh_pct = cQx_Ack;
 	}
@@ -143,13 +127,13 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 		tS->mQxHighPowerThresh_pct = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "HighPowerThresh_pct %s %.2f",
+	Prn::print(Prn::View21, "HighPowerThresh_pct         %s %.2f",
 		asString_Qx(tS->mQxHighPowerThresh_pct), tRxHighPowerThresh_pct);
 
-	//***************************************************************************
-	//***************************************************************************
-	//***************************************************************************
-	// Done.
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+// Done.
 
 	delete tRxString;
 }
