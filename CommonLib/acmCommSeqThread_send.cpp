@@ -117,44 +117,6 @@ void CommSeqThread::executeSendSettings()
    Prn::print(Prn::View11, "CommSeqThread::executeSendSettings END");
 }
 
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CommSeqThread::sendGain()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxGain = cQx_Pending2;
-   // Format the command string.
-
-   char tBuffer[200];
-   sprintf(tBuffer, "J%1d%1d", tS->mTxForwardGain, tS->mTxReverseGain);
-
-   // Test for a notification exception.
-   mNotify.testException();
-
-   // Set the thread notification mask.
-   mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
-
-   // Send a command.
-   sendString(tBuffer);
-
-   // Wait for the acknowledgement notification.
-   mNotify.wait(cCmdAckTimeout);
-
-   // Read the receive string from the queue.
-   if (std::string* tRxString = mRxStringQueue.tryRead())
-   {
-      // Update the settings with the receive string.
-      SM::gShare->mSuperSettingsACM.updateForJK(tRxString);
-      delete tRxString;
-   }
-   else
-   {
-      Prn::print(Prn::View11, "RxQueue EMPTY");
-   }
-}
 
 void CommSeqThread::sendLatchAlarmEnable()
 {
