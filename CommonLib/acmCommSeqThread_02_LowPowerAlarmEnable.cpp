@@ -103,7 +103,7 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 		// Guard.
 		if (tRet != 1)
 		{
-			Prn::print(Prn::View21, "txrxLowPowerAlarmEnable Nak ERROR 102 %s", tResponse);
+			Prn::print(Prn::View21, "txrxLowPowerAlarmEnable         Nak ERROR 102 %s", tResponse);
 			tS->mQxLowPowerThresh_pct = cQx_Nak;
 			delete tRxString;
 			return;
@@ -122,7 +122,7 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 		// Guard.
 		if (tRet != 1)
 		{
-			Prn::print(Prn::View21, "txrxLowPowerAlarmEnable Nak ERROR 102 %s", tResponse);
+			Prn::print(Prn::View21, "txrxLowPowerAlarmEnable         Nak ERROR 102 %s", tResponse);
 			tS->mQxLowPowerThresh_pct = cQx_Nak;
 			delete tRxString;
 			return;
@@ -146,7 +146,7 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 		tS->mQxLowPowerAlarmEnable = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "LowPowerAlarmEnable %s %s",
+	Prn::print(Prn::View21, "LowPowerAlarmEnable         %s %s",
 		asString_Qx(tS->mQxLowPowerAlarmEnable), my_string_from_bool(tRxLowPowerAlarmEnable));
 
 	//***************************************************************************

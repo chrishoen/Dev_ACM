@@ -101,7 +101,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	// Guard.
 	if (tRet != 1)
 	{
-		Prn::print(Prn::View21, "txrxLowPowerThresh_pct Nak ERROR 102 %s", tResponse);
+		Prn::print(Prn::View21, "txrxLowPowerThresh_pct          Nak ERROR 102 %s", tResponse);
 		tS->mQxLowPowerThresh_pct = cQx_Nak;
 		delete tRxString;
 		return;
@@ -127,7 +127,7 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 		tS->mQxLowPowerThresh_pct = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "LowPowerThresh_pct %s %.2f",
+	Prn::print(Prn::View21, "LowPowerThresh_pct          %s %.2f",
 		asString_Qx(tS->mQxLowPowerThresh_pct), tRxLowPowerThresh_pct);
 
 //***************************************************************************
