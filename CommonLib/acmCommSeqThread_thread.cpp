@@ -108,7 +108,11 @@ void CommSeqThread::threadExitFunction()
 void CommSeqThread::shutdownThreads()
 {
    // Abort the long thread.
+   // Abort the long thread.
+   mAbortFlag = true;
+   mSettingsFlag = false;
    BaseClass::mNotify.abort();
+   mAcquireWaitable.postSemaphore();
 
    // Shutdown the two threads.
    BaseClass::shutdownThreads();

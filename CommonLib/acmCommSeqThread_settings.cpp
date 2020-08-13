@@ -146,7 +146,6 @@ void CommSeqThread::doProcessSettings()
    }
 
    // Finalize the synchronization objects.
-   mAcquireWaitable.finalize();
    mNotify.clearFlags();
 
    Prn::print(Prn::View11, "CommSeqThread::doProcessSettings END");
