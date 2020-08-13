@@ -59,7 +59,7 @@ void CommSeqThread::txrxVSWRAlarmEnable(bool aTxFlag)
 	// Send the command.
 	sendString(tTxString);
 
-	// Wait for the receive acknowledgement notification.
+	// Wait for the receive response notification.
 	mNotify.wait(cCmdAckTimeout);
 
 	//***************************************************************************
@@ -72,6 +72,8 @@ void CommSeqThread::txrxVSWRAlarmEnable(bool aTxFlag)
 	if (tRxString == 0)
 	{
 		Prn::print(Prn::View11, "RxQueue EMPTY");
+		tS->mQxVSWRAlarmEnable = cQx_Nak;
+		delete tRxString;
 		return;
 	}
 
@@ -89,15 +91,6 @@ void CommSeqThread::txrxVSWRAlarmEnable(bool aTxFlag)
 	// 012345678901234
 	// 0024clL=32768
 
-	// Guard.
-	if ((tResponse[13] != 0)
-		)
-	{
-		Prn::print(Prn::View21, "txrxVSWRAlarmEnable ERROR 101 %s", tResponse);
-		delete tRxString;
-		return;
-	}
-
 	// Read from response string into temp variables.
 	tRet = sscanf(tResponse, "%x",
 		&tV);
@@ -105,28 +98,20 @@ void CommSeqThread::txrxVSWRAlarmEnable(bool aTxFlag)
 	// Guard.
 	if (tRet != 1)
 	{
+		Prn::print(Prn::View21, "VSWRAlarmEnable                 Nak ERROR 102 %s", tResponse);
+		tS->mQxVSWRAlarmEnable = cQx_Nak;
 		delete tRxString;
-		Prn::print(Prn::View21, "txrxVSWRAlarmEnable ERROR 102");
+		return;
 	}
 
 	// Convert.
 	tRxVSWRAlarmEnable = tV & 0x0008;
 
-	// If rx only then done. Copy the temp to the settings and exit.
-	if (!aTxFlag)
-	{
-		Prn::print(Prn::View21, "VSWRAlarmEnable %sf",
-			my_string_from_bool(tRxVSWRAlarmEnable));
-		tS->mRxVSWRAlarmEnable = tRxVSWRAlarmEnable;
-		delete tRxString;
-		return;
-	}
-
 	// Compare.
-	if (tTxVSWRAlarmEnable == tRxVSWRAlarmEnable)
+	if (!aTxFlag || tTxVSWRAlarmEnable == tRxVSWRAlarmEnable)
 	{
-		// If ok then copy the temp to the member and set the
-		// qx ack code for an ack. 
+		// If rx only or compare ok then copy the temp to the rx variable
+		// and set the qx ack code for an ack. 
 		tS->mRxVSWRAlarmEnable = tRxVSWRAlarmEnable;
 		tS->mQxVSWRAlarmEnable = cQx_Ack;
 	}
@@ -136,7 +121,7 @@ void CommSeqThread::txrxVSWRAlarmEnable(bool aTxFlag)
 		tS->mQxVSWRAlarmEnable = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "VSWRAlarmEnable %s %s",
+   Prn::print(Prn::View21, "VSWRAlarmEnable             %s %s",
 		asString_Qx(tS->mQxVSWRAlarmEnable), my_string_from_bool(tRxVSWRAlarmEnable));
 
 	//***************************************************************************

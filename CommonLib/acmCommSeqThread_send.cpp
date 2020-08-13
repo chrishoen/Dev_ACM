@@ -49,7 +49,7 @@ void CommSeqThread::executeSendSettings()
          txrxHighPowerThresh_pct(false);
          txrxHighPowerAlarmEnable(false);
          txrxVSWRTrigger(false);
-         //txrxVSWRAlarmEnable(false);
+         txrxVSWRAlarmEnable(false);
          //txrxGain(false);
          //txrxLatchAlarmEnable(false);
          //txrxPowerUpAlarmEnable(false);
