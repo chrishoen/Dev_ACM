@@ -66,7 +66,7 @@ void CommSeqThread::executeSendSettings()
 
       if (tS->mQxGain == cQx_Pending1)
       {
-         sendGain();
+         txrxGain(true);
       }
 
       if (tS->mQxLatchAlarmEnable == cQx_Pending1)
