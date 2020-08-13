@@ -44,13 +44,14 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 	char tTxString[100];
 	if (aTxFlag)
 	{
-		// Command to write the variable.
+		// Cmmand to write the variable.
 		sprintf(tTxString, "G%1d", tS->mTxLowPowerAlarmEnable);
 	}
 	else
 	{
-		// Command to read the variable.
-		sprintf(tTxString, "BT");
+		// Command to read the variable. This sends to commands, because
+		// of protocol goofiness. The response for the second will be ignored.
+		sprintf(tTxString, "BD");
 	}
 
 	// Set the thread notification mask.
@@ -59,7 +60,7 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 	// Send the command.
 	sendString(tTxString);
 
-	// Wait for the receive acknowledgement notification.
+	// Wait for the receive response notification.
 	mNotify.wait(cCmdAckTimeout);
 
 	//***************************************************************************
@@ -72,6 +73,8 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 	if (tRxString == 0)
 	{
 		Prn::print(Prn::View11, "RxQueue EMPTY");
+		tS->mQxLowPowerAlarmEnable = cQx_Nak;
+		delete tRxString;
 		return;
 	}
 
@@ -82,53 +85,58 @@ void CommSeqThread::txrxLowPowerAlarmEnable(bool aTxFlag)
 	else                              tResponse = &tRxString->c_str()[1];
 
 	// Temp variables to be extracted from the response string.
-	int   tV = 0;
+	int  tV = 0;
 	bool tTxLowPowerAlarmEnable = tS->mTxLowPowerAlarmEnable;
 	bool tRxLowPowerAlarmEnable = false;
 
 	// 012345678901234
-	// L=32768
+	// L=32768           for tx
+	// 01ffclL=32768     for rx
 
-	// Guard.
-	if ((tResponse[0] != 'L') ||
-		(tResponse[1] != '=') ||
-		(tResponse[7] != 0)
-		)
+	// If txrx.
+	if (aTxFlag)
 	{
-		Prn::print(Prn::View21, "txrxLowPowerAlarmEnable ERROR 101 %s", tResponse);
-		delete tRxString;
-		return;
+		// Read from response string into temp variables.
+		tRet = sscanf(tResponse, "L=%d",
+			&tV);
+
+		// Guard.
+		if (tRet != 1)
+		{
+			Prn::print(Prn::View21, "txrxLowPowerAlarmEnable Nak ERROR 102 %s", tResponse);
+			tS->mQxLowPowerThresh_pct = cQx_Nak;
+			delete tRxString;
+			return;
+		}
+
+		// Convert.
+		tRxLowPowerAlarmEnable = tV & 0x8000;
 	}
-
-	// Read from response string into temp variables.
-	tRet = sscanf(tResponse, "L=%d",
-		&tV);
-
-	// Guard.
-	if (tRet != 1)
+	// If rx only.
+	else
 	{
-		delete tRxString;
-		Prn::print(Prn::View21, "txrxLowPowerAlarmEnable ERROR 102");
-	}
+		// Read from response string into temp variables.
+		tRet = sscanf(tResponse, "%x",
+			&tV);
 
-	// Convert.
-	tRxLowPowerAlarmEnable = tV & 0x8000;
+		// Guard.
+		if (tRet != 1)
+		{
+			Prn::print(Prn::View21, "txrxLowPowerAlarmEnable Nak ERROR 102 %s", tResponse);
+			tS->mQxLowPowerThresh_pct = cQx_Nak;
+			delete tRxString;
+			return;
+		}
 
-	// If rx only then done. Copy the temp to the settings and exit.
-	if (!aTxFlag)
-	{
-		Prn::print(Prn::View21, "LowPowerAlarmEnable %sf",
-			my_string_from_bool(tRxLowPowerAlarmEnable));
-		tS->mRxLowPowerAlarmEnable = tRxLowPowerAlarmEnable;
-		delete tRxString;
-		return;
+		// Convert.
+		tRxLowPowerAlarmEnable = tV & 0x0020;
 	}
 
 	// Compare.
-	if (tTxLowPowerAlarmEnable == tRxLowPowerAlarmEnable)
+	if (!aTxFlag || tTxLowPowerAlarmEnable == tRxLowPowerAlarmEnable)
 	{
-		// If ok then copy the temp to the member and set the
-		// qx ack code for an ack. 
+		// If rx only or compare ok then copy the temp to the rx variable
+		// and set the qx ack code for an ack. 
 		tS->mRxLowPowerAlarmEnable = tRxLowPowerAlarmEnable;
 		tS->mQxLowPowerAlarmEnable = cQx_Ack;
 	}

@@ -44,7 +44,7 @@ void CommSeqThread::executeSendSettings()
          tS->mQxReadAllSettings = cQx_Pending2;
 
          txrxLowPowerThresh_pct(false);
-         //txrxLowPowerAlarmEnable(false);
+         txrxLowPowerAlarmEnable(false);
          //txrxHighPowerThresh_pct(false);
          //txrxHighPowerAlarmEnable(false);
          //txrxVSWRTrigger(false);
