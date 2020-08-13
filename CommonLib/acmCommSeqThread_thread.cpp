@@ -125,6 +125,7 @@ void CommSeqThread::executeAbort()
 
    // Abort the long thread.
    mAbortFlag = true;
+   mSettingsFlag = false;
    BaseClass::mNotify.abort();
    mAcquireWaitable.postSemaphore();
 }

@@ -142,6 +142,7 @@ void CommSeqThread::doProcessSettings()
    catch (int aException)
    {
       Prn::print(0, "EXCEPTION CommSeqThread::executeSendSettings %d %s", aException, mNotify.mException);
+      if (mAbortFlag) throw 1667;
    }
 
    // Finalize the synchronization objects.

@@ -35,36 +35,8 @@ void CommSeqThread::executeProcess()
       // Loop to transmit and receive.
       while (true)
       {
-         // Wait for timer or abort.
-         mAcquireWaitable.waitForTimerOrSemaphore();
-         if (mAcquireWaitable.wasSemaphore())
-         {
-            // The waitable semahore as posted for an abort.
-            throw 667;
-         }
-
-         // Test for a notification exception.
-         mNotify.testException();
-
-         // Set the thread notification mask.
-         mNotify.setMaskOne("CmdAck", cCmdAckNotifyCode);
-
-         // Send a command.
-         sendString("T");
-
-         // Wait for the acknowledgement notification.
-         mNotify.wait(cCmdAckTimeout);
-
-         // Read the receive string from the queue.
-         if (std::string* tRxString = mRxStringQueue.tryRead())
-         {
-            SM::gShare->mSuperStateACM.updateForT(tRxString);
-            delete tRxString;
-         }
-         else
-         {
-            Prn::print(Prn::View11, "RxQueue EMPTY");
-         }
+         doProcessAcquire();
+         doProcessSettings();
       }
    }
    catch (int aException)
