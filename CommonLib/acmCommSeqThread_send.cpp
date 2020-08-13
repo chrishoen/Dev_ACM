@@ -48,7 +48,7 @@ void CommSeqThread::executeSendSettings()
          txrxLowPowerAlarmEnable(false);
          txrxHighPowerThresh_pct(false);
          txrxHighPowerAlarmEnable(false);
-         //txrxVSWRTrigger(false);
+         txrxVSWRTrigger(false);
          //txrxVSWRAlarmEnable(false);
          //txrxGain(false);
          //txrxLatchAlarmEnable(false);

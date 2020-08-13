@@ -59,7 +59,7 @@ void CommSeqThread::txrxVSWRTrigger(bool aTxFlag)
 	// Send the command.
 	sendString(tTxString);
 
-	// Wait for the receive acknowledgement notification.
+	// Wait for the receive response notification.
 	mNotify.wait(cCmdAckTimeout);
 
 	//***************************************************************************
@@ -72,6 +72,8 @@ void CommSeqThread::txrxVSWRTrigger(bool aTxFlag)
 	if (tRxString == 0)
 	{
 		Prn::print(Prn::View11, "RxQueue EMPTY");
+		tS->mQxVSWRTrigger = cQx_Nak;
+		delete tRxString;
 		return;
 	}
 
@@ -84,21 +86,10 @@ void CommSeqThread::txrxVSWRTrigger(bool aTxFlag)
 	// Temp variables to be extracted from the response string.
 	int tV = 0;
 	int tTxVSWRTrigger = tS->mTxVSWRTrigger;
-	int tRxVSWRTrigger = 0.0;
+	int tRxVSWRTrigger = 0;
 
 	// 01234567890
 	// V=C
-
-	// Guard.
-	if ((tResponse[0] != 'V') ||
-		(tResponse[1] != '=') ||
-		(tResponse[3] != 0)
-		)
-	{
-		Prn::print(Prn::View21, "txrxVSWRTrigger ERROR 101 %s", tResponse);
-		delete tRxString;
-		return;
-	}
 
 	// Read from response string into temp variables.
 	tRet = sscanf(tResponse, "V=%x",
@@ -107,28 +98,19 @@ void CommSeqThread::txrxVSWRTrigger(bool aTxFlag)
 	// Guard.
 	if (tRet != 1)
 	{
+		Prn::print(Prn::View21, "VSWRTrigger                     Nak ERROR 102 %s", tResponse);
 		delete tRxString;
-		Prn::print(Prn::View21, "txrxVSWRTrigger ERROR 102");
+		return;
 	}
 
 	// Convert.
 	tRxVSWRTrigger = tV;
 
-	// If rx only then done. Copy the temp to the settings and exit.
-	if (!aTxFlag)
-	{
-		Prn::print(Prn::View21, "VSWRTrigger %s %.2f",
-			tRxVSWRTrigger);
-		tS->mRxVSWRTrigger = tRxVSWRTrigger;
-		delete tRxString;
-		return;
-	}
-
 	// Compare the tx and rx variables.
-	if (tTxVSWRTrigger == tRxVSWRTrigger)
+	if (!aTxFlag || tTxVSWRTrigger == tRxVSWRTrigger)
 	{
-		// If ok then copy the temp to the member and set the
-		// qx ack code for an ack. 
+		// If rx only or compare ok then copy the temp to the rx variable
+		// and set the qx ack code for an ack. 
 		tS->mRxVSWRTrigger = tRxVSWRTrigger;
 		tS->mQxVSWRTrigger = cQx_Ack;
 	}
@@ -138,7 +120,7 @@ void CommSeqThread::txrxVSWRTrigger(bool aTxFlag)
 		tS->mQxVSWRTrigger = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "VSWRTrigger %s %d",
+	Prn::print(Prn::View21, "VSWRTrigger                 %s %d",
 		asString_Qx(tS->mQxVSWRTrigger), tRxVSWRTrigger);
 
 	//***************************************************************************
