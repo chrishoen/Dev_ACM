@@ -41,6 +41,7 @@ void CommSeqThread::executeSendSettings()
 
       if (tS->mQxReadAllSettings == cQx_Pending1)
       {
+         Prn::print(Prn::View21, "ReadAllSettings**************");
          tS->mQxReadAllSettings = cQx_Pending2;
 
          txrxLowPowerThresh_pct(false);
