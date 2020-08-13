@@ -32,6 +32,12 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
    bool tGoing = false;
 
    // For each settings variable, set the qx code.
+   if (tS->mQxReadAllSettings == cQx_Request)
+   {
+      tS->mQxReadAllSettings = cQx_Pending1;
+      tGoing = true;
+   }
+
    if (tS->mQxLowPowerThresh_pct == cQx_Request)
    {
       tS->mQxLowPowerThresh_pct = cQx_Pending1;

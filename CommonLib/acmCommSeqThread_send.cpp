@@ -34,6 +34,38 @@ void CommSeqThread::executeSendSettings()
    {
       ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
 
+      //***************************************************************************
+      //***************************************************************************
+      //***************************************************************************
+      // Read all settings variables.
+
+      if (tS->mQxReadAllSettings == cQx_Pending1)
+      {
+         tS->mQxReadAllSettings = cQx_Pending2;
+
+         txrxLowPowerThresh_pct(false);
+         //txrxLowPowerAlarmEnable(false);
+         //txrxHighPowerThresh_pct(false);
+         //txrxHighPowerAlarmEnable(false);
+         //txrxVSWRTrigger(false);
+         //txrxVSWRAlarmEnable(false);
+         //txrxGain(false);
+         //txrxLatchAlarmEnable(false);
+         //txrxPowerUpAlarmEnable(false);
+         //txrxRelayOnPowerEnable(false);
+         //txrxRelayOnVSWREnable(false);
+         //txrxCheckVSWROnZeroEnable(false);
+         //txrxPTTDelay_sec(false);
+         //txrxPTTAlarmEnable(false);
+
+         tS->mQxReadAllSettings = cQx_Ack;
+      }
+
+      //***************************************************************************
+      //***************************************************************************
+      //***************************************************************************
+      // Set individual settings variables.
+
       if (tS->mQxLowPowerThresh_pct == cQx_Pending1)
       {
          txrxLowPowerThresh_pct(true);

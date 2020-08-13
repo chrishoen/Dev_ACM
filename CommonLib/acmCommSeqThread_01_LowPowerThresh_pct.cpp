@@ -75,6 +75,8 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	if (tRxString == 0)
 	{
 		Prn::print(Prn::View11, "RxQueue EMPTY");
+		tS->mQxLowPowerThresh_pct = cQx_Ack;
+		delete tRxString;
 		return;
 	}
 
@@ -92,17 +94,6 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	// 012345678901234
 	// L=32768
 
-	// Guard.
-	if ((tResponse[0] != 'L') ||
-		(tResponse[1] != '=') ||
-		(tResponse[7] != 0)
-		)
-	{
-		Prn::print(Prn::View21, "txrxLowPowerThresh_pct ERROR 101 %s", tResponse);
-		delete tRxString;
-		return;
-	}
-
 	// Read from response string into temp variables.
 	tRet = sscanf(tResponse, "L=%d",
 		&tV);
@@ -110,8 +101,10 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	// Guard.
 	if (tRet != 1)
 	{
+		Prn::print(Prn::View21, "txrxLowPowerThresh_pct Nak ERROR 102 %s", tResponse);
+		tS->mQxLowPowerThresh_pct = cQx_Nak;
 		delete tRxString;
-		Prn::print(Prn::View21, "txrxLowPowerThresh_pct ERROR 102");
+		return;
 	}
 
 	// Apply a mask.
@@ -123,9 +116,10 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 	// If rx only then done. Copy the temp to the settings and exit.
 	if (!aTxFlag)
 	{
-		Prn::print(Prn::View21, "LowPowerThresh_pct %s %.2f",
-			tRxLowPowerThresh_pct);
 		tS->mRxLowPowerThresh_pct = tRxLowPowerThresh_pct;
+		tS->mQxLowPowerThresh_pct = cQx_Ack;
+		Prn::print(Prn::View21, "LowPowerThresh_pct %s %.2f",
+			asString_Qx(tS->mQxLowPowerThresh_pct), tRxLowPowerThresh_pct);
 		delete tRxString;
 		return;
 	}
@@ -154,7 +148,6 @@ void CommSeqThread::txrxLowPowerThresh_pct(bool aTxFlag)
 
 	delete tRxString;
 }
-
 
 //******************************************************************************
 //******************************************************************************

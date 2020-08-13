@@ -49,6 +49,9 @@ public:
 	// mRxVariable   the settings received    from  the acm
 	// mQxVariable   the request code: none, request, pending, ack, nak
 
+	// Read all settings.
+	int    mQxReadAllSettings;
+
 	// Low power threshold.
 	float  mTxLowPowerThresh_pct;
 	float  mRxLowPowerThresh_pct;
@@ -138,6 +141,9 @@ public:
 	// Methods.
 
 	// Request the setting of settings variables. 
+	void requestReadAllSettings();
+
+	// Request the setting of settings variables. 
 	void requestLowPowerThresh_pct(float aValue);
 	void requestLowPowerAlarmEnable(bool aValue);
 	void requestHighPowerThresh_pct(float aValue);
@@ -153,20 +159,6 @@ public:
 	void requestPTTDelay_sec(float aValue);
 	void requestPTTAlarmEnable(bool aValue);
 
-	//***************************************************************************
-	//***************************************************************************
-	//***************************************************************************
-	// Methods.
-
-	// Update some variables by decoding a received response string from a
-	// sent command. 
-	bool updateForDE(std::string* aResponse);
-	bool updateForG(std::string* aResponse);
-	bool updateForLM(std::string* aResponse);
-	bool updateForN(std::string* aResponse);
-	bool updateFor89(std::string* aResponse);
-	bool updateFor6(std::string* aResponse);
-	bool updateForJK(std::string* aResponse);
 };
 
 //******************************************************************************

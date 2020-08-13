@@ -20,6 +20,9 @@ namespace ACM
 
 void SuperSettingsACM::initialize()
 {
+	// Read all settings.
+	mQxReadAllSettings = 0;
+
 	// Low power threshold.
 	mTxLowPowerThresh_pct = 0.0;
 	mRxLowPowerThresh_pct = 0.0;
@@ -100,10 +103,14 @@ void SuperSettingsACM::initialize()
 
 void SuperSettingsACM::show(int aPF)
 {
+	// Read all settings.
+	Prn::print(aPF, "ReadAllSettings              %10s",
+		asString_Qx(mQxReadAllSettings));
+
 	// Low power threshold.
 	Prn::print(aPF, "LowPowerThresh_pct           %10.2f %10.2f %10s",
-	   mTxLowPowerThresh_pct,
-	   mRxLowPowerThresh_pct,
+		mTxLowPowerThresh_pct,
+		mRxLowPowerThresh_pct,
 		asString_Qx(mQxLowPowerThresh_pct));
 
 	// Low power alarm.
@@ -193,6 +200,10 @@ void SuperSettingsACM::show(int aPF)
 //******************************************************************************
 // Request the setting of settings variables. 
 
+void SuperSettingsACM::requestReadAllSettings()
+{
+	mQxReadAllSettings = cQx_Request;
+}
 void SuperSettingsACM::requestLowPowerThresh_pct(float aValue)
 {
 	mTxLowPowerThresh_pct = aValue;

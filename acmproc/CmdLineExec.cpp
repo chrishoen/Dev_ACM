@@ -64,9 +64,9 @@ void CmdLineExec::executeAbort(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
 {
-   int tV = aCmd->argInt(1);
-   if (tV == 0)
+   if (aCmd->numArg() == 0)
    {
+      Prn::print(0, " 0  ReadAllSettings");
       Prn::print(0, " 1  LowPowerThresh_pct      float");
       Prn::print(0, " 2  LowPowerAlarmEnable     bool");
       Prn::print(0, " 3  HighPowerThresh_pct     float");
@@ -84,9 +84,11 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
       return;
    }
 
+   int tV = aCmd->argInt(1);
    ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
    switch (tV)
    {
+   case  0:  tS->requestReadAllSettings(); break;
    case  1:  tS->requestLowPowerThresh_pct(aCmd->argDouble(2)); break;
    case  2:  tS->requestLowPowerAlarmEnable(aCmd->argBool(2)); break;
    case  3:  tS->requestHighPowerThresh_pct(aCmd->argDouble(2)); break;
