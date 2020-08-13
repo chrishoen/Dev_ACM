@@ -59,7 +59,7 @@ void CommSeqThread::txrxGain(bool aTxFlag)
 	// Send the command.
 	sendString(tTxString);
 
-	// Wait for the receive acknowledgement notification.
+	// Wait for the receive response notification.
 	mNotify.wait(cCmdAckTimeout);
 
 	//***************************************************************************
@@ -72,6 +72,8 @@ void CommSeqThread::txrxGain(bool aTxFlag)
 	if (tRxString == 0)
 	{
 		Prn::print(Prn::View11, "RxQueue EMPTY");
+		tS->mQxLowPowerThresh_pct = cQx_Nak;
+		delete tRxString;
 		return;
 	}
 
@@ -92,21 +94,13 @@ void CommSeqThread::txrxGain(bool aTxFlag)
 	// 01234567JK01234
 	// G=88
 	// E
-	// Guard.
 
 	// If an error code was received then exit.
 	if (strcmp(tResponse, "E") == 0)
 	{
-		Prn::print(Prn::View21, "txrxGain ERROR 101");
+		Prn::print(Prn::View21, "Gain                        Nak ERROR 101 %s", tResponse);
+		tS->mQxGain = cQx_Nak;
 		delete tRxString;
-
-		// Set the qx ack code for a nak. 
-		if (aTxFlag) 
-		{
-			tS->mQxGain = cQx_Nak;
-			Prn::print(Prn::View21, "Gain Nak");
-		}
-
 		return;
 	}
 
@@ -117,12 +111,9 @@ void CommSeqThread::txrxGain(bool aTxFlag)
 	// Guard.
 	if (tRet != 2)
 	{
-		// Set the qx ack code for a nak. 
-		if (aTxFlag) tS->mQxGain = cQx_Nak;
-
-		// Exit
+		Prn::print(Prn::View21, "Gain                            Nak ERROR 102 %s", tResponse);
+		tS->mQxLowPowerThresh_pct = cQx_Nak;
 		delete tRxString;
-		Prn::print(Prn::View21, "txrxGain ERROR 102");
 		return;
 	}
 
@@ -130,22 +121,11 @@ void CommSeqThread::txrxGain(bool aTxFlag)
 	tRxForwardGain = tV1;
 	tRxReverseGain = tV2;
 
-	// If rx only then done. Copy the temp to the settings and exit.
-	if (!aTxFlag)
-	{
-		Prn::print(Prn::View21, "Gain %s 5d %d",
-			tRxForwardGain, tRxReverseGain);
-		tS->mRxForwardGain = tRxForwardGain;
-		tS->mRxReverseGain = tRxReverseGain;
-		delete tRxString;
-		return;
-	}
-
 	// Compare the tx and rx variables.
-	if (tRxForwardGain == tTxForwardGain && tRxReverseGain == tTxReverseGain)
+	if (!aTxFlag || tRxForwardGain == tTxForwardGain && tRxReverseGain == tTxReverseGain)
 	{
-		// If ok then copy the temp to the member and set the
-		// qx ack code for an ack. 
+		// If rx only or compare ok then copy the temp to the rx variable
+		// and set the qx ack code for an ack. 
 		tS->mRxForwardGain = tRxForwardGain;
 		tS->mRxReverseGain = tRxReverseGain;
 		tS->mQxGain = cQx_Ack;
@@ -156,7 +136,7 @@ void CommSeqThread::txrxGain(bool aTxFlag)
 		tS->mQxGain = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "Gain %s %d  %d",
+	Prn::print(Prn::View21, "Gain                        %s %d  %d",
 		asString_Qx(tS->mQxGain), tRxForwardGain, tRxReverseGain);
 
 	//***************************************************************************
