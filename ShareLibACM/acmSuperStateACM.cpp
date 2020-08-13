@@ -118,7 +118,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	if (my_closeto(tForwardPower_w, 0.0, 0.000001))
 	{
 		// ff zero then error
-		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 201");
+		//Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 201");
 		return false;
 	}
 
