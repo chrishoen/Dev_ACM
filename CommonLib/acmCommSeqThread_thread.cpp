@@ -45,11 +45,12 @@ CommSeqThread::CommSeqThread()
    // Set qcalls.
    mSessionQCall.bind       (this->mShortThread, this, &CommSeqThread::executeSession);
    mRxStringQCall.bind      (this->mShortThread, this, &CommSeqThread::executeRxString);
-   mAcquireQCall.bind       (this->mLongThread, this, &CommSeqThread::executeAcquire);
-   mAbortQCall.bind         (this->mShortThread, this, &CommSeqThread::executeAbort);
-   mSendSettingsQCall.bind  (this->mLongThread, this, &CommSeqThread::executeSendSettings);
+   mAbortQCall.bind(this->mShortThread, this, &CommSeqThread::executeAbort);
+   mProcessQCall.bind       (this->mLongThread, this, &CommSeqThread::executeProcess);
 
    // Set member variables.
+   mAbortFlag = false;
+   mSettingsFlag = false;
    mLoopExitCode = 0;
    mTxCount = 0;
    mRxCount = 0;
@@ -123,6 +124,7 @@ void CommSeqThread::executeAbort()
    Prn::print(Prn::View11, "ABORT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
    // Abort the long thread.
+   mAbortFlag = true;
    BaseClass::mNotify.abort();
    mAcquireWaitable.postSemaphore();
 }

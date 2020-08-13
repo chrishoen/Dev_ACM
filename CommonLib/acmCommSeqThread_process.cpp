@@ -18,15 +18,13 @@ namespace ACM
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Enter a loop that periodically queries the acm for measurement
-// variables. Periodically send a T command and process the response
-// to calculate and set the super state variables.
-//
-// The loop can be aborted via the waitable or the notification.
+// Process function. This is bound to the qcall. It runs in the context
+// of the long thread to execute a loop that periodically acquires 
+// measurement data and polls and processes settings requests.
 
-void CommSeqThread::doProcessAcquire()
+void CommSeqThread::executeProcess()
 {
-   Prn::print(Prn::View11, "CommSeqThread::doProcessAcquire BEGIN");
+   Prn::print(Prn::View11, "CommSeqThread::executeProcess BEGIN");
 
    // Initialize the synchronization objects.
    mAcquireWaitable.initialize(Cmn::gProgramParms.mDelay);
@@ -69,16 +67,16 @@ void CommSeqThread::doProcessAcquire()
          }
       }
    }
-   catch(int aException)
+   catch (int aException)
    {
-      Prn::print(0, "EXCEPTION CommSeqThread::executeAcquire %d %s", aException, mNotify.mException);
+      Prn::print(0, "EXCEPTION CommSeqThread::executeProcess %d %s", aException, mNotify.mException);
    }
 
    // Finalize the synchronization objects.
    mAcquireWaitable.finalize();
    mNotify.clearFlags();
 
-   Prn::print(Prn::View11, "CommSeqThread::doProcessAcquire END");
+   Prn::print(Prn::View11, "CommSeqThread::executeProcess END");
 }
 
 //******************************************************************************

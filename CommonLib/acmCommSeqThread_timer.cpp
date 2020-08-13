@@ -125,7 +125,11 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
    // Send the qcall to the long thread.
    if (tGoing)
    {
-      mSendSettingsQCall();
+      // Abort the long thread.
+      mAbortFlag = false;
+      mSettingsFlag = false;
+      BaseClass::mNotify.abort();
+      mAcquireWaitable.postSemaphore();
    }
 }
 

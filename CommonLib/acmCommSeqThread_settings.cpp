@@ -18,14 +18,15 @@ namespace ACM
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Send super settings function. This is bound to the qcall. Polls the
-// super settings and for any settings variable that has pending1, send 
-// a corresponding command to the acm to set the variable and then send 
-// a command to read the variable as verification.
+// Poll the super settings and for any settings variable that has pending1,
+// send a corresponding command to the acm to set the variable and then
+// process the response for verification.
+//
+// This can be aborted via the notification.
 
-void CommSeqThread::executeSendSettings()
+void CommSeqThread::doProcessSettings()
 {
-   Prn::print(Prn::View11, "CommSeqThread::executeSendSettings BEGIN");
+   Prn::print(Prn::View11, "CommSeqThread::doProcessSettings BEGIN");
 
    // Initialize the synchronization objects.
    mNotify.clearFlags();
@@ -138,7 +139,7 @@ void CommSeqThread::executeSendSettings()
       }
 
    }
-   catch(int aException)
+   catch (int aException)
    {
       Prn::print(0, "EXCEPTION CommSeqThread::executeSendSettings %d %s", aException, mNotify.mException);
    }
@@ -147,7 +148,7 @@ void CommSeqThread::executeSendSettings()
    mAcquireWaitable.finalize();
    mNotify.clearFlags();
 
-   Prn::print(Prn::View11, "CommSeqThread::executeSendSettings END");
+   Prn::print(Prn::View11, "CommSeqThread::doProcessSettings END");
 }
 
 

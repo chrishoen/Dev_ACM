@@ -26,7 +26,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("ACQ"))       executeAcquire(aCmd);
+   if (aCmd->isCmd("PROC"))      executeProcess(aCmd);
    if (aCmd->isCmd("A"))         executeAbort(aCmd);
    if (aCmd->isCmd("REQ"))       executeRequest(aCmd);
 
@@ -44,9 +44,9 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeAcquire(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeProcess(Ris::CmdLineCmd* aCmd)
 {
-   ACM::gCommSeqThread->mAcquireQCall();
+   ACM::gCommSeqThread->mProcessQCall();
 }
 
 //******************************************************************************

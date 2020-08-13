@@ -74,6 +74,12 @@ public:
    // Waitable timer.
    Ris::Threads::Waitable mAcquireWaitable;
 
+   // If true then an abort has been requested.
+   bool mAbortFlag;
+
+   // If true then a settings change has been requested.
+   bool mSettingsFlag;
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -158,18 +164,6 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Methods. qcalls.
-
-   // Acquire. It is invoked by the command line executive.
-   Ris::Threads::QCall0 mAcquireQCall;
-
-   // Acquire function. This is bound to the qcall. It runs a periodic
-   // acm data acquisition sequence.
-   void executeAcquire();
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
    // Methods: QCalls: These are used to send commands to the thread.
 
    // Abort a running grid or test qcall.
@@ -185,24 +179,40 @@ public:
    //***************************************************************************
    // Methods. qcalls.
 
-   // Send super settings. It is invoked by the short thread.
-   Ris::Threads::QCall0 mSendSettingsQCall;
+   // Acquire. It is invoked by the command line executive.
+   Ris::Threads::QCall0 mProcessQCall;
 
-   // Send super settings function. This is bound to the qcall. Polls the
-   // super settings and for any settings variable that has pending1, send 
-   // a corresponding command to the acm to set the variable and then send 
-   // a command to read the variable as verification.
-   void executeSendSettings();
+   // Process function. This is bound to the qcall. It runs in the context
+   // of the long thread to execute a loop that periodically acquires 
+   // measurement data and polls and processes settings requests.
+   void executeProcess();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Enter a loop that periodically queries the acm for measurement
+   // variables. Periodically send a T command and process the response
+   // to calculate and set the super state variables.
+   //
+   // The loop can be aborted via the waitable or the notification.
+   void doProcessAcquire();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods.
+
+   // Poll the super settings and for any settings variable that has pending1,
+   // send a corresponding command to the acm to set the variable and then
+   // process the response for verification.
+   //
+   // This can be aborted via the notification.
+   void doProcessSettings();
 
    // Send for individual settings variables. These is called by the above
    // function.
-   void sendLowPowerThresh_pct();
-   void sendLowPowerAlarmEnable();
-   void sendHighPowerThresh_pct();
-   void sendHighPowerAlarmEnable();
-   void sendVSWRTrigger();
-   void sendVSWRAlarmEnable();
-   void sendGain();
    void sendLatchAlarmEnable();
    void sendPowerUpAlarmEnable();
    void sendRelayOnPowerEnable();
@@ -235,8 +245,6 @@ public:
    void txrxCheckVSWROnZeroEnable(bool aTxFlag);
    void txrxPTTDelay_sec(bool aTxFlag);
    void txrxPTTAlarmEnable(bool aTxFlag);
-
-
 };
 
 //******************************************************************************

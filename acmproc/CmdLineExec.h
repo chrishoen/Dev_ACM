@@ -15,7 +15,7 @@ public:
   void reset();
   void execute(Ris::CmdLineCmd* aCmd);
 
-  void executeAcquire (Ris::CmdLineCmd* aCmd);
+  void executeProcess (Ris::CmdLineCmd* aCmd);
   void executeAbort   (Ris::CmdLineCmd* aCmd);
   void executeRequest (Ris::CmdLineCmd* aCmd);
 
