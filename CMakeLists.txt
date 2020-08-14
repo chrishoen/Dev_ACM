@@ -17,6 +17,7 @@ return()
 
 add_subdirectory ("Test")
 add_subdirectory ("commtest")
+add_subdirectory ("ShareLibACMphpExt")
 return()
 
 

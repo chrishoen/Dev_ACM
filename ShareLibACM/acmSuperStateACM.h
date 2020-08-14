@@ -50,6 +50,8 @@ public:
 	// Measurement variables.
 	float  mForwardPower_kw;
 	float  mReflectedPower_kw;
+	float  mForwardPower_dbm;
+	float  mReflectedPower_dbm;
 	float  mVSWR;
 	float  mReturnLoss_db;
 	float  mRho;
@@ -78,6 +80,15 @@ public:
 	// Update some variables by decoding a received response string from a
 	// sent command. 
 	bool updateForT(std::string* aResponse);
+
+	//******************************************************************************
+	//******************************************************************************
+	//******************************************************************************
+	// Methods.
+
+	// Return the super state encoded into a json string.
+	std::string asJsonString();
+
 };
 
 //******************************************************************************

@@ -3,6 +3,7 @@
 //******************************************************************************
 #include "stdafx.h"
 
+#include "json.h"
 #include "acmSuperStateACM.h"
 
 //******************************************************************************
@@ -21,6 +22,8 @@ void SuperStateACM::initialize()
 {
 	mForwardPower_kw = 0.0;
 	mReflectedPower_kw = 0.0;
+	mForwardPower_dbm = -666.0;
+	mReflectedPower_dbm = -666.0;
 	mVSWR = 0.0;
 	mReturnLoss_db = 0.0;
 	mRho = 0.0;
@@ -39,6 +42,8 @@ void SuperStateACM::show(int aPF)
 {
 	Prn::print(aPF, "ForwardPower_kw      %10.3f", mForwardPower_kw);
 	Prn::print(aPF, "ReflectedPower_kw    %10.3f", mReflectedPower_kw);
+	Prn::print(aPF, "ForwardPower_dbm     %10.1f", mForwardPower_dbm);
+	Prn::print(aPF, "ReflectedPower_dbm   %10.1f", mReflectedPower_dbm);
 	Prn::print(aPF, "VSWR                 %10.2f", mVSWR);
 	Prn::print(aPF, "ReturnLoss_db        %10.2f", mReturnLoss_db);
 	Prn::print(aPF, "Rho                  %10.2f", mRho);
@@ -104,8 +109,10 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	}
 
 	// Copy temp variables to member variables. 
-	mForwardPower_kw = tForwardPower_w;
-	mReflectedPower_kw = tReflectedPower_w;
+	mForwardPower_kw = tForwardPower_w / 1000.0;
+	mReflectedPower_kw = tReflectedPower_w / 1000.0;
+	mForwardPower_dbm = 10.0 * log(tForwardPower_w * 1000.0);
+	mReflectedPower_dbm = 10.0 * log(tReflectedPower_w * 1000.0);
 	mAlarmFlag = tAlarmChar == 'A';
 	mAlarmOnZeroPower = tAlarmOnZeroPower == 1;
 
@@ -151,5 +158,45 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Return the super state encoded into a json string.
+
+std::string SuperStateACM::asJsonString()
+{
+	Json::Value tValue;
+
+	tValue["ForwardPower_kw"] = mForwardPower_kw;
+	tValue["ReflectedPower_kw"] = mReflectedPower_kw;
+	tValue["ForwardPower_dbm"] = mForwardPower_dbm;
+	tValue["ReflectedPower_dbm"] = mReflectedPower_dbm;
+	tValue["VSWR"] = mVSWR;
+	tValue["ReturnLoss_db"] = mReturnLoss_db;
+	tValue["Rho"] = mRho;
+	tValue["Efficiency_pct"] = mEfficiency_pct;
+	tValue["AlarmFlag"] = mAlarmFlag;
+	tValue["AlarmOnZeroPower"] = mAlarmOnZeroPower;
+
+	std::string tString;
+	Json::FastWriter tWriter;
+	tString = tWriter.write(tValue);
+	return tString;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 } //namespace
 
+#if 0
+
+ForwardPower_kw ForwardPower_kw
+ReflectedPower_kw ReflectedPower_kw
+ForwardPower_dbm ForwardPower_dbm
+ReflectedPower_dbm ReflectedPower_dbm
+VSWR VSWR
+ReturnLoss_db ReturnLoss_db
+Rho Rho
+Efficiency_pct Efficiency_pct
+AlarmFlag AlarmFlag
+AlarmOnZeroPower AlarmOnZeroPower
+
+#endif
