@@ -13,48 +13,13 @@ Description:
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Get shared memory super state variables as json strings.
 
-void share_set_X1_Int(Php::Parameters& aP)
+Php::Value share_get_SuperSettingsACM_Json()
 {
-   SM::gShare->mX1 = (int)aP[0];
-}
-
-void share_set_X2_Int(Php::Parameters& aP)
-{
-   SM::gShare->mX2 = (int)aP[0];
-}
-
-void share_set_X3_Int(Php::Parameters& aP)
-{
-   SM::gShare->mX3 = (int)aP[0];
-}
-
-void share_set_X4_Int(Php::Parameters& aP)
-{
-   SM::gShare->mX4 = (int)aP[0];
+   return (Php::Value)SM::gShare->mSuperSettingsACM.asJsonString();
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-
-Php::Value share_get_X1_Int()
-{
-   return (Php::Value)SM::gShare->mX1;
-}
-
-Php::Value share_get_X2_Int()
-{
-   return (Php::Value)SM::gShare->mX2;
-}
-
-Php::Value share_get_X3_Int()
-{
-   return (Php::Value)SM::gShare->mX3;
-}
-
-Php::Value share_get_X4_Int()
-{
-   return (Php::Value)SM::gShare->mX4;
-}
-
