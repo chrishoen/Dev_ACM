@@ -3,6 +3,7 @@
 //******************************************************************************
 #include "stdafx.h"
 
+#include "json.h"
 #include "acmSuperDefs.h"
 #include "acmSuperSettingsACM.h"
 
@@ -279,4 +280,55 @@ void SuperSettingsACM::requestPTTAlarmEnable(bool aValue)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Return the super settings receive variables encoded into a json string.
+
+std::string SuperSettingsACM::asJsonString()
+{
+	Json::Value tValue;
+
+	tValue["RxLowPowerThresh_pct"] = mRxLowPowerThresh_pct;
+	tValue["RxLowPowerAlarmEnable"] = mRxLowPowerAlarmEnable;
+	tValue["RxHighPowerThresh_pct"] = mRxHighPowerThresh_pct;
+	tValue["RxHighPowerAlarmEnable"] = mRxHighPowerAlarmEnable;
+	tValue["RxVSWRTrigger"] = mRxVSWRTrigger;
+	tValue["RxVSWRAlarmEnable"] = mRxVSWRAlarmEnable;
+	tValue["RxForwardGain"] = mRxForwardGain;
+	tValue["RxReverseGain"] = mRxReverseGain;
+	tValue["RxLatchAlarmEnable"] = mRxLatchAlarmEnable;
+	tValue["RxPowerUpAlarmEnable"] = mRxPowerUpAlarmEnable;
+	tValue["RxRelayOnPowerEnable"] = mRxRelayOnPowerEnable;
+	tValue["RxRelayOnVSWREnable"] = mRxRelayOnVSWREnable;
+	tValue["RxCheckVSWROnZeroEnable"] = mRxCheckVSWROnZeroEnable;
+	tValue["RxPTTDelay_sec"] = mRxPTTDelay_sec;
+	tValue["RxPTTAlarmEnable"] = mRxPTTAlarmEnable;
+
+	std::string tString;
+	Json::FastWriter tWriter;
+	tString = tWriter.write(tValue);
+	return tString;
+
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 } //namespace
+
+#if 0
+RxLowPowerThresh_pct RxLowPowerThresh_pct
+RxLowPowerAlarmEnable RxLowPowerAlarmEnable
+RxHighPowerThresh_pct RxHighPowerThresh_pct
+RxHighPowerAlarmEnable RxHighPowerAlarmEnable
+RxVSWRTrigger RxVSWRTrigger
+RxVSWRAlarmEnable RxVSWRAlarmEnable
+RxForwardGain RxForwardGain
+RxReverseGain RxReverseGain
+RxLatchAlarmEnable RxLatchAlarmEnable
+RxPowerUpAlarmEnable RxPowerUpAlarmEnable
+RxRelayOnPowerEnable RxRelayOnPowerEnable
+RxRelayOnVSWREnable RxRelayOnVSWREnable
+RxCheckVSWROnZeroEnable RxCheckVSWROnZeroEnable
+RxPTTDelay_sec RxPTTDelay_sec
+RxPTTAlarmEnable RxPTTAlarmEnable
+#endif
+ 
