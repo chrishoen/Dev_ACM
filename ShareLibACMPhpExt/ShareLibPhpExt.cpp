@@ -23,6 +23,7 @@ extern "C"
 		static Php::Extension ex( "ShareLibACMPhpExt", "0.1" );
 
 		ex.add<share_get_SuperStateACM_Json>("share_get_SuperStateACM_Json");
+		ex.add<share_get_SuperSettingsACM_Json>("share_get_SuperSettingsACM_Json");
 
 		//******************************************************************************
 		//******************************************************************************
