@@ -27,11 +27,20 @@ void main_initialize(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
+   // Initialize.
+
+   // Read parameters files.
+   Cmn::gProgramParms.reset();
+   Cmn::gProgramParms.readSection("default");
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Initialize thread services.
 
    TS::reset();
    TS::setProgramName("cprint");
-   TS::setProgramPrintLevel(TS::PrintLevel(0, 3));
+   TS::setProgramPrintLevel(TS::PrintLevel(0, 0));
    TS::initialize();
 
    //***************************************************************************
@@ -41,6 +50,7 @@ void main_initialize(int argc,char** argv)
 
    // Initialize print.
    Prn::resetPrint();
+   Prn::setPrintViewIPAddress(Cmn::gProgramParms.mPrintViewIPAddress);
    Prn::useConsole(1);
    Prn::useConsole(2);
    Prn::initializePrint();
@@ -55,15 +65,6 @@ void main_initialize(int argc,char** argv)
    Prn::setFilter(Prn::View22, false, 2);
    Prn::setFilter(Prn::View23, false, 2);
    Prn::setFilter(Prn::View24, false, 2);
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Initialize.
-
-   // Read parameters files.
-   Cmn::gProgramParms.reset();
-   Cmn::gProgramParms.readSection("default");
 
    //***************************************************************************
    //***************************************************************************

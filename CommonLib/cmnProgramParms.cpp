@@ -41,7 +41,8 @@ void ProgramParms::reset()
    mCmdCommPort485Flag = false;
    mDelay = 0;
    mTxCommand[0] = 0;
-
+   mPrintViewEnable = false;
+   mPrintViewIPAddress[0] = 0;
 }
 
 //******************************************************************************
@@ -69,6 +70,10 @@ void ProgramParms::show()
    printf("\n");
    printf("Delay                   %12d\n", mDelay);
    printf("TxCommand               %12s\n", mTxCommand);
+
+   printf("\n");
+   printf("PrintViewEnable            %-10s\n", my_string_from_bool(mPrintViewEnable));
+   printf("PrintViewIPAddress         %-10s\n", mPrintViewIPAddress);
 }
 
 //******************************************************************************
@@ -93,6 +98,9 @@ void ProgramParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("Delay"))                  mDelay = aCmd->argInt(1);
    if (aCmd->isCmd("TxCommand"))              aCmd->copyArgString(1, mTxCommand, cMaxStringSize);
+
+   if (aCmd->isCmd("PrintViewIPAddress"))     aCmd->copyArgString(1, mPrintViewIPAddress, cMaxStringSize);
+   if (aCmd->isCmd("PrintViewEnable"))        mPrintViewEnable = aCmd->argBool(1);
 }
 
 //******************************************************************************
