@@ -127,6 +127,7 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
+   Prn::print(Prn::View11, "GO1**************");
 }
 
 //******************************************************************************

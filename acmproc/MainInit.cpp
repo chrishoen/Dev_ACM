@@ -49,8 +49,7 @@ void main_initialize(int argc,char** argv)
    // Initialize print facility.
 
    // Initialize print.
-   Prn::resetPrint();
-   Prn::setPrintViewIPAddress(Cmn::gProgramParms.mPrintViewIPAddress);
+   Prn::resetPrint(Cmn::gProgramParms.mPrintViewIPAddress);
    Prn::useConsole(1);
    Prn::useConsole(2);
    Prn::initializePrint();
