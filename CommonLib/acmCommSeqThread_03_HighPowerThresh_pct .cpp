@@ -114,7 +114,7 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 	tRxHighPowerThresh_pct = 100.0 * tV / 26214.0;
 
 	// Compare the tx and rx variables.
-	if (!aTxFlag || my_closeto(tTxHighPowerThresh_pct, tRxHighPowerThresh_pct, 0.01))
+	if (!aTxFlag || my_iscloseto(tTxHighPowerThresh_pct, tRxHighPowerThresh_pct, 0.01))
 	{
 		// If rx only or compare ok then copy the temp to the rx variable
 		// and set the qx ack code for an ack. 

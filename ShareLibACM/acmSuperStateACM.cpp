@@ -134,7 +134,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	// Calculate some more variables from the extracted variables.
 
 	// Guard.
-	if (my_closeto(tForwardPower_w, 0.0, 0.000001))
+	if (my_iscloseto(tForwardPower_w, 0.0, 0.00001))
 	{
 		// ff zero then error
 		//Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 201");

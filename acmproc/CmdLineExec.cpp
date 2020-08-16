@@ -37,6 +37,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
 
 
+   if (aCmd->isCmd("Help"))      executeHelp(aCmd);
    if (aCmd->isCmd("Parms"))     executeParms(aCmd);
    if (aCmd->isCmd("Show"))      executeShow(aCmd);
 }
@@ -164,6 +165,25 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
    Cmn::gProgramParms.show();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeHelp(Ris::CmdLineCmd* aCmd)
+{
+   Prn::print(0, "Help ***********************************");
+   Prn::print(0, "");
+   Prn::print(0, "proc             -- start main processing loop");
+   Prn::print(0, "a                -- abort main processing loop");
+   Prn::print(0, "");
+   Prn::print(0, "over arg1 arg2   -- override input super state forward and reflected power watts");
+   Prn::print(0, "show x           -- show super state");
+   Prn::print(0, "show s           -- show super settings");
+   Prn::print(0, "");
+   Prn::print(0, "req              -- show super settings request options");
+   Prn::print(0, "req option arg1  -- request setting a super setting value");
 }
 
 //******************************************************************************
