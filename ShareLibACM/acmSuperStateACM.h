@@ -61,6 +61,10 @@ public:
 	bool   mAlarmFlag;
 	bool   mAlarmOnZeroPower;
 
+	// Overreide variables.
+	float  mOverrideForwardPower_w;
+	float  mOverrideReflectedPower_w;
+
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************

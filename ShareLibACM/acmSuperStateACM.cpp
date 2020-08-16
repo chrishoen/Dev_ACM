@@ -31,6 +31,9 @@ void SuperStateACM::initialize()
 
 	mAlarmFlag = false;
 	mAlarmOnZeroPower = false;
+
+	mOverrideForwardPower_w = 0.0;
+	mOverrideReflectedPower_w = 0.0;
 }
 
 //******************************************************************************
@@ -40,16 +43,18 @@ void SuperStateACM::initialize()
 
 void SuperStateACM::show(int aPF)
 {
-	Prn::print(aPF, "ForwardPower_kw      %10.3f", mForwardPower_kw);
-	Prn::print(aPF, "ReflectedPower_kw    %10.3f", mReflectedPower_kw);
-	Prn::print(aPF, "ForwardPower_dbm     %10.1f", mForwardPower_dbm);
-	Prn::print(aPF, "ReflectedPower_dbm   %10.1f", mReflectedPower_dbm);
-	Prn::print(aPF, "VSWR                 %10.2f", mVSWR);
-	Prn::print(aPF, "ReturnLoss_db        %10.2f", mReturnLoss_db);
-	Prn::print(aPF, "Rho                  %10.2f", mRho);
-	Prn::print(aPF, "Efficiency_pct       %10.2f", mEfficiency_pct);
-	Prn::print(aPF, "AlarmFlag            %10s", my_string_from_bool(mAlarmFlag));
-	Prn::print(aPF, "AlarmOnZeroPower     %10s", my_string_from_bool(mAlarmOnZeroPower));
+	Prn::print(aPF, "ForwardPower_kw            %10.3f", mForwardPower_kw);
+	Prn::print(aPF, "ReflectedPower_kw          %10.3f", mReflectedPower_kw);
+	Prn::print(aPF, "ForwardPower_dbm           %10.1f", mForwardPower_dbm);
+	Prn::print(aPF, "ReflectedPower_dbm         %10.1f", mReflectedPower_dbm);
+	Prn::print(aPF, "VSWR                       %10.2f", mVSWR);
+	Prn::print(aPF, "ReturnLoss_db              %10.2f", mReturnLoss_db);
+	Prn::print(aPF, "Rho                        %10.2f", mRho);
+	Prn::print(aPF, "Efficiency_pct             %10.2f", mEfficiency_pct);
+	Prn::print(aPF, "AlarmFlag                  %10s", my_string_from_bool(mAlarmFlag));
+	Prn::print(aPF, "AlarmOnZeroPower           %10s", my_string_from_bool(mAlarmOnZeroPower));
+	Prn::print(aPF, "OverrideForwardPower_w     %10.3f", mOverrideForwardPower_w);
+	Prn::print(aPF, "OverrideReflectedPower_w   %10.3f", mOverrideReflectedPower_w);
 }
 
 //******************************************************************************
@@ -106,6 +111,13 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	{
 		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 102");
 		return false;
+	}
+
+	// If the overrides are not zero then override the inputs.
+	if (mOverrideForwardPower_w != 0.0)
+	{
+		tForwardPower_w = mOverrideForwardPower_w;
+		tReflectedPower_w = mOverrideReflectedPower_w;
 	}
 
 	// Copy temp variables to member variables. 

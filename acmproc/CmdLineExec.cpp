@@ -29,6 +29,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("PROC"))      executeProcess(aCmd);
    if (aCmd->isCmd("A"))         executeAbort(aCmd);
    if (aCmd->isCmd("REQ"))       executeRequest(aCmd);
+   if (aCmd->isCmd("OVER"))      executeOverride(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -104,6 +105,16 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
    case 13:  tS->requestPTTDelay_sec(aCmd->argDouble(2)); break;
    case 14:  tS->requestPTTAlarmEnable(aCmd->argBool(2)); break;
    }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeOverride(Ris::CmdLineCmd* aCmd)
+{
+   SM::gShare->mSuperStateACM.mOverrideForwardPower_w = aCmd->argDouble(1);
+   SM::gShare->mSuperStateACM.mOverrideReflectedPower_w = aCmd->argDouble(2);
 }
 
 //******************************************************************************

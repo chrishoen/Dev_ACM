@@ -15,9 +15,10 @@ public:
   void reset();
   void execute(Ris::CmdLineCmd* aCmd);
 
-  void executeProcess (Ris::CmdLineCmd* aCmd);
-  void executeAbort   (Ris::CmdLineCmd* aCmd);
-  void executeRequest (Ris::CmdLineCmd* aCmd);
+  void executeProcess  (Ris::CmdLineCmd* aCmd);
+  void executeAbort    (Ris::CmdLineCmd* aCmd);
+  void executeRequest  (Ris::CmdLineCmd* aCmd);
+  void executeOverride (Ris::CmdLineCmd* aCmd);
 
   void executeGo1     (Ris::CmdLineCmd* aCmd);
   void executeGo2     (Ris::CmdLineCmd* aCmd);
