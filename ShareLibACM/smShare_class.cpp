@@ -30,11 +30,6 @@ Ris::SharedMemory gSharedMemory;
 
 void Share::initialize()
 {
-   mX1 = 101;
-   mX2 = 102;
-   mX3 = 103;
-   mX4 = 104;
-
    mSuperStateACM.initialize();
    mSuperSettingsACM.initialize();
 
@@ -49,10 +44,6 @@ void Share::initialize()
 void Share::show(int aPF)
 {
    Prn::print(aPF, "NumAttached      %d", gSharedMemory.getNumAttached());
-   Prn::print(aPF, "mX1              %d", mX1);
-   Prn::print(aPF, "mX2              %d", mX2);
-   Prn::print(aPF, "mX3              %d", mX3);
-   Prn::print(aPF, "mX4              %d", mX4);
 }
 
 void Share::show2()

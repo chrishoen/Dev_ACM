@@ -29,6 +29,7 @@ namespace SM
 // 1) No constructors.
 // 2) No pointers.
 // 3) No dynamic memory, this means no std::string, no std::vector, ...
+// 4) No class inheritance (no vtables).
 //
 //******************************************************************************
 //******************************************************************************
@@ -40,21 +41,6 @@ namespace SM
 class Share
 {
 public:
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members.
-
-   // Resource count. Incremented each time that a process attaches to the
-   // shared memory region. Decremented each time that a process deattaches.
-   int mResourceCount;
-
-   // Some variables.
-   int mX1;
-   int mX2;
-   int mX3;
-   int mX4;
 
    //***************************************************************************
    //***************************************************************************
