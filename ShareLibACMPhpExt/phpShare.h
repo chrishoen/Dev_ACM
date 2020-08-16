@@ -49,4 +49,27 @@ void share_set_SettingsPTTAlarmEnable_bool(Php::Parameters& aP);
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Super settings variables.
+
+// Return the setting qx status. none,request,pending1,pending2,ack,nak.
+// These can be polled after making one of the above set calls.
+Php::Value share_get_SettingsQxReadAllSettings();
+Php::Value share_get_SettingsQxLowPowerThresh_pct();
+Php::Value share_get_SettingsQxLowPowerAlarmEnable();
+Php::Value share_get_SettingsQxHighPowerThresh_pct();
+Php::Value share_get_SettingsQxHighPowerAlarmEnable();
+Php::Value share_get_SettingsQxVSWRTrigger();
+Php::Value share_get_SettingsQxVSWRAlarmEnable();
+Php::Value share_get_SettingsQxGain();
+Php::Value share_get_SettingsQxLatchAlarmEnable();
+Php::Value share_get_SettingsQxPowerUpAlarmEnable();
+Php::Value share_get_SettingsQxRelayOnPowerEnable();
+Php::Value share_get_SettingsQxRelayOnVSWREnable();
+Php::Value share_get_SettingsQxCheckVSWROnZeroEnable();
+Php::Value share_get_SettingsQxPTTDelay_sec();
+Php::Value share_get_SettingsQxPTTAlarmEnable();
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 

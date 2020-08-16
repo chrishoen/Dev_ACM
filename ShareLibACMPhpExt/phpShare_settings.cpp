@@ -95,3 +95,70 @@ void share_set_SettingsPTTAlarmEnable_bool(Php::Parameters& aP)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Return the setting qx status. none,request,pending1,pending2,ack,nak.
+// These can be polled after making one of the above set calls.
+
+Php::Value share_get_SettingsQxReadAllSettings()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxReadAllSettings);
+}
+Php::Value share_get_SettingsQxLowPowerThresh_pct()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxLowPowerThresh_pct);
+}
+Php::Value share_get_SettingsQxLowPowerAlarmEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxLowPowerAlarmEnable);
+}
+Php::Value share_get_SettingsQxHighPowerThresh_pct()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxHighPowerThresh_pct);
+}
+Php::Value share_get_SettingsQxHighPowerAlarmEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxHighPowerAlarmEnable);
+}
+Php::Value share_get_SettingsQxVSWRTrigger()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxVSWRTrigger);
+}
+Php::Value share_get_SettingsQxVSWRAlarmEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxVSWRAlarmEnable);
+}
+Php::Value share_get_SettingsQxGain()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxGain);
+}
+Php::Value share_get_SettingsQxLatchAlarmEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxLatchAlarmEnable);
+}
+Php::Value share_get_SettingsQxPowerUpAlarmEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxPowerUpAlarmEnable);
+}
+Php::Value share_get_SettingsQxRelayOnPowerEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxRelayOnPowerEnable);
+}
+Php::Value share_get_SettingsQxRelayOnVSWREnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxRelayOnVSWREnable);
+}
+Php::Value share_get_SettingsQxCheckVSWROnZeroEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxCheckVSWROnZeroEnable);
+}
+Php::Value share_get_SettingsQxPTTDelay_sec()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxPTTDelay_sec);
+}
+Php::Value share_get_SettingsQxPTTAlarmEnable()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxPTTAlarmEnable);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
