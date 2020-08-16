@@ -27,7 +27,7 @@ Php::Value share_get_SuperSettingsACM_Json();
 //******************************************************************************
 // Super settings variables.
 
-// Request the setting of settings variables. 
+// Request the setting to read all settings. 
 void share_set_SettingsReadAllSettings();
 
 // Request the setting of settings variables. 
