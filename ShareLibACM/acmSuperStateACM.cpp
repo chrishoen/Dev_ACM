@@ -43,8 +43,8 @@ void SuperStateACM::initialize()
 
 void SuperStateACM::show(int aPF)
 {
-	Prn::print(aPF, "ForwardPower_kw            %10.3f", mForwardPower_kw);
-	Prn::print(aPF, "ReflectedPower_kw          %10.3f", mReflectedPower_kw);
+	Prn::print(aPF, "ForwardPower_kw            %10.6f", mForwardPower_kw);
+	Prn::print(aPF, "ReflectedPower_kw          %10.6f", mReflectedPower_kw);
 	Prn::print(aPF, "ForwardPower_dbm           %10.1f", mForwardPower_dbm);
 	Prn::print(aPF, "ReflectedPower_dbm         %10.1f", mReflectedPower_dbm);
 	Prn::print(aPF, "VSWR                       %10.2f", mVSWR);
@@ -123,8 +123,8 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	// Copy temp variables to member variables. 
 	mForwardPower_kw = tForwardPower_w / 1000.0;
 	mReflectedPower_kw = tReflectedPower_w / 1000.0;
-	mForwardPower_dbm = 10.0 * log(tForwardPower_w * 1000.0);
-	mReflectedPower_dbm = 10.0 * log(tReflectedPower_w * 1000.0);
+	mForwardPower_dbm = 10.0 * log10(tForwardPower_w * 1000.0);
+	mReflectedPower_dbm = 10.0 * log10(tReflectedPower_w * 1000.0);
 	mAlarmFlag = tAlarmChar == 'A';
 	mAlarmOnZeroPower = tAlarmOnZeroPower == 1;
 
@@ -155,7 +155,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	// Calculate some member variables.
 	float tGamma = sqrt(tReflectedPower_w / tForwardPower_w);
 	mVSWR = (1.0 + tGamma) / (1.0 - tGamma);
-	mReturnLoss_db = -20.0 * log(tGamma);
+	mReturnLoss_db = -20.0 * log10(tGamma);
 	mRho = tGamma;
 	mEfficiency_pct = (tForwardPower_w - tReflectedPower_w) / tForwardPower_w;
 
