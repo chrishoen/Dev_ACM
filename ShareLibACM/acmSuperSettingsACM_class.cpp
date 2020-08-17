@@ -286,21 +286,21 @@ std::string SuperSettingsACM::asJsonString()
 {
 	Json::Value tValue;
 
-	tValue["RxLowPowerThresh_pct"] = mRxLowPowerThresh_pct;
-	tValue["RxLowPowerAlarmEnable"] = mRxLowPowerAlarmEnable;
-	tValue["RxHighPowerThresh_pct"] = mRxHighPowerThresh_pct;
-	tValue["RxHighPowerAlarmEnable"] = mRxHighPowerAlarmEnable;
-	tValue["RxVSWRTrigger"] = mRxVSWRTrigger;
-	tValue["RxVSWRAlarmEnable"] = mRxVSWRAlarmEnable;
-	tValue["RxForwardGain"] = mRxForwardGain;
-	tValue["RxReverseGain"] = mRxReverseGain;
-	tValue["RxLatchAlarmEnable"] = mRxLatchAlarmEnable;
-	tValue["RxPowerUpAlarmEnable"] = mRxPowerUpAlarmEnable;
-	tValue["RxRelayOnPowerEnable"] = mRxRelayOnPowerEnable;
-	tValue["RxRelayOnVSWREnable"] = mRxRelayOnVSWREnable;
-	tValue["RxCheckVSWROnZeroEnable"] = mRxCheckVSWROnZeroEnable;
-	tValue["RxPTTDelay_sec"] = mRxPTTDelay_sec;
-	tValue["RxPTTAlarmEnable"] = mRxPTTAlarmEnable;
+	tValue["LowPowerThresh_pct"] = mRxLowPowerThresh_pct;
+	tValue["LowPowerAlarmEnable"] = mRxLowPowerAlarmEnable;
+	tValue["HighPowerThresh_pct"] = mRxHighPowerThresh_pct;
+	tValue["HighPowerAlarmEnable"] = mRxHighPowerAlarmEnable;
+	tValue["VSWRTrigger"] = mRxVSWRTrigger;
+	tValue["VSWRAlarmEnable"] = mRxVSWRAlarmEnable;
+	tValue["ForwardGain"] = mRxForwardGain;
+	tValue["ReverseGain"] = mRxReverseGain;
+	tValue["LatchAlarmEnable"] = mRxLatchAlarmEnable;
+	tValue["PowerUpAlarmEnable"] = mRxPowerUpAlarmEnable;
+	tValue["RelayOnPowerEnable"] = mRxRelayOnPowerEnable;
+	tValue["RelayOnVSWREnable"] = mRxRelayOnVSWREnable;
+	tValue["CheckVSWROnZeroEnable"] = mRxCheckVSWROnZeroEnable;
+	tValue["PTTDelay_sec"] = mRxPTTDelay_sec;
+	tValue["PTTAlarmEnable"] = mRxPTTAlarmEnable;
 
 	std::string tString;
 	Json::FastWriter tWriter;
