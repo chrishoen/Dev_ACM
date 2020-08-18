@@ -110,7 +110,7 @@ void CommSeqThread::doProcessSettings()
 
       if (tS->mQxPowerUpAlarmEnable == cQx_Pending1)
       {
-         sendPowerUpAlarmEnable();
+         txrxPowerUpAlarmEnable(true);
       }
 
       if (tS->mQxRelayOnPowerEnable == cQx_Pending1)
@@ -151,12 +151,6 @@ void CommSeqThread::doProcessSettings()
    Prn::print(Prn::View11, "CommSeqThread::doProcessSettings END");
 }
 
-void CommSeqThread::sendPowerUpAlarmEnable()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxPowerUpAlarmEnable = cQx_Pending2;
-}
 void CommSeqThread::sendRelayOnPowerEnable()
 {
    // Do this first.
