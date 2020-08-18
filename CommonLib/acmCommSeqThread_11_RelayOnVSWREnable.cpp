@@ -29,6 +29,23 @@ namespace ACM
 // current variable. Receive and process the response to set the rx
 // variable.
 
+void CommSeqThread::txrxRelayOnVSWREnable(bool aTxFlag)
+{
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+	// Send a command to the acm.
+
+	// Do this first.
+	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	tS->mQxRelayOnVSWREnable = cQx_Pending2;
+
+	// This one's a disaster.
+	Prn::print(Prn::View21, "RelayOnVSWREnable           Nak IGNORED");
+	tS->mQxRelayOnVSWREnable = cQx_Nak;
+	return;
+}
+
 
 //******************************************************************************
 //******************************************************************************
