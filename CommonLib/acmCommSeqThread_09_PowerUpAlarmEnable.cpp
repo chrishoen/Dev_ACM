@@ -29,7 +29,6 @@ namespace ACM
 // current variable. Receive and process the response to set the rx
 // variable.
 
-
 void CommSeqThread::txrxPowerUpAlarmEnable(bool aTxFlag)
 {
    //***************************************************************************

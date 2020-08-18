@@ -80,8 +80,8 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
       Prn::print(0, " 7  Gain                    int int");
       Prn::print(0, " 8  LatchAlarmEnable        bool");
       Prn::print(0, " 9  PowerUpAlarmEnable      bool");
-      Prn::print(0, "10  RelayOnPowerEnable(     bool");
-      Prn::print(0, "11  RelayOnVSWREnable(      bool");
+      Prn::print(0, "10  RelayOnPowerEnable      bool");
+      Prn::print(0, "11  RelayOnVSWREnable       bool");
       Prn::print(0, "12  CheckVSWROnZeroEnable   bool");
       Prn::print(0, "13  PTTDelay_sec            float");
       Prn::print(0, "14  PTTAlarmEnable          bool");
