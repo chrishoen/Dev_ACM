@@ -26,6 +26,8 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("TP"))        ACM::gCommSeqThread->mTPFlag = aCmd->argBool(1);
+
    if (aCmd->isCmd("PROC"))      executeProcess(aCmd);
    if (aCmd->isCmd("A"))         executeAbort(aCmd);
    if (aCmd->isCmd("REQ"))       executeRequest(aCmd);
@@ -175,15 +177,17 @@ void CmdLineExec::executeHelp(Ris::CmdLineCmd* aCmd)
 {
    Prn::print(0, "Help ***********************************");
    Prn::print(0, "");
-   Prn::print(0, "proc             -- start main processing loop");
-   Prn::print(0, "a                -- abort main processing loop");
+   Prn::print(0, "proc                 -- start main processing loop");
+   Prn::print(0, "a                    -- abort main processing loop");
+   Prn::print(0, "tp bool1             -- enable/disable periodic superstate acquire");
+
    Prn::print(0, "");
-   Prn::print(0, "over arg1 arg2   -- override input super state forward and reflected power watts");
-   Prn::print(0, "show x           -- show super state");
-   Prn::print(0, "show s           -- show super settings");
+   Prn::print(0, "over float1 float2   -- override input super state forward and reflected power watts");
+   Prn::print(0, "show x               -- show super state");
+   Prn::print(0, "show s               -- show super settings");
    Prn::print(0, "");
-   Prn::print(0, "req              -- show super settings request options");
-   Prn::print(0, "req option arg1  -- request setting a super setting value");
+   Prn::print(0, "req                  -- show super settings request options");
+   Prn::print(0, "req option int1      -- request setting a super setting value");
 }
 
 //******************************************************************************

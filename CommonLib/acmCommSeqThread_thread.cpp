@@ -49,6 +49,8 @@ CommSeqThread::CommSeqThread()
    mProcessQCall.bind       (this->mLongThread, this, &CommSeqThread::executeProcess);
 
    // Set member variables.
+   mConnectionFlag = false;
+   mTPFlag = true;
    mAbortFlag = false;
    mSettingsFlag = false;
    mLoopExitCode = 0;

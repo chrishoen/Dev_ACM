@@ -45,6 +45,9 @@ void CommSeqThread::doProcessAcquire()
             throw 667;
          }
 
+         // Guard.
+         if (!mTPFlag) continue;
+
          // Test for a notification exception.
          mNotify.testException();
 

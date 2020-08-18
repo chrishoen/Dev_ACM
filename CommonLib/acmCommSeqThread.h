@@ -59,6 +59,9 @@ public:
    // If true then the serial port is open.
    bool mConnectionFlag;
 
+   // If true then do some periodic processing.
+   bool mTPFlag;
+
    // Receive string queue. Strings are received at the short thread
    // and processed in the long thread.
    Ris::SRSWPointerQueue<std::string*, 100> mRxStringQueue;
