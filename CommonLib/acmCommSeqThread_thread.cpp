@@ -50,7 +50,7 @@ CommSeqThread::CommSeqThread()
 
    // Set member variables.
    mConnectionFlag = false;
-   mTPFlag = true;
+   mTPFlag = false;
    mAbortFlag = false;
    mSettingsFlag = false;
    mLoopExitCode = 0;
@@ -88,6 +88,9 @@ void CommSeqThread::threadInitFunction()
 
    // Launch the child thread.
    mSerialStringThread->launchThread();
+
+   // Start the long thread with a qcall.
+   mProcessQCall();
 }
 
 //******************************************************************************
