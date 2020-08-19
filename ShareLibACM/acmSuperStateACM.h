@@ -71,8 +71,7 @@ public:
 	bool mVSWRAlarmEnable;
 	bool mLatchAlarmEnable;
 	bool mPowerUpAlarmEnable;
-	bool mRelayOnPowerEnable;
-	bool mRelayOnVSWREnable;
+	bool mRelayOnAlarmEnable;
 	bool mCheckVSWROnZeroEnable;
 	bool mPTTEnable;
 

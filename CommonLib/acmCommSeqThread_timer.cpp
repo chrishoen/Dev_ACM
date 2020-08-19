@@ -92,9 +92,9 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
       tGoing = true;
    }
 
-   if (tS->mQxRelayOnPowerEnable == cQx_Request)
+   if (tS->mQxRelayOnAlarmEnable == cQx_Request)
    {
-      tS->mQxRelayOnPowerEnable = cQx_Pending1;
+      tS->mQxRelayOnAlarmEnable = cQx_Pending1;
       tGoing = true;
    }
 

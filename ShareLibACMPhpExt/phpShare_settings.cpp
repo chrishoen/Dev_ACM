@@ -71,9 +71,9 @@ void share_set_SettingsPowerUpAlarmEnable_bool(Php::Parameters& aP)
 {
    SM::gShare->mSuperSettingsACM.requestPowerUpAlarmEnable((bool)aP[0]);
 }
-void share_set_SettingsRelayOnPowerEnable_bool(Php::Parameters& aP)
+void share_set_SettingsRelayOnAlarmEnable_bool(Php::Parameters& aP)
 {
-   SM::gShare->mSuperSettingsACM.requestRelayOnPowerEnable((bool)aP[0]);
+   SM::gShare->mSuperSettingsACM.requestRelayOnAlarmEnable((bool)aP[0]);
 }
 void share_set_SettingsRelayOnVSWREnable_bool(Php::Parameters& aP)
 {
@@ -138,9 +138,9 @@ Php::Value share_get_SettingsQxPowerUpAlarmEnable()
 {
    return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxPowerUpAlarmEnable);
 }
-Php::Value share_get_SettingsQxRelayOnPowerEnable()
+Php::Value share_get_SettingsQxRelayOnAlarmEnable()
 {
-   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxRelayOnPowerEnable);
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxRelayOnAlarmEnable);
 }
 Php::Value share_get_SettingsQxRelayOnVSWREnable()
 {

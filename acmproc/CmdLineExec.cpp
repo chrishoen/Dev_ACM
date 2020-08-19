@@ -80,7 +80,7 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
       Prn::print(0, " 7  Gain                    int int");
       Prn::print(0, " 8  LatchAlarmEnable        bool");
       Prn::print(0, " 9  PowerUpAlarmEnable      bool");
-      Prn::print(0, "10  RelayOnPowerEnable      bool");
+      Prn::print(0, "10  RelayOnAlarmEnable      bool");
       Prn::print(0, "11  RelayOnVSWREnable       bool");
       Prn::print(0, "12  CheckVSWROnZeroEnable   bool");
       Prn::print(0, "13  PTTDelay_sec            float");
@@ -102,7 +102,7 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
    case  7:  tS->requestGain(aCmd->argInt(2), aCmd->argDouble(3)); break;
    case  8:  tS->requestLatchAlarmEnable(aCmd->argBool(2)); break;
    case  9:  tS->requestPowerUpAlarmEnable(aCmd->argBool(2)); break;
-   case 10:  tS->requestRelayOnPowerEnable(aCmd->argBool(2)); break;
+   case 10:  tS->requestRelayOnAlarmEnable(aCmd->argBool(2)); break;
    case 11:  tS->requestRelayOnVSWREnable(aCmd->argBool(2)); break;
    case 12:  tS->requestCheckVSWROnZeroEnable(aCmd->argBool(2)); break;
    case 13:  tS->requestPTTDelay_sec(aCmd->argDouble(2)); break;

@@ -218,7 +218,7 @@ public:
    // function.
    void sendLatchAlarmEnable();
    void sendPowerUpAlarmEnable();
-   void sendRelayOnPowerEnable();
+   void sendRelayOnAlarmEnable();
    void sendRelayOnVSWREnable();
    void sendCheckVSWROnZeroEnable();
    void sendPTTDelay_sec();
@@ -243,7 +243,7 @@ public:
    void txrxGain(bool aTxFlag);
    void txrxLatchAlarmEnable(bool aTxFlag);
    void txrxPowerUpAlarmEnable(bool aTxFlag);
-   void txrxRelayOnPowerEnable(bool aTxFlag);
+   void txrxRelayOnAlarmEnable(bool aTxFlag);
    void txrxRelayOnVSWREnable(bool aTxFlag);
    void txrxCheckVSWROnZeroEnable(bool aTxFlag);
    void txrxPTTDelay_sec(bool aTxFlag);

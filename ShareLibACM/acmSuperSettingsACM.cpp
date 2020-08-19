@@ -72,9 +72,9 @@ void SuperSettingsACM::initialize()
 	mQxPowerUpAlarmEnable = 0;
 
 	// Relay energize on power alarm enable.
-	mTxRelayOnPowerEnable = false;
-	mRxRelayOnPowerEnable = false;
-	mQxRelayOnPowerEnable = 0;
+	mTxRelayOnAlarmEnable = false;
+	mRxRelayOnAlarmEnable = false;
+	mQxRelayOnAlarmEnable = 0;
 
 	// Relay energize on VSWR alarm enable.
 	mTxRelayOnVSWREnable = false;
@@ -165,10 +165,10 @@ void SuperSettingsACM::show(int aPF)
 		asString_Qx(mQxPowerUpAlarmEnable));
 
 	// Relay energize on power alarm enable.
-	Prn::print(aPF, "RelayOnPowerAlarmEnable      %10s %10s %10s",
-		my_string_from_bool(mTxRelayOnPowerEnable),
-		my_string_from_bool(mRxRelayOnPowerEnable),
-		asString_Qx(mQxRelayOnPowerEnable));
+	Prn::print(aPF, "RelayOnAlarmAlarmEnable      %10s %10s %10s",
+		my_string_from_bool(mTxRelayOnAlarmEnable),
+		my_string_from_bool(mRxRelayOnAlarmEnable),
+		asString_Qx(mQxRelayOnAlarmEnable));
 
 	// Relay energize on VSWR alarm enable.
 	Prn::print(aPF, "RelayOnVSWRAlarmEnable       %10s %10s %10s",
@@ -251,10 +251,10 @@ void SuperSettingsACM::requestPowerUpAlarmEnable(bool aValue)
 	mTxPowerUpAlarmEnable = aValue;
 	mQxPowerUpAlarmEnable = cQx_Request;
 }
-void SuperSettingsACM::requestRelayOnPowerEnable(bool aValue)
+void SuperSettingsACM::requestRelayOnAlarmEnable(bool aValue)
 {
-	mTxRelayOnPowerEnable = aValue;
-	mQxRelayOnPowerEnable = cQx_Request;
+	mTxRelayOnAlarmEnable = aValue;
+	mQxRelayOnAlarmEnable = cQx_Request;
 }
 void SuperSettingsACM::requestRelayOnVSWREnable(bool aValue)
 {
@@ -296,7 +296,7 @@ std::string SuperSettingsACM::asJsonString()
 	tValue["ReverseGain"] = mRxReverseGain;
 	tValue["LatchAlarmEnable"] = mRxLatchAlarmEnable;
 	tValue["PowerUpAlarmEnable"] = mRxPowerUpAlarmEnable;
-	tValue["RelayOnPowerEnable"] = mRxRelayOnPowerEnable;
+	tValue["RelayOnAlarmEnable"] = mRxRelayOnAlarmEnable;
 	tValue["RelayOnVSWREnable"] = mRxRelayOnVSWREnable;
 	tValue["CheckVSWROnZeroEnable"] = mRxCheckVSWROnZeroEnable;
 	tValue["PTTDelay_sec"] = mRxPTTDelay_sec;
@@ -325,7 +325,7 @@ RxForwardGain RxForwardGain
 RxReverseGain RxReverseGain
 RxLatchAlarmEnable RxLatchAlarmEnable
 RxPowerUpAlarmEnable RxPowerUpAlarmEnable
-RxRelayOnPowerEnable RxRelayOnPowerEnable
+RxRelayOnAlarmEnable RxRelayOnAlarmEnable
 RxRelayOnVSWREnable RxRelayOnVSWREnable
 RxCheckVSWROnZeroEnable RxCheckVSWROnZeroEnable
 RxPTTDelay_sec RxPTTDelay_sec

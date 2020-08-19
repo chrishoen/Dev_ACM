@@ -58,7 +58,7 @@ void CommSeqThread::doProcessSettings()
          txrxGain(false);
          txrxLatchAlarmEnable(false);
          txrxPowerUpAlarmEnable(false);
-         txrxRelayOnPowerEnable(false);
+         txrxRelayOnAlarmEnable(false);
          txrxRelayOnVSWREnable(false);
          //txrxCheckVSWROnZeroEnable(false);
          //txrxPTTDelay_sec(false);
@@ -117,9 +117,9 @@ void CommSeqThread::doProcessSettings()
          txrxPowerUpAlarmEnable(true);
       }
 
-      if (tS->mQxRelayOnPowerEnable == cQx_Pending1)
+      if (tS->mQxRelayOnAlarmEnable == cQx_Pending1)
       {
-         txrxRelayOnPowerEnable(true);
+         txrxRelayOnAlarmEnable(true);
       }
 
       if (tS->mQxRelayOnVSWREnable == cQx_Pending1)

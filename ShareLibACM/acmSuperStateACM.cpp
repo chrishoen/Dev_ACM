@@ -40,8 +40,7 @@ void SuperStateACM::initialize()
 	 mVSWRAlarmEnable = false;
 	 mLatchAlarmEnable = false;
 	 mPowerUpAlarmEnable = false;
-	 mRelayOnPowerEnable = false;
-	 mRelayOnVSWREnable = false;
+	 mRelayOnAlarmEnable = false;
 	 mCheckVSWROnZeroEnable = false;
 	 mPTTEnable = false;
 }
@@ -74,8 +73,7 @@ void SuperStateACM::show(int aPF)
 	Prn::print(aPF, "VSWRAlarmEnable            %10s", my_string_from_bool(mVSWRAlarmEnable));
 	Prn::print(aPF, "LatchAlarmEnable           %10s", my_string_from_bool(mLatchAlarmEnable));
 	Prn::print(aPF, "PowerUpAlarmEnable         %10s", my_string_from_bool(mPowerUpAlarmEnable));
-	Prn::print(aPF, "RelayOnPowerEnable         %10s", my_string_from_bool(mRelayOnPowerEnable));
-	Prn::print(aPF, "RelayOnVSWREnable          %10s", my_string_from_bool(mRelayOnVSWREnable));
+	Prn::print(aPF, "RelayOnAlarmEnable         %10s", my_string_from_bool(mRelayOnAlarmEnable));
 	Prn::print(aPF, "CheckVSWROnZeroEnable      %10s", my_string_from_bool(mCheckVSWROnZeroEnable));
 	Prn::print(aPF, "PTTEnable                  %10s", my_string_from_bool(mPTTEnable));
 }
@@ -197,15 +195,14 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 
 void SuperStateACM::updateFlags(int aFlags)
 {
-	mCheckVSWROnZeroEnable = aFlags & 0x0001;
-	mHighPowerAlarmEnable  = aFlags & 0x0002;
-	mRelayOnVSWREnable     = aFlags & 0x0004;
-	mVSWRAlarmEnable       = aFlags & 0x0008;
 	mLowPowerAlarmEnable   = aFlags & 0x0020;
+	mHighPowerAlarmEnable  = aFlags & 0x0002;
+	mVSWRAlarmEnable       = aFlags & 0x0008;
 	mLatchAlarmEnable      = aFlags & 0x0040;
 	mPowerUpAlarmEnable    = aFlags & 0x0080;
+	mRelayOnAlarmEnable    = aFlags & 0x0004;
+	mCheckVSWROnZeroEnable = aFlags & 0x0001;
 	mPTTEnable             = aFlags & 0x0100;
-	mRelayOnPowerEnable    = aFlags & 0x0200;
 }
 
 //******************************************************************************

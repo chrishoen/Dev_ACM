@@ -29,7 +29,7 @@ namespace ACM
 // current variable. Receive and process the response to set the rx
 // variable.
 
-void CommSeqThread::txrxRelayOnPowerEnable(bool aTxFlag)
+void CommSeqThread::txrxRelayOnAlarmEnable(bool aTxFlag)
 {
 	//***************************************************************************
 	//***************************************************************************
@@ -39,11 +39,11 @@ void CommSeqThread::txrxRelayOnPowerEnable(bool aTxFlag)
    // Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
 	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
-	tS->mQxRelayOnPowerEnable = cQx_Pending2;
+	tS->mQxRelayOnAlarmEnable = cQx_Pending2;
 
 	// This one's a disaster.
-	Prn::print(Prn::View21, "RelayOnPowerEnable          Nak IGNORED");
-	tS->mQxRelayOnPowerEnable = cQx_Nak;
+	Prn::print(Prn::View21, "RelayOnAlarmEnable          Nak IGNORED");
+	tS->mQxRelayOnAlarmEnable = cQx_Nak;
 	return;
 
 	// Format the command string.
@@ -51,7 +51,7 @@ void CommSeqThread::txrxRelayOnPowerEnable(bool aTxFlag)
 	if (aTxFlag)
 	{
 		// Command to write the variable.
-		sprintf(tTxString, "W%1dD", tS->mTxRelayOnPowerEnable);
+		sprintf(tTxString, "W%1dD", tS->mTxRelayOnAlarmEnable);
 	}
 	else
 	{
@@ -78,7 +78,7 @@ void CommSeqThread::txrxRelayOnPowerEnable(bool aTxFlag)
 	if (tRxString == 0)
 	{
 		Prn::print(Prn::View11, "RxQueue EMPTY");
-		tS->mQxRelayOnPowerEnable = cQx_Nak;
+		tS->mQxRelayOnAlarmEnable = cQx_Nak;
 		delete tRxString;
 		return;
 	}
@@ -91,8 +91,8 @@ void CommSeqThread::txrxRelayOnPowerEnable(bool aTxFlag)
 
 	// Temp variables to be extracted from the response string.
 	int   tV = 0;
-	bool tTxRelayOnPowerEnable = tS->mTxRelayOnPowerEnable;
-	bool tRxRelayOnPowerEnable = false;
+	bool tTxRelayOnAlarmEnable = tS->mTxRelayOnAlarmEnable;
+	bool tRxRelayOnAlarmEnable = false;
 
 	// 012345678901234
 	// 0024clL=32768
@@ -104,31 +104,31 @@ void CommSeqThread::txrxRelayOnPowerEnable(bool aTxFlag)
 	// Guard.
 	if (tRet != 1)
 	{
-		Prn::print(Prn::View21, "RelayOnPowerEnable              Nak ERROR 102 %s", tResponse);
-		tS->mQxRelayOnPowerEnable = cQx_Nak;
+		Prn::print(Prn::View21, "RelayOnAlarmEnable              Nak ERROR 102 %s", tResponse);
+		tS->mQxRelayOnAlarmEnable = cQx_Nak;
 		delete tRxString;
 		return;
 	}
 
 	// Convert.
-	tRxRelayOnPowerEnable = tV & 0x0200;
+	tRxRelayOnAlarmEnable = tV & 0x0200;
 
 	// Compare.
-	if (!aTxFlag || tTxRelayOnPowerEnable == tRxRelayOnPowerEnable)
+	if (!aTxFlag || tTxRelayOnAlarmEnable == tRxRelayOnAlarmEnable)
 	{
 		// If rx only or compare ok then copy the temp to the rx variable
 		// and set the qx ack code for an ack. 
-		tS->mRxRelayOnPowerEnable = tRxRelayOnPowerEnable;
-		tS->mQxRelayOnPowerEnable = cQx_Ack;
+		tS->mRxRelayOnAlarmEnable = tRxRelayOnAlarmEnable;
+		tS->mQxRelayOnAlarmEnable = cQx_Ack;
 	}
 	else
 	{
 		// If not ok then set the qx ack code for a nak. 
-		tS->mQxRelayOnPowerEnable = cQx_Nak;
+		tS->mQxRelayOnAlarmEnable = cQx_Nak;
 	}
 
-	Prn::print(Prn::View21, "RelayOnPowerEnable          %s %s",
-		asString_Qx(tS->mQxRelayOnPowerEnable), my_string_from_bool(tRxRelayOnPowerEnable));
+	Prn::print(Prn::View21, "RelayOnAlarmEnable          %s %s",
+		asString_Qx(tS->mQxRelayOnAlarmEnable), my_string_from_bool(tRxRelayOnAlarmEnable));
 
 	//***************************************************************************
 	//***************************************************************************
