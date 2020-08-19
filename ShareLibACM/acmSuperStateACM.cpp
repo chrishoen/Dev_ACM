@@ -32,18 +32,18 @@ void SuperStateACM::initialize()
 	mAlarmFlag = false;
 	mAlarmOnZeroPower = false;
 
-	mCheckVSWROnZeroEnable = false;
-	mHighPowerAlarmEnable = false;
-	mRelayOnVSWREnable = false;
-	mVSWRAlarmEnable = false;
-	mLowPowerAlarmEnable = false;
-	mLatchAlarmEnable = false;
-	mPowerUpAlarmEnable = false;
-	mPTTEnable = false;
-	mRelayOnPowerEnable = false;
-
 	mOverrideForwardPower_w = 0.0;
 	mOverrideReflectedPower_w = 0.0;
+
+	 mLowPowerAlarmEnable = false;
+	 mHighPowerAlarmEnable = false;
+	 mVSWRAlarmEnable = false;
+	 mLatchAlarmEnable = false;
+	 mPowerUpAlarmEnable = false;
+	 mRelayOnPowerEnable = false;
+	 mRelayOnVSWREnable = false;
+	 mCheckVSWROnZeroEnable = false;
+	 mPTTEnable = false;
 }
 
 //******************************************************************************
@@ -69,15 +69,15 @@ void SuperStateACM::show(int aPF)
 	Prn::print(aPF, "OverrideReflectedPower_w   %10.3f", mOverrideReflectedPower_w);
 
 	Prn::print(aPF, "");
-	Prn::print(aPF, "CheckVSWROnZeroEnable      %10s", my_string_from_bool(mCheckVSWROnZeroEnable));
-	Prn::print(aPF, "HighPowerAlarmEnable       %10s", my_string_from_bool(mHighPowerAlarmEnable));
-	Prn::print(aPF, "RelayOnVSWREnable          %10s", my_string_from_bool(mRelayOnVSWREnable));
-	Prn::print(aPF, "VSWRAlarmEnable            %10s", my_string_from_bool(mVSWRAlarmEnable));
 	Prn::print(aPF, "LowPowerAlarmEnable        %10s", my_string_from_bool(mLowPowerAlarmEnable));
+	Prn::print(aPF, "HighPowerAlarmEnable       %10s", my_string_from_bool(mHighPowerAlarmEnable));
+	Prn::print(aPF, "VSWRAlarmEnable            %10s", my_string_from_bool(mVSWRAlarmEnable));
 	Prn::print(aPF, "LatchAlarmEnable           %10s", my_string_from_bool(mLatchAlarmEnable));
 	Prn::print(aPF, "PowerUpAlarmEnable         %10s", my_string_from_bool(mPowerUpAlarmEnable));
-	Prn::print(aPF, "PTTEnable                  %10s", my_string_from_bool(mPTTEnable));
 	Prn::print(aPF, "RelayOnPowerEnable         %10s", my_string_from_bool(mRelayOnPowerEnable));
+	Prn::print(aPF, "RelayOnVSWREnable          %10s", my_string_from_bool(mRelayOnVSWREnable));
+	Prn::print(aPF, "CheckVSWROnZeroEnable      %10s", my_string_from_bool(mCheckVSWROnZeroEnable));
+	Prn::print(aPF, "PTTEnable                  %10s", my_string_from_bool(mPTTEnable));
 }
 
 //******************************************************************************

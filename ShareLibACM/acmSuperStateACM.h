@@ -66,15 +66,15 @@ public:
 	float  mOverrideReflectedPower_w;
 
 	// Flag variables.
-	bool mCheckVSWROnZeroEnable;
-	bool mHighPowerAlarmEnable;
-	bool mRelayOnVSWREnable;
-	bool mVSWRAlarmEnable;
 	bool mLowPowerAlarmEnable;
+	bool mHighPowerAlarmEnable;
+	bool mVSWRAlarmEnable;
 	bool mLatchAlarmEnable;
 	bool mPowerUpAlarmEnable;
-	bool mPTTEnable;
 	bool mRelayOnPowerEnable;
+	bool mRelayOnVSWREnable;
+	bool mCheckVSWROnZeroEnable;
+	bool mPTTEnable;
 
 	//***************************************************************************
 	//***************************************************************************
