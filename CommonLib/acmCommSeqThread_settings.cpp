@@ -40,6 +40,10 @@ void CommSeqThread::doProcessSettings()
       //***************************************************************************
       // Read all settings variables.
 
+      // Do this first;
+      mRxStringQueue.flushRead();
+
+      // Test for pending requests.
       if (tS->mQxReadAllSettings == cQx_Pending1)
       {
          Prn::print(Prn::View21, "ReadAllSettings**************");
