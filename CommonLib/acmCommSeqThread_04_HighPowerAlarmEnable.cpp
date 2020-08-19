@@ -38,6 +38,7 @@ void CommSeqThread::txrxHighPowerAlarmEnable(bool aTxFlag)
 
 		// Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxHighPowerAlarmEnable = cQx_Pending2;
 
 	// Format the command string.
@@ -111,6 +112,7 @@ void CommSeqThread::txrxHighPowerAlarmEnable(bool aTxFlag)
 
 		// Convert.
 		tRxHighPowerAlarmEnable = tV & 0x8000;
+		tX->mHighPowerAlarmEnable = tRxHighPowerAlarmEnable;
 	}
 	// If rx only.
 	else

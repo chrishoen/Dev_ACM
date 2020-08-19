@@ -36,8 +36,9 @@ void CommSeqThread::txrxPowerUpAlarmEnable(bool aTxFlag)
 	//***************************************************************************
 	// Send a command to the acm.
 
-		// Do this first.
+   // Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxPowerUpAlarmEnable = cQx_Pending2;
 
 	// Format the command string.
@@ -105,6 +106,7 @@ void CommSeqThread::txrxPowerUpAlarmEnable(bool aTxFlag)
 	}
 
 	// Convert.
+	tX->updateFlags(tV);
 	tRxPowerUpAlarmEnable = tV & 0x0080;
 
 	// Compare.

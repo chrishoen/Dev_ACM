@@ -38,6 +38,7 @@ void CommSeqThread::txrxRelayOnPowerEnable(bool aTxFlag)
 
    // Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxRelayOnPowerEnable = cQx_Pending2;
 
 	// This one's a disaster.

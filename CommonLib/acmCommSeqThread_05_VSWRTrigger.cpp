@@ -38,6 +38,7 @@ void CommSeqThread::txrxVSWRTrigger(bool aTxFlag)
 
 		// Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxVSWRTrigger = cQx_Pending2;
 
 	// Format the command string.

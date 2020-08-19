@@ -39,6 +39,7 @@ void CommSeqThread::txrxHighPowerThresh_pct(bool aTxFlag)
 
 	// Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxHighPowerThresh_pct = cQx_Pending2;
 
 	// Format the command string.

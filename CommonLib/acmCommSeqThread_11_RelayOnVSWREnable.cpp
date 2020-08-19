@@ -38,6 +38,7 @@ void CommSeqThread::txrxRelayOnVSWREnable(bool aTxFlag)
 
 	// Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxRelayOnVSWREnable = cQx_Pending2;
 
 	// This one's a disaster.

@@ -36,8 +36,9 @@ void CommSeqThread::txrxLatchAlarmEnable(bool aTxFlag)
 	//***************************************************************************
 	// Send a command to the acm.
 
-		// Do this first.
+   // Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxLatchAlarmEnable = cQx_Pending2;
 
 	// Format the command string.
@@ -105,6 +106,7 @@ void CommSeqThread::txrxLatchAlarmEnable(bool aTxFlag)
 	}
 
 	// Convert.
+	tX->updateFlags(tV);
 	tRxLatchAlarmEnable = tV & 0x0040;
 
 	// Compare.

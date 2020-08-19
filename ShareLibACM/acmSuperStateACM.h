@@ -65,6 +65,17 @@ public:
 	float  mOverrideForwardPower_w;
 	float  mOverrideReflectedPower_w;
 
+	// Flag variables.
+	bool mCheckVSWROnZeroEnable;
+	bool mHighPowerAlarmEnable;
+	bool mRelayOnVSWREnable;
+	bool mVSWRAlarmEnable;
+	bool mLowPowerAlarmEnable;
+	bool mLatchAlarmEnable;
+	bool mPowerUpAlarmEnable;
+	bool mPTTEnable;
+	bool mRelayOnPowerEnable;
+
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
@@ -84,6 +95,9 @@ public:
 	// Update some variables by decoding a received response string from a
 	// sent command. 
 	bool updateForT(std::string* aResponse);
+
+	// Update flag variables.
+	void updateFlags(int aFlags);
 
 	//******************************************************************************
 	//******************************************************************************

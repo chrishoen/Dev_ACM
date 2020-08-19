@@ -38,6 +38,7 @@ void CommSeqThread::txrxVSWRAlarmEnable(bool aTxFlag)
 
 		// Do this first.
 	ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
+	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxVSWRAlarmEnable = cQx_Pending2;
 
 	// Format the command string.
@@ -105,6 +106,7 @@ void CommSeqThread::txrxVSWRAlarmEnable(bool aTxFlag)
 	}
 
 	// Convert.
+	tX->updateFlags(tV);
 	tRxVSWRAlarmEnable = tV & 0x0008;
 
 	// Compare.
