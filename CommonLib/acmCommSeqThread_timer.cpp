@@ -98,12 +98,6 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
       tGoing = true;
    }
 
-   if (tS->mQxRelayOnVSWREnable == cQx_Request)
-   {
-      tS->mQxRelayOnVSWREnable = cQx_Pending1;
-      tGoing = true;
-   }
-
    if (tS->mQxCheckVSWROnZeroEnable == cQx_Request)
    {
       tS->mQxCheckVSWROnZeroEnable = cQx_Pending1;

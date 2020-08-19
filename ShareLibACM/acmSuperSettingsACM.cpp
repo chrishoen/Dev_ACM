@@ -71,15 +71,10 @@ void SuperSettingsACM::initialize()
 	mRxPowerUpAlarmEnable = false;
 	mQxPowerUpAlarmEnable = 0;
 
-	// Relay energize on power alarm enable.
+	// Relay energize on alarm enable.
 	mTxRelayOnAlarmEnable = false;
 	mRxRelayOnAlarmEnable = false;
 	mQxRelayOnAlarmEnable = 0;
-
-	// Relay energize on VSWR alarm enable.
-	mTxRelayOnVSWREnable = false;
-	mRxRelayOnVSWREnable = false;
-	mQxRelayOnVSWREnable = 0;
 
 	// Check VSWR on zero power.
 	mTxCheckVSWROnZeroEnable = false;
@@ -164,17 +159,11 @@ void SuperSettingsACM::show(int aPF)
 		my_string_from_bool(mRxPowerUpAlarmEnable),
 		asString_Qx(mQxPowerUpAlarmEnable));
 
-	// Relay energize on power alarm enable.
+	// Relay energize on alarm enable.
 	Prn::print(aPF, "RelayOnAlarmAlarmEnable      %10s %10s %10s",
 		my_string_from_bool(mTxRelayOnAlarmEnable),
 		my_string_from_bool(mRxRelayOnAlarmEnable),
 		asString_Qx(mQxRelayOnAlarmEnable));
-
-	// Relay energize on VSWR alarm enable.
-	Prn::print(aPF, "RelayOnVSWRAlarmEnable       %10s %10s %10s",
-		my_string_from_bool(mTxRelayOnVSWREnable),
-		my_string_from_bool(mRxRelayOnVSWREnable),
-		asString_Qx(mQxRelayOnVSWREnable));
 
 	// Check VSWR on zero power.
 	Prn::print(aPF, "CheckVSWROnZeroPowerEnable   %10s %10s %10s",
@@ -256,11 +245,6 @@ void SuperSettingsACM::requestRelayOnAlarmEnable(bool aValue)
 	mTxRelayOnAlarmEnable = aValue;
 	mQxRelayOnAlarmEnable = cQx_Request;
 }
-void SuperSettingsACM::requestRelayOnVSWREnable(bool aValue)
-{
-	mTxRelayOnVSWREnable = aValue;
-	mQxRelayOnVSWREnable = cQx_Request;
-}
 void SuperSettingsACM::requestCheckVSWROnZeroEnable(bool aValue)
 {
 	mTxCheckVSWROnZeroEnable = aValue;
@@ -297,7 +281,6 @@ std::string SuperSettingsACM::asJsonString()
 	tValue["LatchAlarmEnable"] = mRxLatchAlarmEnable;
 	tValue["PowerUpAlarmEnable"] = mRxPowerUpAlarmEnable;
 	tValue["RelayOnAlarmEnable"] = mRxRelayOnAlarmEnable;
-	tValue["RelayOnVSWREnable"] = mRxRelayOnVSWREnable;
 	tValue["CheckVSWROnZeroEnable"] = mRxCheckVSWROnZeroEnable;
 	tValue["PTTDelay_sec"] = mRxPTTDelay_sec;
 	tValue["PTTAlarmEnable"] = mRxPTTAlarmEnable;
@@ -326,7 +309,6 @@ RxReverseGain RxReverseGain
 RxLatchAlarmEnable RxLatchAlarmEnable
 RxPowerUpAlarmEnable RxPowerUpAlarmEnable
 RxRelayOnAlarmEnable RxRelayOnAlarmEnable
-RxRelayOnVSWREnable RxRelayOnVSWREnable
 RxCheckVSWROnZeroEnable RxCheckVSWROnZeroEnable
 RxPTTDelay_sec RxPTTDelay_sec
 RxPTTAlarmEnable RxPTTAlarmEnable

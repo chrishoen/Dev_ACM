@@ -41,22 +41,17 @@ void CommSeqThread::txrxRelayOnAlarmEnable(bool aTxFlag)
 	ACM::SuperStateACM* tX = &SM::gShare->mSuperStateACM;
 	tS->mQxRelayOnAlarmEnable = cQx_Pending2;
 
-	// This one's a disaster.
-	Prn::print(Prn::View21, "RelayOnAlarmEnable          Nak IGNORED");
-	tS->mQxRelayOnAlarmEnable = cQx_Nak;
-	return;
-
 	// Format the command string.
 	char tTxString[100];
 	if (aTxFlag)
 	{
 		// Command to write the variable.
-		sprintf(tTxString, "W%1dD", tS->mTxRelayOnAlarmEnable);
+		sprintf(tTxString, "5%1dQ", tS->mTxRelayOnAlarmEnable);
 	}
 	else
 	{
 		// Command to read the variable.
-		sprintf(tTxString, "BD");
+		sprintf(tTxString, "BQ");
 	}
 
 	// Set the thread notification mask.
@@ -91,8 +86,8 @@ void CommSeqThread::txrxRelayOnAlarmEnable(bool aTxFlag)
 
 	// Temp variables to be extracted from the response string.
 	int   tV = 0;
-	bool tTxRelayOnAlarmEnable = tS->mTxRelayOnAlarmEnable;
 	bool tRxRelayOnAlarmEnable = false;
+	bool tTxRelayOnAlarmEnable = tS->mTxRelayOnAlarmEnable;
 
 	// 012345678901234
 	// 0024clL=32768
@@ -111,7 +106,8 @@ void CommSeqThread::txrxRelayOnAlarmEnable(bool aTxFlag)
 	}
 
 	// Convert.
-	tRxRelayOnAlarmEnable = tV & 0x0200;
+	tX->updateFlags(tV);
+	tRxRelayOnAlarmEnable = tX->mRelayOnAlarmEnable;
 
 	// Compare.
 	if (!aTxFlag || tTxRelayOnAlarmEnable == tRxRelayOnAlarmEnable)

@@ -100,15 +100,10 @@ public:
 	bool   mRxPowerUpAlarmEnable;
 	int    mQxPowerUpAlarmEnable;
 
-	// Relay energize on power alarm enable.
+	// Relay energize on alarm enable.
 	bool   mTxRelayOnAlarmEnable;
 	bool   mRxRelayOnAlarmEnable;
 	int    mQxRelayOnAlarmEnable;
-
-	// Relay energize on VSWR alarm enable.
-	bool   mTxRelayOnVSWREnable;
-	bool   mRxRelayOnVSWREnable;
-	int    mQxRelayOnVSWREnable;
 
 	// Check VSWR on zero power.
 	bool   mTxCheckVSWROnZeroEnable;
@@ -155,7 +150,6 @@ public:
 	void requestLatchAlarmEnable(bool aValue);
 	void requestPowerUpAlarmEnable(bool aValue);
 	void requestRelayOnAlarmEnable(bool aValue);
-	void requestRelayOnVSWREnable(bool aValue);
 	void requestCheckVSWROnZeroEnable(bool aValue);
 	void requestPTTDelay_sec(float aValue);
 	void requestPTTAlarmEnable(bool aValue);
