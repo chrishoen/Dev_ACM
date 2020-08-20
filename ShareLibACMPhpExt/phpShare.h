@@ -41,7 +41,7 @@ void share_set_SettingsGain_int_int(Php::Parameters& aP);
 void share_set_SettingsLatchAlarmEnable_bool(Php::Parameters& aP);
 void share_set_SettingsPowerUpAlarmEnable_bool(Php::Parameters& aP);
 void share_set_SettingsRelayOnAlarmEnable_bool(Php::Parameters& aP);
-void share_set_SettingsCheckVSWROnZeroEnable_bool(Php::Parameters& aP);
+void share_set_SettingsVSWROnZeroEnable_bool(Php::Parameters& aP);
 void share_set_SettingsPTTDelay_sec_float(Php::Parameters& aP);
 void share_set_SettingsPTTAlarmEnable_bool(Php::Parameters& aP);
 
@@ -63,7 +63,7 @@ Php::Value share_get_SettingsQxGain();
 Php::Value share_get_SettingsQxLatchAlarmEnable();
 Php::Value share_get_SettingsQxPowerUpAlarmEnable();
 Php::Value share_get_SettingsQxRelayOnAlarmEnable();
-Php::Value share_get_SettingsQxCheckVSWROnZeroEnable();
+Php::Value share_get_SettingsQxVSWROnZeroEnable();
 Php::Value share_get_SettingsQxPTTDelay_sec();
 Php::Value share_get_SettingsQxPTTAlarmEnable();
 

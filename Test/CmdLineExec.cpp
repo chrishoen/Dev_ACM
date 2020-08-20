@@ -105,6 +105,10 @@ void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 {
+   char chunk[32];
+   memset(chunk, 0, 32);
+   printf("sizeof chunk %d\n", strlen(chunk));
+
 }
 
 //******************************************************************************

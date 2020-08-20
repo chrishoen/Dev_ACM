@@ -98,9 +98,9 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
       tGoing = true;
    }
 
-   if (tS->mQxCheckVSWROnZeroEnable == cQx_Request)
+   if (tS->mQxVSWROnZeroEnable == cQx_Request)
    {
-      tS->mQxCheckVSWROnZeroEnable = cQx_Pending1;
+      tS->mQxVSWROnZeroEnable = cQx_Pending1;
       tGoing = true;
    }
 

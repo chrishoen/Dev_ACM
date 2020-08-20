@@ -105,10 +105,10 @@ public:
 	bool   mRxRelayOnAlarmEnable;
 	int    mQxRelayOnAlarmEnable;
 
-	// Check VSWR on zero power.
-	bool   mTxCheckVSWROnZeroEnable;
-	bool   mRxCheckVSWROnZeroEnable;
-	int    mQxCheckVSWROnZeroEnable;
+	// VSWR on zero power.
+	bool   mTxVSWROnZeroEnable;
+	bool   mRxVSWROnZeroEnable;
+	int    mQxVSWROnZeroEnable;
 
 	// PTT delay.
 	float  mTxPTTDelay_sec;
@@ -150,7 +150,7 @@ public:
 	void requestLatchAlarmEnable(bool aValue);
 	void requestPowerUpAlarmEnable(bool aValue);
 	void requestRelayOnAlarmEnable(bool aValue);
-	void requestCheckVSWROnZeroEnable(bool aValue);
+	void requestVSWROnZeroEnable(bool aValue);
 	void requestPTTDelay_sec(float aValue);
 	void requestPTTAlarmEnable(bool aValue);
 
@@ -180,7 +180,7 @@ mQxLatchAlarmEnable;
 mQxPowerUpAlarmEnable;
 mQxRelayOnAlarmEnable;
 mQxRelayOnVSWREnable;
-mQxCheckVSWROnZeroEnable;
+mQxVSWROnZeroEnable;
 mQxPTTDelay_sec;
 mQxPTTAlarmEnable;
 #endif

@@ -41,7 +41,7 @@ void SuperStateACM::initialize()
 	 mLatchAlarmEnable = false;
 	 mPowerUpAlarmEnable = false;
 	 mRelayOnAlarmEnable = false;
-	 mCheckVSWROnZeroEnable = false;
+	 mVSWROnZeroEnable = false;
 	 mPTTEnable = false;
 }
 
@@ -74,7 +74,7 @@ void SuperStateACM::show(int aPF)
 	Prn::print(aPF, "LatchAlarmEnable           %10s", my_string_from_bool(mLatchAlarmEnable));
 	Prn::print(aPF, "PowerUpAlarmEnable         %10s", my_string_from_bool(mPowerUpAlarmEnable));
 	Prn::print(aPF, "RelayOnAlarmEnable         %10s", my_string_from_bool(mRelayOnAlarmEnable));
-	Prn::print(aPF, "CheckVSWROnZeroEnable      %10s", my_string_from_bool(mCheckVSWROnZeroEnable));
+	Prn::print(aPF, "VSWROnZeroEnable      %10s", my_string_from_bool(mVSWROnZeroEnable));
 	Prn::print(aPF, "PTTEnable                  %10s", my_string_from_bool(mPTTEnable));
 }
 
@@ -201,7 +201,7 @@ void SuperStateACM::updateFlags(int aFlags)
 	mLatchAlarmEnable      = aFlags & 0x0040;
 	mPowerUpAlarmEnable    = aFlags & 0x0080;
 	mRelayOnAlarmEnable    = aFlags & 0x0004;
-	mCheckVSWROnZeroEnable = aFlags & 0x0001;
+	mVSWROnZeroEnable = aFlags & 0x0001;
 	mPTTEnable             = aFlags & 0x0100;
 }
 

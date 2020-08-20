@@ -220,7 +220,7 @@ public:
    void sendPowerUpAlarmEnable();
    void sendRelayOnAlarmEnable();
    void sendRelayOnVSWREnable();
-   void sendCheckVSWROnZeroEnable();
+   void sendVSWROnZeroEnable();
    void sendPTTDelay_sec();
    void sendPTTAlarmEnable();
 
@@ -245,7 +245,7 @@ public:
    void txrxPowerUpAlarmEnable(bool aTxFlag);
    void txrxRelayOnAlarmEnable(bool aTxFlag);
    void txrxRelayOnVSWREnable(bool aTxFlag);
-   void txrxCheckVSWROnZeroEnable(bool aTxFlag);
+   void txrxVSWROnZeroEnable(bool aTxFlag);
    void txrxPTTDelay_sec(bool aTxFlag);
    void txrxPTTAlarmEnable(bool aTxFlag);
 };

@@ -75,9 +75,9 @@ void share_set_SettingsRelayOnAlarmEnable_bool(Php::Parameters& aP)
 {
    SM::gShare->mSuperSettingsACM.requestRelayOnAlarmEnable((bool)aP[0]);
 }
-void share_set_SettingsCheckVSWROnZeroEnable_bool(Php::Parameters& aP)
+void share_set_SettingsVSWROnZeroEnable_bool(Php::Parameters& aP)
 {
-   SM::gShare->mSuperSettingsACM.requestCheckVSWROnZeroEnable((bool)aP[0]);
+   SM::gShare->mSuperSettingsACM.requestVSWROnZeroEnable((bool)aP[0]);
 }
 void share_set_SettingsPTTDelay_sec_float(Php::Parameters& aP)
 {
@@ -138,9 +138,9 @@ Php::Value share_get_SettingsQxRelayOnAlarmEnable()
 {
    return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxRelayOnAlarmEnable);
 }
-Php::Value share_get_SettingsQxCheckVSWROnZeroEnable()
+Php::Value share_get_SettingsQxVSWROnZeroEnable()
 {
-   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxCheckVSWROnZeroEnable);
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxVSWROnZeroEnable);
 }
 Php::Value share_get_SettingsQxPTTDelay_sec()
 {

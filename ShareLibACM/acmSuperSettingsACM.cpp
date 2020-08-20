@@ -76,10 +76,10 @@ void SuperSettingsACM::initialize()
 	mRxRelayOnAlarmEnable = false;
 	mQxRelayOnAlarmEnable = 0;
 
-	// Check VSWR on zero power.
-	mTxCheckVSWROnZeroEnable = false;
-	mRxCheckVSWROnZeroEnable = false;
-	mQxCheckVSWROnZeroEnable = 0;
+	// VSWR on zero power.
+	mTxVSWROnZeroEnable = false;
+	mRxVSWROnZeroEnable = false;
+	mQxVSWROnZeroEnable = 0;
 
 	// PTT delay.
 	mTxPTTDelay_sec = 0.0;
@@ -165,11 +165,11 @@ void SuperSettingsACM::show(int aPF)
 		my_string_from_bool(mRxRelayOnAlarmEnable),
 		asString_Qx(mQxRelayOnAlarmEnable));
 
-	// Check VSWR on zero power.
-	Prn::print(aPF, "CheckVSWROnZeroPowerEnable   %10s %10s %10s",
-		my_string_from_bool(mTxCheckVSWROnZeroEnable),
-		my_string_from_bool(mRxCheckVSWROnZeroEnable),
-		asString_Qx(mQxCheckVSWROnZeroEnable));
+	// VSWR on zero power.
+	Prn::print(aPF, "VSWROnZeroEnable             %10s %10s %10s",
+		my_string_from_bool(mTxVSWROnZeroEnable),
+		my_string_from_bool(mRxVSWROnZeroEnable),
+		asString_Qx(mQxVSWROnZeroEnable));
 
 	// PTT delay.
 	Prn::print(aPF, "PTTDelay_sec                 %10.2f %10.2f %10s",
@@ -245,10 +245,10 @@ void SuperSettingsACM::requestRelayOnAlarmEnable(bool aValue)
 	mTxRelayOnAlarmEnable = aValue;
 	mQxRelayOnAlarmEnable = cQx_Request;
 }
-void SuperSettingsACM::requestCheckVSWROnZeroEnable(bool aValue)
+void SuperSettingsACM::requestVSWROnZeroEnable(bool aValue)
 {
-	mTxCheckVSWROnZeroEnable = aValue;
-	mQxCheckVSWROnZeroEnable = cQx_Request;
+	mTxVSWROnZeroEnable = aValue;
+	mQxVSWROnZeroEnable = cQx_Request;
 }
 void SuperSettingsACM::requestPTTDelay_sec(float aValue)
 {
@@ -281,7 +281,7 @@ std::string SuperSettingsACM::asJsonString()
 	tValue["LatchAlarmEnable"] = mRxLatchAlarmEnable;
 	tValue["PowerUpAlarmEnable"] = mRxPowerUpAlarmEnable;
 	tValue["RelayOnAlarmEnable"] = mRxRelayOnAlarmEnable;
-	tValue["CheckVSWROnZeroEnable"] = mRxCheckVSWROnZeroEnable;
+	tValue["VSWROnZeroEnable"] = mRxVSWROnZeroEnable;
 	tValue["PTTDelay_sec"] = mRxPTTDelay_sec;
 	tValue["PTTAlarmEnable"] = mRxPTTAlarmEnable;
 
@@ -309,7 +309,7 @@ RxReverseGain RxReverseGain
 RxLatchAlarmEnable RxLatchAlarmEnable
 RxPowerUpAlarmEnable RxPowerUpAlarmEnable
 RxRelayOnAlarmEnable RxRelayOnAlarmEnable
-RxCheckVSWROnZeroEnable RxCheckVSWROnZeroEnable
+RxVSWROnZeroEnable RxVSWROnZeroEnable
 RxPTTDelay_sec RxPTTDelay_sec
 RxPTTAlarmEnable RxPTTAlarmEnable
 #endif
