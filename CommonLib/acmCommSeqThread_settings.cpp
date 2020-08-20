@@ -59,7 +59,7 @@ void CommSeqThread::doProcessSettings()
          txrxLatchAlarmEnable(false);
          txrxPowerUpAlarmEnable(false);
          txrxRelayOnAlarmEnable(false);
-         //txrxVSWROnZeroEnable(false);
+         txrxVSWROnZeroEnable(false);
          //txrxPTTDelay_sec(false);
          //txrxPTTAlarmEnable(false);
 
@@ -123,7 +123,7 @@ void CommSeqThread::doProcessSettings()
 
       if (tS->mQxVSWROnZeroEnable == cQx_Pending1)
       {
-         sendVSWROnZeroEnable();
+         txrxVSWROnZeroEnable(true);
       }
 
       if (tS->mQxPTTDelay_sec == cQx_Pending1)
@@ -149,12 +149,6 @@ void CommSeqThread::doProcessSettings()
    Prn::print(Prn::View11, "CommSeqThread::doProcessSettings END");
 }
 
-void CommSeqThread::sendVSWROnZeroEnable()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxVSWROnZeroEnable = cQx_Pending2;
-}
 void CommSeqThread::sendPTTDelay_sec()
 {
    // Do this first.

@@ -74,7 +74,7 @@ void SuperStateACM::show(int aPF)
 	Prn::print(aPF, "LatchAlarmEnable           %10s", my_string_from_bool(mLatchAlarmEnable));
 	Prn::print(aPF, "PowerUpAlarmEnable         %10s", my_string_from_bool(mPowerUpAlarmEnable));
 	Prn::print(aPF, "RelayOnAlarmEnable         %10s", my_string_from_bool(mRelayOnAlarmEnable));
-	Prn::print(aPF, "VSWROnZeroEnable      %10s", my_string_from_bool(mVSWROnZeroEnable));
+	Prn::print(aPF, "VSWROnZeroEnable           %10s", my_string_from_bool(mVSWROnZeroEnable));
 	Prn::print(aPF, "PTTEnable                  %10s", my_string_from_bool(mPTTEnable));
 }
 

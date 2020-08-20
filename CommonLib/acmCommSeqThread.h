@@ -216,11 +216,6 @@ public:
 
    // Send for individual settings variables. These is called by the above
    // function.
-   void sendLatchAlarmEnable();
-   void sendPowerUpAlarmEnable();
-   void sendRelayOnAlarmEnable();
-   void sendRelayOnVSWREnable();
-   void sendVSWROnZeroEnable();
    void sendPTTDelay_sec();
    void sendPTTAlarmEnable();
 
