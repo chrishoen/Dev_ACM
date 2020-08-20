@@ -214,10 +214,6 @@ public:
    // This can be aborted via the notification.
    void doProcessSettings();
 
-   // Send for individual settings variables. These is called by the above
-   // function.
-   void sendPTTAlarmEnable();
-
    // For each individual settings variable, process the super settings
    // as follows:
    //

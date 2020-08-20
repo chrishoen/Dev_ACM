@@ -61,7 +61,7 @@ void CommSeqThread::doProcessSettings()
          txrxRelayOnAlarmEnable(false);
          txrxVSWROnZeroEnable(false);
          txrxPTTDelay_sec(false);
-         //txrxPTTAlarmEnable(false);
+         txrxPTTAlarmEnable(false);
 
          tS->mQxReadAllSettings = cQx_Ack;
       }
@@ -133,7 +133,7 @@ void CommSeqThread::doProcessSettings()
 
       if (tS->mQxPTTAlarmEnable == cQx_Pending1)
       {
-         sendPTTAlarmEnable();
+         txrxPTTAlarmEnable(true);
       }
 
    }
@@ -147,13 +147,6 @@ void CommSeqThread::doProcessSettings()
    mNotify.clearFlags();
 
    Prn::print(Prn::View11, "CommSeqThread::doProcessSettings END");
-}
-
-void CommSeqThread::sendPTTAlarmEnable()
-{
-   // Do this first.
-   ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
-   tS->mQxPTTAlarmEnable = cQx_Pending2;
 }
 
 //******************************************************************************

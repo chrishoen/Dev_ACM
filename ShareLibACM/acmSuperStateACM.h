@@ -73,7 +73,7 @@ public:
 	bool mPowerUpAlarmEnable;
 	bool mRelayOnAlarmEnable;
 	bool mVSWROnZeroEnable;
-	bool mPTTEnable;
+	bool mPTTAlarmEnable;
 
 	//***************************************************************************
 	//***************************************************************************
