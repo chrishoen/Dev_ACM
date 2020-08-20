@@ -44,28 +44,9 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 {
-   char tBuffer[64];
-   strcpy(tBuffer, "123.4,12.34,2");
-   strcpy(tBuffer, ">123.4,12.34A1");
-   strcpy(tBuffer, ">123.4,12.34 0");
-   strcpy(tBuffer, ">000.0,00.00 0");
-   float tForwardPower = -1;
-   float tReflectedPower = -1;
-   char  tAlarmChar = 'z';
-   int   tAlarmOnZeroPower =  9;
-   int   tRet = 0;
-
-   tRet = sscanf(tBuffer, ">%f,%f%c%d",
-      &tForwardPower,
-      &tReflectedPower,
-      &tAlarmChar,
-      &tAlarmOnZeroPower);
-
-   Prn::print(0, "tRet              %d",    tRet);
-   Prn::print(0, "tForwardPower     %5.1f", tForwardPower);
-   Prn::print(0, "tReflectedPower   %5.2f", tReflectedPower);
-   Prn::print(0, "tAlarmChar        %c",    tAlarmChar);
-   Prn::print(0, "tAlarmOnZeroPower %1d",   tAlarmOnZeroPower);
+   float tY = aCmd->argDouble(1);
+   int tN = (int)round(tY / 0.156666666666666666666);
+   Prn::print(0, "%d", tN);
 }
 
 //******************************************************************************
@@ -74,12 +55,9 @@ void CmdLineExec::executeGo1(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 {
-   char tBuffer[200];
-   float tPct = aCmd->argDouble(1);
-   int   tN = (int) 26214*tPct / 100.0;
-   sprintf(tBuffer, "%05d",tN);
-
-   Prn::print(0, "%s", tBuffer);
+   int tN = aCmd->argInt(1);
+   float tY = (float)(tN * 0.156666666666666666666);
+   Prn::print(0, "%f", tY);
 }
 
 //******************************************************************************
@@ -88,15 +66,7 @@ void CmdLineExec::executeGo2(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 {
-   char tString[200];
-
-   while (true)
-   {
-      fgets(tString, 200, stdin);
-      printf("CMD %d %s", (int)strlen(tString), tString);
-      if (strcmp(tString, "e\n") == 0) break;
-   }
-
+   Prn::print(0, "%%%d", 101);
 }
 
 //******************************************************************************

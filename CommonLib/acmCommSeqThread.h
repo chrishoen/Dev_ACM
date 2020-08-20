@@ -216,7 +216,6 @@ public:
 
    // Send for individual settings variables. These is called by the above
    // function.
-   void sendPTTDelay_sec();
    void sendPTTAlarmEnable();
 
    // For each individual settings variable, process the super settings
