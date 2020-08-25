@@ -81,6 +81,19 @@ void CommSeqThread::executeRxString(std::string* aString)
 
    Prn::print(Prn::View11, "<<<< %s", aString->c_str());
 
+   if (mShowCode == 1)
+   {
+      char tBuffer1[400];
+      tBuffer1[0] = 0;
+      for (int i = 0; i < aString->length(); i++)
+      {
+         char tBuffer2[10];
+         sprintf(tBuffer2, "%02x ", (int)aString->c_str()[i]);
+         strcat(tBuffer1, tBuffer2);
+      }
+      Prn::print(Prn::View11, "<<<< %s", tBuffer1);
+   }
+
    // Write the string to the rx string queue and signal the notification
    // that an acknowledgement was received.
    if (mRxStringQueue.tryWrite(aString))

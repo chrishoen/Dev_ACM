@@ -62,6 +62,9 @@ public:
    // If true then do some periodic processing.
    bool mTPFlag;
 
+   // Show code.
+   int mShowCode;
+
    // Receive string queue. Strings are received at the short thread
    // and processed in the long thread.
    Ris::SRSWPointerQueue<std::string*, 100> mRxStringQueue;

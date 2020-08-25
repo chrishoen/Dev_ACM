@@ -27,12 +27,14 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("TP"))        ACM::gCommSeqThread->mTPFlag = aCmd->argBool(1);
+   if (aCmd->isCmd("SC"))        ACM::gCommSeqThread->mShowCode = aCmd->argInt(1);
 
    if (aCmd->isCmd("PROC"))      executeProcess(aCmd);
    if (aCmd->isCmd("A"))         executeAbort(aCmd);
    if (aCmd->isCmd("REQ"))       executeRequest(aCmd);
    if (aCmd->isCmd("OVER"))      executeOverride(aCmd);
 
+   if (aCmd->isCmd("TX"))        executeTx(aCmd);
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
@@ -116,6 +118,15 @@ void CmdLineExec::executeOverride(Ris::CmdLineCmd* aCmd)
 {
    SM::gShare->mSuperStateACM.mOverrideForwardPower_w = aCmd->argDouble(1);
    SM::gShare->mSuperStateACM.mOverrideReflectedPower_w = aCmd->argDouble(2);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeTx(Ris::CmdLineCmd* aCmd)
+{
+   ACM::gCommSeqThread->sendString(aCmd->argString(1));
 }
 
 //******************************************************************************
