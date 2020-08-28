@@ -25,8 +25,11 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Launch program threads.
 
-   ACM::gCommSeqThread = new ACM::CommSeqThread;
-   ACM::gCommSeqThread->launchThreads();
+   if (false)
+   {
+      ACM::gCommSeqThread = new ACM::CommSeqThread;
+      ACM::gCommSeqThread->launchThreads();
+   }
 
    //***************************************************************************
    //***************************************************************************

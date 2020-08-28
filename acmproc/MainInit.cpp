@@ -40,7 +40,7 @@ void main_initialize(int argc,char** argv)
 
    TS::reset();
    TS::setProgramName("cprint");
-   TS::setProgramPrintLevel(TS::PrintLevel(0, 0));
+   TS::setProgramPrintLevel(0);
    TS::initialize();
 
    //***************************************************************************

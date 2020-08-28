@@ -43,6 +43,9 @@ void ProgramParms::reset()
    mTxCommand[0] = 0;
    mPrintViewEnable = false;
    mPrintViewIPAddress[0] = 0;
+   mSerialStringPrintLevel = 0;
+   mCommSeqShortPrintLevel = 0;
+   mCommSeqLongPrintLevel = 0;
 }
 
 //******************************************************************************
@@ -52,7 +55,6 @@ void ProgramParms::reset()
 
 void ProgramParms::show()
 {
-   char tBuffer[40];
    printf("\n");
    printf("ProgramParms******************************************* %s\n", mTargetSection);
 
@@ -63,9 +65,9 @@ void ProgramParms::show()
    printf("CmdCommPort485Flag      %12s\n",  my_string_from_bool(mCmdCommPort485Flag));
 
    printf("\n");
-   printf("SerialStringPrintLevel  %12s\n",  mSerialStringPrintLevel.asString(tBuffer));
-   printf("CommSeqShortPrintLevel  %12s\n",  mCommSeqShortPrintLevel.asString(tBuffer));
-   printf("CommSeqLongPrintLevel   %12s\n",  mCommSeqLongPrintLevel.asString(tBuffer));
+   printf("SerialStringPrintLevel  %12d\n",  mSerialStringPrintLevel);
+   printf("CommSeqShortPrintLevel  %12d\n",  mCommSeqShortPrintLevel);
+   printf("CommSeqLongPrintLevel   %12d\n",  mCommSeqLongPrintLevel);
 
    printf("\n");
    printf("Delay                   %12d\n", mDelay);
@@ -92,9 +94,9 @@ void ProgramParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("CmdCommPortTimeout"))     mCmdCommPortTimeout = aCmd->argInt(1);
    if (aCmd->isCmd("CmdCommPort485Flag"))     mCmdCommPort485Flag = aCmd->argBool(1);
 
-   if (aCmd->isCmd("SerialStringPrintLevel")) mSerialStringPrintLevel.readArgs(aCmd);
-   if (aCmd->isCmd("CommSeqShortPrintLevel")) mCommSeqShortPrintLevel.readArgs(aCmd);
-   if (aCmd->isCmd("CommSeqLongPrintLevel"))  mCommSeqLongPrintLevel.readArgs(aCmd);
+   if (aCmd->isCmd("SerialStringPrintLevel")) mSerialStringPrintLevel = aCmd->argInt(1);
+   if (aCmd->isCmd("CommSeqShortPrintLevel")) mCommSeqShortPrintLevel = aCmd->argInt(1);
+   if (aCmd->isCmd("CommSeqLongPrintLevel"))  mCommSeqLongPrintLevel = aCmd->argInt(1);
 
    if (aCmd->isCmd("Delay"))                  mDelay = aCmd->argInt(1);
    if (aCmd->isCmd("TxCommand"))              aCmd->copyArgString(1, mTxCommand, cMaxStringSize);

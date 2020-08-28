@@ -73,9 +73,9 @@ public:
    bool mCmdCommPort485Flag;
 
    // Thread print and log levels.
-   TS::PrintLevel mSerialStringPrintLevel;
-   TS::PrintLevel mCommSeqShortPrintLevel;
-   TS::PrintLevel mCommSeqLongPrintLevel;
+   int mSerialStringPrintLevel;
+   int mCommSeqShortPrintLevel;
+   int mCommSeqLongPrintLevel;
 
    //***************************************************************************
    //***************************************************************************
