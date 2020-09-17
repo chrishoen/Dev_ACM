@@ -50,7 +50,7 @@ CommSeqThread::CommSeqThread()
 
    // Set member variables.
    mConnectionFlag = false;
-   mTPFlag = false;
+   mTPFlag = true;
    mShowCode = 0;
    mAbortFlag = false;
    mSettingsFlag = false;

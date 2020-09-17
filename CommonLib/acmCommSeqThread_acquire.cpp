@@ -41,7 +41,7 @@ void CommSeqThread::doProcessAcquire()
          mAcquireWaitable.waitForTimerOrSemaphore();
          if (mAcquireWaitable.wasSemaphore())
          {
-            // The waitable semahore as posted for an abort.
+            // The waitable semahore was posted for an abort.
             throw 667;
          }
 
