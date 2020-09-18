@@ -152,6 +152,20 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
+	// Apply limits.
+
+	doApplyLimits(mForwardPower_kw);
+	doApplyLimits(mReflectedPower_kw);
+	doApplyLimits(mForwardPower_dbm);
+	doApplyLimits(mReflectedPower_dbm);
+	doApplyLimits(mVSWR);
+	doApplyLimits(mReturnLoss_db);
+	doApplyLimits(mRho);
+	doApplyLimits(mEfficiency_pct);
+
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
 	// Calculate some more variables from the extracted variables.
 
 	// Guard.
@@ -179,6 +193,20 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	mReturnLoss_db = -20.0 * log10(tGamma);
 	mRho = tGamma;
 	mEfficiency_pct = (tForwardPower_w - tReflectedPower_w) / tForwardPower_w;
+
+	//***************************************************************************
+	//***************************************************************************
+	//***************************************************************************
+	// Apply limits.
+
+	doApplyLimits(mForwardPower_kw);
+	doApplyLimits(mReflectedPower_kw);
+	doApplyLimits(mForwardPower_dbm);
+	doApplyLimits(mReflectedPower_dbm);
+	doApplyLimits(mVSWR);
+	doApplyLimits(mReturnLoss_db);
+	doApplyLimits(mRho);
+	doApplyLimits(mEfficiency_pct);
 
 	//***************************************************************************
 	//***************************************************************************
@@ -229,6 +257,17 @@ std::string SuperStateACM::asJsonString()
 	Json::FastWriter tWriter;
 	tString = tWriter.write(tValue);
 	return tString;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Apply limits to a variable. Needed for the json stuff.
+
+void SuperStateACM::doApplyLimits(float& aX)
+{
+	if (aX < -666) aX = -666;
+	if (aX >  666) aX =  666;
 }
 
 //******************************************************************************
