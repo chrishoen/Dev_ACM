@@ -74,7 +74,10 @@ void CommSeqThread::doProcessAcquire()
    }
    catch(int aException)
    {
-      Prn::print(0, "EXCEPTION CommSeqThread::executeAcquire %d %s", aException, mNotify.mException);
+      if (!mSettingsFlag)
+      {
+         Prn::print(0, "EXCEPTION CommSeqThread::executeAcquire %d %s", aException, mNotify.mException);
+      }
       if (mAbortFlag) throw 1667;
    }
 
