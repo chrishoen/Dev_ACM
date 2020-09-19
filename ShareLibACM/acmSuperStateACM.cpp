@@ -22,8 +22,8 @@ void SuperStateACM::initialize()
 {
 	mForwardPower_kw = 0.0;
 	mReflectedPower_kw = 0.0;
-	mForwardPower_dbm = -666.0;
-	mReflectedPower_dbm = -666.0;
+	mForwardPower_dbm = -999.0;
+	mReflectedPower_dbm = -999.0;
 	mVSWR = 0.0;
 	mReturnLoss_db = 0.0;
 	mRho = 0.0;
@@ -266,8 +266,8 @@ std::string SuperStateACM::asJsonString()
 
 void SuperStateACM::doApplyLimits(float& aX)
 {
-	if (aX < -666) aX = -666;
-	if (aX >  666) aX =  666;
+	if (aX < -999) aX = -999;
+	if (aX >  999) aX =  999;
 }
 
 //******************************************************************************
