@@ -229,8 +229,8 @@ void SuperStateACM::updateFlags(int aFlags)
 	mLatchAlarmEnable      = aFlags & 0x0040;
 	mPowerUpAlarmEnable    = aFlags & 0x0080;
 	mRelayOnAlarmEnable    = aFlags & 0x0004;
-	mVSWROnZeroEnable = aFlags & 0x0001;
-	mPTTAlarmEnable             = aFlags & 0x0100;
+	mVSWROnZeroEnable      = aFlags & 0x0001;
+	mPTTAlarmEnable        = aFlags & 0x0100;
 }
 
 //******************************************************************************
@@ -241,17 +241,18 @@ void SuperStateACM::updateFlags(int aFlags)
 std::string SuperStateACM::asJsonString()
 {
 	Json::Value tValue;
+	char tBuffer[40];
 
-	tValue["ForwardPower_kw"] = mForwardPower_kw;
-	tValue["ReflectedPower_kw"] = mReflectedPower_kw;
-	tValue["ForwardPower_dbm"] = mForwardPower_dbm;
-	tValue["ReflectedPower_dbm"] = mReflectedPower_dbm;
-	tValue["VSWR"] = mVSWR;
-	tValue["ReturnLoss_db"] = mReturnLoss_db;
-	tValue["Rho"] = mRho;
-	tValue["Efficiency_pct"] = mEfficiency_pct;
-	tValue["AlarmFlag"] = mAlarmFlag;
-	tValue["AlarmOnZeroPower"] = mAlarmOnZeroPower;
+	tValue["ForwardPower_kw"]    = my_string_from_float(tBuffer,"%.6f",mForwardPower_kw);
+	tValue["ReflectedPower_kw"]  = my_string_from_float(tBuffer, "%.6f", mReflectedPower_kw);
+	tValue["ForwardPower_dbm"]   = my_string_from_float(tBuffer, "%.1f", mForwardPower_dbm);
+	tValue["ReflectedPower_dbm"] = my_string_from_float(tBuffer, "%.1f", mReflectedPower_dbm);
+	tValue["VSWR"]               = my_string_from_float(tBuffer, "%.2f", mVSWR);
+	tValue["ReturnLoss_db"]      = my_string_from_float(tBuffer, "%.2f", mReturnLoss_db);
+	tValue["Rho"]                = my_string_from_float(tBuffer, "%.2f", mRho);
+	tValue["Efficiency_pct"]     = my_string_from_float(tBuffer, "%.2f", mEfficiency_pct);
+	tValue["AlarmFlag"]          = mAlarmFlag;
+	tValue["AlarmOnZeroPower"]   = mAlarmOnZeroPower;
 
 	std::string tString;
 	Json::FastWriter tWriter;

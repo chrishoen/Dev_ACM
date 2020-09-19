@@ -269,10 +269,11 @@ void SuperSettingsACM::requestPTTAlarmEnable(bool aValue)
 std::string SuperSettingsACM::asJsonString()
 {
 	Json::Value tValue;
+	char tBuffer[40];
 
-	tValue["LowPowerThresh_pct"] = mRxLowPowerThresh_pct;
+	tValue["LowPowerThresh_pct"] = my_string_from_float(tBuffer, "%.2f", mRxLowPowerThresh_pct);
 	tValue["LowPowerAlarmEnable"] = mRxLowPowerAlarmEnable;
-	tValue["HighPowerThresh_pct"] = mRxHighPowerThresh_pct;
+	tValue["HighPowerThresh_pct"] = my_string_from_float(tBuffer, "%.2f", mRxHighPowerThresh_pct);
 	tValue["HighPowerAlarmEnable"] = mRxHighPowerAlarmEnable;
 	tValue["VSWRTrigger"] = mRxVSWRTrigger;
 	tValue["VSWRAlarmEnable"] = mRxVSWRAlarmEnable;
@@ -282,7 +283,7 @@ std::string SuperSettingsACM::asJsonString()
 	tValue["PowerUpAlarmEnable"] = mRxPowerUpAlarmEnable;
 	tValue["RelayOnAlarmEnable"] = mRxRelayOnAlarmEnable;
 	tValue["VSWROnZeroEnable"] = mRxVSWROnZeroEnable;
-	tValue["PTTDelay_sec"] = mRxPTTDelay_sec;
+	tValue["PTTDelay_sec"] = my_string_from_float(tBuffer, "%.2f", mRxPTTDelay_sec);
 	tValue["PTTAlarmEnable"] = mRxPTTAlarmEnable;
 
 	std::string tString;
