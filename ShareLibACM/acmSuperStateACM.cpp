@@ -239,8 +239,8 @@ void SuperStateACM::updateFlags(int aFlags)
 	mLowPowerAlarmEnable   = aFlags & 0x0020;
 	mHighPowerAlarmEnable  = aFlags & 0x0002;
 	mVSWRAlarmEnable       = aFlags & 0x0008;
-	mLatchAlarmEnable      = aFlags & 0x0040;
-	mPowerUpAlarmEnable    = aFlags & 0x0080;
+	mLatchAlarmEnable      = !(aFlags & 0x0040);
+	mPowerUpAlarmEnable    = !(aFlags & 0x0080);
 	mRelayOnAlarmEnable    = aFlags & 0x0004;
 	mVSWROnZeroEnable      = aFlags & 0x0001;
 	mPTTAlarmEnable        = aFlags & 0x0100;

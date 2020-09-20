@@ -160,7 +160,7 @@ void SuperSettingsACM::show(int aPF)
 		asString_Qx(mQxPowerUpAlarmEnable));
 
 	// Relay energize on alarm enable.
-	Prn::print(aPF, "RelayOnAlarmAlarmEnable      %10s %10s %10s",
+	Prn::print(aPF, "RelayOnAlarmEnable           %10s %10s %10s",
 		my_string_from_bool(mTxRelayOnAlarmEnable),
 		my_string_from_bool(mRxRelayOnAlarmEnable),
 		asString_Qx(mQxRelayOnAlarmEnable));

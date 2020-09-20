@@ -46,7 +46,14 @@ void CommSeqThread::txrxPowerUpAlarmEnable(bool aTxFlag)
 	if (aTxFlag)
 	{
 		// Command to write the variable.
-		sprintf(tTxString, "U%1dD", tS->mTxPowerUpAlarmEnable);
+		if (tS->mTxPowerUpAlarmEnable)
+		{
+			sprintf(tTxString, "U0D");
+		}
+		else
+		{
+			sprintf(tTxString, "U1D");
+		}
 	}
 	else
 	{
@@ -107,7 +114,7 @@ void CommSeqThread::txrxPowerUpAlarmEnable(bool aTxFlag)
 
 	// Convert.
 	tX->updateFlags(tV);
-	tRxPowerUpAlarmEnable = tV & 0x0080;
+	tRxPowerUpAlarmEnable = !(tV & 0x0080);
 
 	// Compare.
 	if (!aTxFlag || tTxPowerUpAlarmEnable == tRxPowerUpAlarmEnable)

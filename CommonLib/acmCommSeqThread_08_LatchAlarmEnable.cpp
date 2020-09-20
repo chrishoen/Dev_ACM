@@ -46,7 +46,14 @@ void CommSeqThread::txrxLatchAlarmEnable(bool aTxFlag)
 	if (aTxFlag)
 	{
 		// Command to write the variable.
-		sprintf(tTxString, "O%1dD", tS->mTxLatchAlarmEnable);
+		if (tS->mTxLatchAlarmEnable)
+		{
+			sprintf(tTxString, "O0D");
+		}
+		else
+		{
+			sprintf(tTxString, "O1D");
+		}
 	}
 	else
 	{
@@ -107,7 +114,7 @@ void CommSeqThread::txrxLatchAlarmEnable(bool aTxFlag)
 
 	// Convert.
 	tX->updateFlags(tV);
-	tRxLatchAlarmEnable = tV & 0x0040;
+	tRxLatchAlarmEnable = !(tV & 0x0040);
 
 	// Compare.
 	if (!aTxFlag || tTxLatchAlarmEnable == tRxLatchAlarmEnable)
@@ -133,7 +140,6 @@ void CommSeqThread::txrxLatchAlarmEnable(bool aTxFlag)
 
 	delete tRxString;
 }
-
 
 //******************************************************************************
 //******************************************************************************
