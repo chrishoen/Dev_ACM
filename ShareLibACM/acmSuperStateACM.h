@@ -36,7 +36,7 @@ public:
 	// Members.
 
 	// True if this contains valid data.
-	int mValidFlag;
+	bool mValidFlag;
 
 	// Test variables.
 	int mCount;
