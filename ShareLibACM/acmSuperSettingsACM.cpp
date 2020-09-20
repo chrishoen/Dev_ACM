@@ -90,6 +90,11 @@ void SuperSettingsACM::initialize()
 	mTxPTTAlarmEnable = false;
 	mRxPTTAlarmEnable = false;
 	mQxPTTAlarmEnable = 0;
+
+	// ClearAlarms.
+	mTxClearAlarms = false;
+	mRxClearAlarms = false;
+	mQxClearAlarms = 0;
 }
 
 //******************************************************************************
@@ -178,11 +183,16 @@ void SuperSettingsACM::show(int aPF)
 		asString_Qx(mQxPTTDelay_sec));
 
 	// PTT alarm.
-	// Power up alarm enable.
 	Prn::print(aPF, "PTTAlarmEnable               %10s %10s %10s",
 		my_string_from_bool(mTxPTTAlarmEnable),
 		my_string_from_bool(mRxPTTAlarmEnable),
 		asString_Qx(mQxPTTAlarmEnable));
+
+	// Clear alarms.
+	Prn::print(aPF, "ClearAlarms                  %10s %10s %10s",
+		my_string_from_bool(mTxClearAlarms),
+		my_string_from_bool(mRxClearAlarms),
+		asString_Qx(mQxClearAlarms));
 }
 
 //******************************************************************************
@@ -260,7 +270,11 @@ void SuperSettingsACM::requestPTTAlarmEnable(bool aValue)
 	mTxPTTAlarmEnable = aValue;
 	mQxPTTAlarmEnable = cQx_Request;
 }
-
+void SuperSettingsACM::requestClearAlarms()
+{
+	mTxClearAlarms = true;
+	mQxClearAlarms = cQx_Request;
+}
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
@@ -290,7 +304,6 @@ std::string SuperSettingsACM::asJsonString()
 	Json::FastWriter tWriter;
 	tString = tWriter.write(tValue);
 	return tString;
-
 }
 
 //******************************************************************************

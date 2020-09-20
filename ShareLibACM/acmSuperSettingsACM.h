@@ -120,6 +120,11 @@ public:
 	bool   mRxPTTAlarmEnable;
 	int    mQxPTTAlarmEnable;
 
+	// Clear alarms.
+	bool   mTxClearAlarms;
+	bool   mRxClearAlarms;
+	int    mQxClearAlarms;
+
 	//***************************************************************************
 	//***************************************************************************
 	//***************************************************************************
@@ -153,6 +158,7 @@ public:
 	void requestVSWROnZeroEnable(bool aValue);
 	void requestPTTDelay_sec(float aValue);
 	void requestPTTAlarmEnable(bool aValue);
+	void requestClearAlarms();
 
 	//***************************************************************************
 	//***************************************************************************

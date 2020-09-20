@@ -116,6 +116,12 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
       tGoing = true;
    }
 
+   if (tS->mQxClearAlarms == cQx_Request)
+   {
+      tS->mQxClearAlarms = cQx_Pending1;
+      tGoing = true;
+   }
+
    // Send the qcall to the long thread.
    if (tGoing)
    {

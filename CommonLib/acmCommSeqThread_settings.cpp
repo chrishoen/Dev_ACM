@@ -136,6 +136,10 @@ void CommSeqThread::doProcessSettings()
          txrxPTTAlarmEnable(true);
       }
 
+      if (tS->mQxClearAlarms == cQx_Pending1)
+      {
+         txrxClearAlarms();
+      }
    }
    catch (int aException)
    {

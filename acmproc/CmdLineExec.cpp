@@ -86,6 +86,7 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
       Prn::print(0, "11  VSWROnZeroEnable        bool");
       Prn::print(0, "12  PTTDelay_sec            float");
       Prn::print(0, "13  PTTAlarmEnable          bool");
+      Prn::print(0, "14  ClearAlarms                 ");
       return;
    }
 
@@ -107,6 +108,7 @@ void CmdLineExec::executeRequest(Ris::CmdLineCmd* aCmd)
    case 11:  tS->requestVSWROnZeroEnable(aCmd->argBool(2)); break;
    case 12:  tS->requestPTTDelay_sec(aCmd->argDouble(2)); break;
    case 13:  tS->requestPTTAlarmEnable(aCmd->argBool(2)); break;
+   case 14:  tS->requestClearAlarms(); break;
    }
 }
 

@@ -241,6 +241,7 @@ public:
    void txrxVSWROnZeroEnable(bool aTxFlag);
    void txrxPTTDelay_sec(bool aTxFlag);
    void txrxPTTAlarmEnable(bool aTxFlag);
+   void txrxClearAlarms();
 };
 
 //******************************************************************************
