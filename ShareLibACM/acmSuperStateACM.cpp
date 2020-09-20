@@ -256,7 +256,7 @@ std::string SuperStateACM::asJsonString()
 	Json::Value tValue;
 	char tBuffer[40];
 
-	tValue["ValidFlag"]          = my_string_from_bool(mValidFlag);
+	tValue["ValidFlag"]          = mValidFlag;
 	tValue["Count"]              = mCount;
 	tValue["ForwardPower_kw"]    = my_string_from_float(tBuffer, "%.6f", mForwardPower_kw);
 	tValue["ReflectedPower_kw"]  = my_string_from_float(tBuffer, "%.6f", mReflectedPower_kw);
