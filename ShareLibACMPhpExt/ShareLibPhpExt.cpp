@@ -41,6 +41,7 @@ PHPCPP_EXPORT void * get_module()
 	ex.add<share_set_SettingsVSWROnZeroEnable_bool>("share_set_SettingsVSWROnZeroEnable_bool");
 	ex.add<share_set_SettingsPTTDelay_sec_float>("share_set_SettingsPTTDelay_sec_float");
 	ex.add<share_set_SettingsPTTAlarmEnable_bool>("share_set_SettingsPTTAlarmEnable_bool");
+	ex.add<share_set_SettingsClearAlarms>("share_set_SettingsClearAlarms");
 
 	ex.add<share_get_SettingsQxReadAllSettings>("share_get_SettingsQxReadAllSettings");
 	ex.add<share_get_SettingsQxLowPowerThresh_pct>("share_get_SettingsQxLowPowerThresh_pct");
@@ -56,6 +57,7 @@ PHPCPP_EXPORT void * get_module()
 	ex.add<share_get_SettingsQxVSWROnZeroEnable>("share_get_SettingsQxVSWROnZeroEnable");
 	ex.add<share_get_SettingsQxPTTDelay_sec>("share_get_SettingsQxPTTDelay_sec");
 	ex.add<share_get_SettingsQxPTTAlarmEnable>("share_get_SettingsQxPTTAlarmEnable");
+	ex.add<share_get_SettingsQxClearAlarms>("share_get_SettingsQxClearAlarms");
 
 	ex.add<share_get_SystemTime>("share_get_SystemTime");
 

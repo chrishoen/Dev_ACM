@@ -44,6 +44,7 @@ void share_set_SettingsRelayOnAlarmEnable_bool(Php::Parameters& aP);
 void share_set_SettingsVSWROnZeroEnable_bool(Php::Parameters& aP);
 void share_set_SettingsPTTDelay_sec_float(Php::Parameters& aP);
 void share_set_SettingsPTTAlarmEnable_bool(Php::Parameters& aP);
+void share_set_SettingsClearAlarms();
 
 //******************************************************************************
 //******************************************************************************
@@ -66,6 +67,7 @@ Php::Value share_get_SettingsQxRelayOnAlarmEnable();
 Php::Value share_get_SettingsQxVSWROnZeroEnable();
 Php::Value share_get_SettingsQxPTTDelay_sec();
 Php::Value share_get_SettingsQxPTTAlarmEnable();
+Php::Value share_get_SettingsQxClearAlarms();
 
 //******************************************************************************
 //******************************************************************************

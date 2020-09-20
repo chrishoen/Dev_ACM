@@ -87,6 +87,10 @@ void share_set_SettingsPTTAlarmEnable_bool(Php::Parameters& aP)
 {
    SM::gShare->mSuperSettingsACM.requestPTTAlarmEnable((bool)aP[0]);
 }
+void share_set_SettingsClearAlarms()
+{
+   SM::gShare->mSuperSettingsACM.requestClearAlarms();
+}
 
 //******************************************************************************
 //******************************************************************************
@@ -149,6 +153,10 @@ Php::Value share_get_SettingsQxPTTDelay_sec()
 Php::Value share_get_SettingsQxPTTAlarmEnable()
 {
    return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxPTTAlarmEnable);
+}
+Php::Value share_get_SettingsQxClearAlarms()
+{
+   return (Php::Value)asString_Qx(SM::gShare->mSuperSettingsACM.mQxClearAlarms);
 }
 
 //******************************************************************************
