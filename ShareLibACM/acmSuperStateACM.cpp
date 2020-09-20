@@ -154,6 +154,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	//***************************************************************************
 	// Apply limits.
 
+#if 0
 	doApplyLimits(mForwardPower_kw);
 	doApplyLimits(mReflectedPower_kw);
 	doApplyLimits(mForwardPower_dbm);
@@ -162,6 +163,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	doApplyLimits(mReturnLoss_db);
 	doApplyLimits(mRho);
 	doApplyLimits(mEfficiency_pct);
+#endif
 
 	//***************************************************************************
 	//***************************************************************************
@@ -199,6 +201,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	//***************************************************************************
 	// Apply limits.
 
+#if 0
 	doApplyLimits(mForwardPower_kw);
 	doApplyLimits(mReflectedPower_kw);
 	doApplyLimits(mForwardPower_dbm);
@@ -207,6 +210,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	doApplyLimits(mReturnLoss_db);
 	doApplyLimits(mRho);
 	doApplyLimits(mEfficiency_pct);
+#endif
 
 	//***************************************************************************
 	//***************************************************************************
