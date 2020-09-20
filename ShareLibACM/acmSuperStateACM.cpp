@@ -20,6 +20,7 @@ namespace ACM
 
 void SuperStateACM::initialize()
 {
+	mValidFlag = false;
 	mForwardPower_kw = 0.0;
 	mReflectedPower_kw = 0.0;
 	mForwardPower_dbm = -999.0;
@@ -52,6 +53,7 @@ void SuperStateACM::initialize()
 
 void SuperStateACM::show(int aPF)
 {
+	Prn::print(aPF, "ValidFlag                  %10s", my_string_from_bool(mValidFlag));
 	Prn::print(aPF, "ForwardPower_kw            %10.6f", mForwardPower_kw);
 	Prn::print(aPF, "ReflectedPower_kw          %10.6f", mReflectedPower_kw);
 	Prn::print(aPF, "ForwardPower_dbm           %10.1f", mForwardPower_dbm);
@@ -117,6 +119,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 		)
 	{
 		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 101");
+		mValidFlag = false;
 		return false;
 	}
 
@@ -131,8 +134,11 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	if (tRet != 4)
 	{
 		Prn::print(Prn::View21, "acmSuperStateACM::updateForT ERROR 102");
+		mValidFlag = false;
 		return false;
 	}
+
+	mValidFlag = true;
 
 	// If the overrides are not zero then override the inputs.
 	if (mOverrideForwardPower_w != 0.0)
