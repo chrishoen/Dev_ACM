@@ -20,7 +20,8 @@ namespace ACM
 
 void SuperStateACM::initialize()
 {
-	mValidFlag = false;
+   mValidFlag = false;
+	mCount = 0;
 	mForwardPower_kw = 0.0;
 	mReflectedPower_kw = 0.0;
 	mForwardPower_dbm = -999.0;
@@ -36,14 +37,14 @@ void SuperStateACM::initialize()
 	mOverrideForwardPower_w = 0.0;
 	mOverrideReflectedPower_w = 0.0;
 
-	 mLowPowerAlarmEnable = false;
-	 mHighPowerAlarmEnable = false;
-	 mVSWRAlarmEnable = false;
-	 mLatchAlarmEnable = false;
-	 mPowerUpAlarmEnable = false;
-	 mRelayOnAlarmEnable = false;
-	 mVSWROnZeroEnable = false;
-	 mPTTAlarmEnable = false;
+	mLowPowerAlarmEnable = false;
+	mHighPowerAlarmEnable = false;
+	mVSWRAlarmEnable = false;
+	mLatchAlarmEnable = false;
+	mPowerUpAlarmEnable = false;
+	mRelayOnAlarmEnable = false;
+	mVSWROnZeroEnable = false;
+	mPTTAlarmEnable = false;
 }
 
 //******************************************************************************
@@ -54,6 +55,7 @@ void SuperStateACM::initialize()
 void SuperStateACM::show(int aPF)
 {
 	Prn::print(aPF, "ValidFlag                  %10s", my_string_from_bool(mValidFlag));
+	Prn::print(aPF, "Count                      %10d", mCount);
 	Prn::print(aPF, "ForwardPower_kw            %10.6f", mForwardPower_kw);
 	Prn::print(aPF, "ReflectedPower_kw          %10.6f", mReflectedPower_kw);
 	Prn::print(aPF, "ForwardPower_dbm           %10.1f", mForwardPower_dbm);
@@ -139,6 +141,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	}
 
 	mValidFlag = true;
+	mCount++;
 
 	// If the overrides are not zero then override the inputs.
 	if (mOverrideForwardPower_w != 0.0)
@@ -254,6 +257,7 @@ std::string SuperStateACM::asJsonString()
 	char tBuffer[40];
 
 	tValue["ValidFlag"]          = my_string_from_bool(mValidFlag);
+	tValue["Count"]              = mCount;
 	tValue["ForwardPower_kw"]    = my_string_from_float(tBuffer, "%.6f", mForwardPower_kw);
 	tValue["ReflectedPower_kw"]  = my_string_from_float(tBuffer, "%.6f", mReflectedPower_kw);
 	tValue["ForwardPower_dbm"]   = my_string_from_float(tBuffer, "%.1f", mForwardPower_dbm);
