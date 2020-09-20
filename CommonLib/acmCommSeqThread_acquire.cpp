@@ -42,7 +42,7 @@ void CommSeqThread::doProcessAcquire()
          if (mAcquireWaitable.wasSemaphore())
          {
             // The waitable semahore was posted for an abort.
-            throw 667;
+            throw 668;
          }
 
          // Guard.
@@ -74,10 +74,19 @@ void CommSeqThread::doProcessAcquire()
    }
    catch(int aException)
    {
-      if (!mSettingsFlag)
+      // If timeout then reset the superstate and the supersettings.
+      if (aException == 667)
+      {
+         Prn::print(Prn::View11, "acquire timeout");
+         SM::gShare->mSuperStateACM.initialize();
+         SM::gShare->mSuperSettingsACM.initialize();
+      }
+
+      if (aException == 668 && !mSettingsFlag)
       {
          Prn::print(0, "EXCEPTION CommSeqThread::executeAcquire %d %s", aException, mNotify.mException);
       }
+
       if (mAbortFlag) throw 1667;
    }
 

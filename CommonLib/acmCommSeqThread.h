@@ -32,7 +32,7 @@ public:
    // Constants:
 
    // Wait timeouts.
-   static const int cCmdAckTimeout = -1;
+   static const int cCmdAckTimeout = 4000;
 
    // Notification codes.
    static const int cCmdAckNotifyCode = 11;
