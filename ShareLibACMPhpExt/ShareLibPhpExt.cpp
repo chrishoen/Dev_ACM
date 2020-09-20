@@ -57,6 +57,7 @@ PHPCPP_EXPORT void * get_module()
 	ex.add<share_get_SettingsQxPTTDelay_sec>("share_get_SettingsQxPTTDelay_sec");
 	ex.add<share_get_SettingsQxPTTAlarmEnable>("share_get_SettingsQxPTTAlarmEnable");
 
+	ex.add<share_get_SystemTime>("share_get_SystemTime");
 
 	//******************************************************************************
 	//******************************************************************************
