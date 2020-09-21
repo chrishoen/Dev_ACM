@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#include<unistd.h>
+
 #include "risThreadsProcess.h"
 
 #include "cmnProgramParms.h"
@@ -23,6 +25,8 @@ void main_initialize(int argc,char** argv)
 
    // Set program process for high priority.
    Ris::Threads::enterProcessHigh();
+
+   chdir("opt/prime");
 
    //***************************************************************************
    //***************************************************************************

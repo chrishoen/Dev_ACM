@@ -34,6 +34,7 @@ void ProgramParms::reset()
 {
    BaseClass::reset();
    BaseClass::setFilePath_RelativeToBaseDir("files/ProgramParms.txt");
+   BaseClass::setFilePath("/opt/prime/files/ProgramParms.txt");
 
    mCmdCommPortDevice[0] = 0;
    mCmdCommPortSetup[0] = 0;
