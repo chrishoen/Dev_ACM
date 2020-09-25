@@ -63,11 +63,11 @@ public:
 
 	// Alarm variables.
 	bool   mAlarmFlag;
-	bool   mLowPowerAlarmFlag;
-	bool   mHighPowerAlarmFlag;
-	bool   mVswrAlarmFlag;
-	bool   mPowerUpAlarmFlag;
-	bool   mPTTAlarmFlag;
+	bool   mAlarmSource_LowPower;
+	bool   mAlarmSource_HighPower;
+	bool   mAlarmSource_Vswr;
+	bool   mAlarmSource_PowerUp;
+	bool   mAlarmSource_PTT;
 
 	// Overreide variables.
 	float  mOverrideForwardPower_w;

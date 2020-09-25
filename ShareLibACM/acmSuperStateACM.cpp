@@ -35,11 +35,11 @@ void SuperStateACM::initialize()
 	mAlarmOnZeroPower = false;
 
 	mAlarmFlag = false;
-	mLowPowerAlarmFlag = false;
-	mHighPowerAlarmFlag = false;
-	mVswrAlarmFlag = false;
-	mPowerUpAlarmFlag = false;
-	mPTTAlarmFlag = false;
+	mAlarmSource_LowPower = false;
+	mAlarmSource_HighPower = false;
+	mAlarmSource_Vswr = false;
+	mAlarmSource_PowerUp = false;
+	mAlarmSource_PTT = false;
 
 	mOverrideForwardPower_w = 0.0;
 	mOverrideReflectedPower_w = 0.0;
@@ -278,11 +278,14 @@ std::string SuperStateACM::asJsonString()
 	tValue["AlarmOnZeroPower"]   = mAlarmOnZeroPower;
 	tValue["AlarmFlag"]          = mAlarmFlag;
 
-	tValue["LowPowerAlarmFlag"]  = mLowPowerAlarmFlag;
-	tValue["HighPowerAlarmFlag"] = mHighPowerAlarmFlag;
-	tValue["VswrAlarmFlag"]      = mVswrAlarmFlag;
-	tValue["PowerUpAlarmFlag"]   = mPowerUpAlarmFlag;
-	tValue["PTTAlarmFlag"]       = mPTTAlarmFlag;
+	Json::Value tAlarmSource;
+	tAlarmSource["LowPower"]     = mAlarmSource_LowPower;
+	tAlarmSource["HighPower"]    = mAlarmSource_HighPower;
+	tAlarmSource["Vswr"]         = mAlarmSource_Vswr;
+	tAlarmSource["PowerUp"]      = mAlarmSource_PowerUp;
+	tAlarmSource["PTT"]          = mAlarmSource_PTT;
+
+	tValue["AlarmSource"]        = tAlarmSource;
 
 	std::string tString;
 	Json::FastWriter tWriter;
