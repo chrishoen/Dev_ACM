@@ -38,9 +38,10 @@ public:
 	// True if this contains valid data.
 	bool mValidFlag;
 
-	// Test variables.
-	int mCount;
-	int mCode;
+	// Increments at the program timer update.
+	int mActiveCount;
+	// Increments for each recieve.
+	int mRxCount;
 
 	//***************************************************************************
 	//***************************************************************************
@@ -58,8 +59,15 @@ public:
 	float  mEfficiency_pct;
 
 	// Alarm variables.
-	bool   mAlarmFlag;
 	bool   mAlarmOnZeroPower;
+
+	// Alarm variables.
+	bool   mAlarmFlag;
+	bool   mLowPowerAlarmFlag;
+	bool   mHighPowerAlarmFlag;
+	bool   mVswrAlarmFlag;
+	bool   mPowerUpAlarmFlag;
+	bool   mPTTAlarmFlag;
 
 	// Overreide variables.
 	float  mOverrideForwardPower_w;

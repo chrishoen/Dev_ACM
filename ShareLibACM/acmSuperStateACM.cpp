@@ -21,7 +21,8 @@ namespace ACM
 void SuperStateACM::initialize()
 {
    mValidFlag = false;
-	mCount = 0;
+	mActiveCount = 0;
+	mRxCount = 0;
 	mForwardPower_kw = 0.0;
 	mReflectedPower_kw = 0.0;
 	mForwardPower_dbm = -999.0;
@@ -31,8 +32,14 @@ void SuperStateACM::initialize()
 	mRho = 0.0;
 	mEfficiency_pct = 0.0;
 
-	mAlarmFlag = false;
 	mAlarmOnZeroPower = false;
+
+	mAlarmFlag = false;
+	mLowPowerAlarmFlag = false;
+	mHighPowerAlarmFlag = false;
+	mVswrAlarmFlag = false;
+	mPowerUpAlarmFlag = false;
+	mPTTAlarmFlag = false;
 
 	mOverrideForwardPower_w = 0.0;
 	mOverrideReflectedPower_w = 0.0;
@@ -55,7 +62,8 @@ void SuperStateACM::initialize()
 void SuperStateACM::show(int aPF)
 {
 	Prn::print(aPF, "ValidFlag                  %10s", my_string_from_bool(mValidFlag));
-	Prn::print(aPF, "Count                      %10d", mCount);
+	Prn::print(aPF, "ActiveCount                %10d", mActiveCount);
+	Prn::print(aPF, "RxCount                    %10d", mRxCount);
 	Prn::print(aPF, "ForwardPower_kw            %10.6f", mForwardPower_kw);
 	Prn::print(aPF, "ReflectedPower_kw          %10.6f", mReflectedPower_kw);
 	Prn::print(aPF, "ForwardPower_dbm           %10.1f", mForwardPower_dbm);
@@ -64,8 +72,8 @@ void SuperStateACM::show(int aPF)
 	Prn::print(aPF, "ReturnLoss_db              %10.2f", mReturnLoss_db);
 	Prn::print(aPF, "Rho                        %10.2f", mRho);
 	Prn::print(aPF, "Efficiency_pct             %10.2f", mEfficiency_pct);
-	Prn::print(aPF, "AlarmFlag                  %10s", my_string_from_bool(mAlarmFlag));
 	Prn::print(aPF, "AlarmOnZeroPower           %10s", my_string_from_bool(mAlarmOnZeroPower));
+	Prn::print(aPF, "AlarmFlag                  %10s", my_string_from_bool(mAlarmFlag));
 
 	Prn::print(aPF, "");
 	Prn::print(aPF, "OverrideForwardPower_w     %10.3f", mOverrideForwardPower_w);
@@ -141,7 +149,7 @@ bool SuperStateACM::updateForT(std::string* aResponse)
 	}
 
 	mValidFlag = true;
-	mCount++;
+	mRxCount++;
 
 	// If the overrides are not zero then override the inputs.
 	if (mOverrideForwardPower_w != 0.0)
@@ -257,7 +265,8 @@ std::string SuperStateACM::asJsonString()
 	char tBuffer[40];
 
 	tValue["ValidFlag"]          = mValidFlag;
-	tValue["Count"]              = mCount;
+	tValue["ActiveCount"]        = mActiveCount;
+	tValue["RxCount"]            = mRxCount;
 	tValue["ForwardPower_kw"]    = my_string_from_float(tBuffer, "%.6f", mForwardPower_kw);
 	tValue["ReflectedPower_kw"]  = my_string_from_float(tBuffer, "%.6f", mReflectedPower_kw);
 	tValue["ForwardPower_dbm"]   = my_string_from_float(tBuffer, "%.1f", mForwardPower_dbm);
@@ -266,8 +275,14 @@ std::string SuperStateACM::asJsonString()
 	tValue["ReturnLoss_db"]      = my_string_from_float(tBuffer, "%.2f", mReturnLoss_db);
 	tValue["Rho"]                = my_string_from_float(tBuffer, "%.2f", mRho);
 	tValue["Efficiency_pct"]     = my_string_from_float(tBuffer, "%.2f", mEfficiency_pct);
-	tValue["AlarmFlag"]          = mAlarmFlag;
 	tValue["AlarmOnZeroPower"]   = mAlarmOnZeroPower;
+	tValue["AlarmFlag"]          = mAlarmFlag;
+
+	tValue["LowPowerAlarmFlag"]  = mLowPowerAlarmFlag;
+	tValue["HighPowerAlarmFlag"] = mHighPowerAlarmFlag;
+	tValue["VswrAlarmFlag"]      = mVswrAlarmFlag;
+	tValue["PowerUpAlarmFlag"]   = mPowerUpAlarmFlag;
+	tValue["PTTAlarmFlag"]       = mPTTAlarmFlag;
 
 	std::string tString;
 	Json::FastWriter tWriter;

@@ -28,8 +28,12 @@ void CommSeqThread::executeOnTimer(int aTimerCount)
    // then set it to pending1 and send a qcall to the long thread to process
    // it.
 
+   ACM::SuperStateACM*    tX = &SM::gShare->mSuperStateACM;
    ACM::SuperSettingsACM* tS = &SM::gShare->mSuperSettingsACM;
    bool tGoing = false;
+
+   // Increment the activity counter.
+   tX->mActiveCount++;
 
    // For each settings variable, set the qx code.
    if (tS->mQxReadAllSettings == cQx_Request)
