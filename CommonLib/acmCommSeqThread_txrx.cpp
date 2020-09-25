@@ -8,6 +8,7 @@ Detestion:
 
 #include "stdafx.h"
 
+#include "smShare.h"
 #include "acmCommSeqThread.h"
 
 namespace ACM
@@ -105,6 +106,15 @@ void CommSeqThread::executeRxString(std::string* aString)
       Prn::print(Prn::View11, "RxStringQueue FULL");
       delete aString;
    }
+
+
+   // If this is the first receive then read all settings.
+   if (mRxFirstFlag)
+   {
+      mRxFirstFlag = false;
+      SM::gShare->mSuperSettingsACM.requestReadAllSettings();
+   }
+
 }
 
 //******************************************************************************

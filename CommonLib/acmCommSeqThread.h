@@ -59,6 +59,9 @@ public:
    // If true then the serial port is open.
    bool mConnectionFlag;
 
+   // If true then waiting for the first receive.
+   bool mRxFirstFlag;
+
    // If true then do some periodic processing.
    bool mTPFlag;
 

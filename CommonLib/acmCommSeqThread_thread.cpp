@@ -10,6 +10,7 @@ Detestion:
 
 #include "cmnPriorities.h"
 #include "cmnProgramParms.h"
+#include "smShare.h"
 
 #define  _ACMCOMMSEQTHREAD_CPP_
 #include "acmCommSeqThread.h"
@@ -50,6 +51,7 @@ CommSeqThread::CommSeqThread()
 
    // Set member variables.
    mConnectionFlag = false;
+   mRxFirstFlag = true;
    mTPFlag = true;
    mShowCode = 0;
    mAbortFlag = false;
